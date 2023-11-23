@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .page-tip {
+    color: #889aa4;
+    @apply text-center m-4 text-base;
+  }
+}

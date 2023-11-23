@@ -1,0 +1,251 @@
+// 导航栏底色
+@nav-bar-background-color: #F0F2F5;
+
+// 输入错误文字颜色
+@field-input-error-text-color: @gray-5;
+
+// 文件上传缩略图尺寸
+@uploader-size: 70px;
+
+// 分隔线颜色
+@divider-border-color: @gray-4;
+
+
+// 按钮
+.van-button--general {
+    color: #6496c7;
+    background-color: #e0f0ff;
+    border: 1px solid #e0f0ff;
+}
+
+/**
+ * 按钮样式
+ */
+.van-button {
+  font-weight: bold;
+}
+
+.van-button--disabled {
+  cursor: not-allowed;
+  opacity: 0.3;
+  filter: grayscale(1);
+}
+
+@media screen and (max-width: 767px) {
+  .van-button--small {
+    font-size: 14px;
+  }
+
+  .van-button--mini {
+    font-size: 13px;
+  }
+}
+
+// 单元格
+.van-cell__right-icon {
+  order: 1;
+}
+
+.title-basis {
+  --title-basis: 80px;
+
+  .van-cell__title {
+    flex: none;
+    flex-basis: var(--title-basis);
+  }
+  .van-cell__value {
+    text-align: left;
+  }
+}
+
+/**
+ * 导航栏样式
+ */
+.van-nav-bar {
+  background-color: #f0f2f5;
+  z-index: 9;
+
+  .van-icon {
+    color: inherit;
+  }
+}
+
+.van-nav-bar__content {
+  height: 54px;
+
+  .van-nav-bar__left .van-icon {
+    font-weight: bold;
+  }
+
+  .van-nav-bar__left > .svg-icon,
+  .van-nav-bar__right > .svg-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .van-nav-bar__text,
+  .van-nav-bar__title {
+    color: #444;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .van-nav-bar__title {
+    margin-left: 15px;
+  }
+  .van-nav-bar__left + .van-nav-bar__title {
+    margin-left: 60px;
+  }
+
+  .van-dropdown-menu .svg-icon {
+    fill: #1989fa;
+  }
+}
+
+
+/* 仪表盘、HMI界面样式 */
+.dashboard {
+  background: linear-gradient(
+    to bottom,
+    @blue 10%,
+    rgba(@blue, 0.4) 70%,
+    rgba(@blue, 0.1) 80%,
+    rgba(@blue, 0.05) 85%
+  );
+
+  /* 下拉文字白色 */
+  .van-pull-refresh__head {
+    color: #fff;
+    .van-loading,
+    .van-loading__text {
+      color: #fff;
+    }
+  }
+
+  /* 导航栏样式 */
+  .van-nav-bar {
+    background-color: @blue;
+  }
+
+  .van-nav-bar .van-icon,
+  .van-nav-bar__text,
+  .van-nav-bar__title {
+    color: #fff;
+  }
+
+  .van-nav-bar__title {
+    margin-left: 15px;
+  }
+
+  .van-hairline--bottom::after {
+    border-bottom: none;
+  }
+
+  .van-nav-bar__right .svg-icon {
+    fill: #fff;
+  }
+
+  /* SOP网格样式 */
+  .van-grid {
+    .van-grid-item {
+      .label {
+        max-width: 90px;
+        margin-top: 6px;
+      }
+    }
+
+    .svg-icon {
+      font-size: 28px;
+    }
+
+    .van-info--dot {
+      width: 12px;
+      height: 12px;
+    }
+  }
+}
+
+/* 视频播放弹框 */
+.video-player {
+  .wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+  }
+  .btn-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #fff;
+    z-index: 9;
+    font-size: 40px;
+    line-height: 1;
+    padding: 4px;
+  }
+}
+
+/* Toast */
+.van-toast {
+  min-width: 88px;
+  width: max-content;
+  max-width: 60%;
+
+  .van-toast__text {
+    font-size: 15px;
+  }
+
+  &--fail {
+    background-color: #ee0a24;
+    .van-toast__icon:before {
+      content: '\e68b';
+    }
+  }
+
+  &--success {
+    background-color: #07c160;
+  }
+}
+
+/**
+ * 标签页样式
+ */
+.van-tabs {
+  .van-tabs__nav {
+    background-color: #f0f2f5;
+
+    .van-tab--active {
+      color: @blue;
+    }
+
+    .van-tabs__line {
+      background-color: @blue;
+    }
+
+    .van-tab__text {
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+}
+
+/**
+ * 对话框样式
+ */
+.van-dialog {
+  .van-dialog__header {
+    font-weight: bold;
+    padding-top: 15px;
+  }
+  .van-dialog__content {
+    max-height: 480px;
+    overflow: auto;
+  }
+
+  .van-dialog__message {
+    padding-top: 16px;
+    white-space: normal;
+    line-height: 1.5em;
+  }
+}

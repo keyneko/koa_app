@@ -1,0 +1,130 @@
+@import './transition.scss';
+
+$bg: #f0f2f5;
+
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+}
+
+label {
+  font-weight: 700;
+}
+
+html {
+  font-size: 14px;
+  line-height: 24px;
+  height: 100%;
+  box-sizing: border-box;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  height: 100%;
+  background-color: $bg;
+  color: #444;
+}
+
+#app {
+  height: 100vh;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
+div:focus {
+  outline: none;
+}
+
+svg {
+  display: inline-block;
+}
+
+/**
+ * 页面布局样式
+ */
+.page {
+  --header-height: 54px;
+  --footer-height: 74px;
+
+  height: 100vh;
+  /*display: flex;*/
+  /*flex-flow: column;*/
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  z-index: 99;
+
+  &__header {
+    height: var(--header-height);
+  }
+
+  &__body {
+    /*flex: 1;*/
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - var(--header-height) - var(--footer-height));
+  }
+
+  &__footer {
+    height: var(--footer-height);
+  }
+
+  &--fixed-header {
+    @extend .page;
+
+    .page__header {
+      /*position: sticky;*/
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 99;
+    }
+
+    .page__body {
+      margin-top: var(--header-height);
+    }
+  }
+
+  &--fixed-footer {
+    @extend .page;
+
+    .page__footer {
+      /*position: sticky;*/
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 99;
+    }
+  }
+
+  &--fixed {
+    @extend .page--fixed-header;
+    @extend .page--fixed-footer;
+  }
+}

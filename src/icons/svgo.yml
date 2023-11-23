@@ -1,0 +1,14 @@
+# replace default config
+
+# multipass: true
+# full: true
+
+plugins:
+
+  # ./svg - Normal SVG, compress and remove specified attributes
+  - removeAttrs:
+      attrs:
+        - 'fill'
+        - 'fill-rule'
+        - 'stroke'
+  - removeTitle
