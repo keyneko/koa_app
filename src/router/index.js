@@ -39,6 +39,15 @@ export const constantRoutes = [
   },
 
   /**
+   * 注册
+   */
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import('@/views/login/register'),
+  },
+
+  /**
    * Dashboard
    */
   {
