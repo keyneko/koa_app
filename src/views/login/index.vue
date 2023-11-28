@@ -1,10 +1,10 @@
 <template lang="pug">
 .page--fixed
   .page__header
-    van-nav-bar(:title="$t('route.login')" left-arrow)
+    van-nav-bar(title="登录" left-arrow)
       template(#left): div
 
-  .page__body.flex.items-center.justify-center
+  .page__body.justify-center
     van-form(
       validate-first
       @submit='onSubmit'
@@ -24,8 +24,8 @@
           data-testid="username"
           autocomplete="off"
           left-icon="manager-o"
-          :placeholder="$t('login.username')"
-          :rules="[{ required: true, message: $t('login.usernameRule') }]")
+          placeholder="请输入用户名"
+          :rules="[{ required: true, message: '用户名不能为空' }]")
 
         van-field(
           v-model='formData.password'
@@ -33,43 +33,37 @@
           autocomplete="off"
           left-icon="shield-o"
           :type="showPwd?'':'password'"
-          :placeholder="$t('login.password')"
-          :rules="[{ required: true, message: $t('login.passwordRule') }]")
+          placeholder="请输入密码"
+          :rules="[{ required: true, message: '密码不能为空' }]")
           template(#right-icon)
             van-icon(:name="showPwd?'eye-o':'closed-eye'" @click='showPwd = !showPwd')
 
         van-field(
-          v-model='formData.code'
-          data-testid="code"
+          v-model='formData.captcha'
+          data-testid="captcha"
           left-icon="sign"
           autocomplete="off"
-          :placeholder="$t('login.code')"
-          :rules="[{ required: true, message: $t('login.codeRule') }]")
+          placeholder="请输入验证码"
+          :rules="[{ required: true, message: '验证码不能为空' }]")
           template(#extra)
-            van-image(
-              data-testid="captcha"
-              width='96'
-              height='36'
-              :src='captcha.img'
-              @click.native='getCaptcha'
-              style="margin: -7px 0px;")
+            .captcha(v-html="captcha" @click='getCaptcha')
 
         van-cell(title)
           template(#extra)
-            a.gray(@click='onForgetPwd') {{ $t('login.forgetPassword') }}
+            a.gray(@click='onForgetPwd') 忘记密码？
 
       van-cell-group(inset)
         van-button(:loading='buttonLoading' block type='info' native-type='submit' data-testid="submit")
-          | {{ $t('login.login') }}
+          | 登录
 
   .page__footer.h-auto
     .page-tip
-      | {{ $t('login.noAccount') }}
-      a {{ $t('login.contactManager') }}
+      | 没有帐号？
+      a 请联系管理员
 </template>
 
 <script setup>
-import { ref, toRef, reactive, computed, watch } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { Toast } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import { encrypt, decrypt } from '@/utils/jsencrypt'
@@ -81,7 +75,6 @@ import * as API from '@/api/user'
 
 const router = useRouter()
 const route = useRoute()
-const { ticket } = route.query
 
 const form = ref(null)
 const showPwd = ref(false)
@@ -90,66 +83,33 @@ const buttonLoading = ref(false)
 const formData = reactive({
   username: '',
   password: '',
-  code: '',
-  uuid: '',
+  captcha: '',
+  captchaId: '',
 })
 
-const captcha = toRef(store.state.user, 'captcha')
-watch(captcha, (value) => {
-  formData.uuid = value.uuid
-})
-
-// 跳转ops绑定的可登录用户列表
-const toAccounts = computed(() => {
-  return {
-    path: '/login/accounts',
-    query: { ...route.query },
-  }
-})
+const captcha = ref('')
 
 function getCaptcha() {
-  return store.dispatch('user/captchaImage')
+  return API.captcha().then(res => {
+    captcha.value = res.captcha
+    formData.captchaId = res.captchaId
+  })
 }
 
 function resetToken() {
-  return store.dispatch('user/resetToken')
+  // return store.dispatch('user/resetToken')
 }
 
 function onForgetPwd() {
-  Toast.fail(i18n.t('login.contactManager') + i18n.t('login.resetPassword'))
+  Toast.fail('请联系管理员重置密码')
 }
 
 function onSubmit() {
-  const values = { ...formData }
-  Cookies.set('username', values['username'])
-  Cookies.set('password', encrypt(values['password']))
 
-  buttonLoading.value = true
-  Toast.loading()
-
-  return store
-    .dispatch('user/login', values)
-    .then((res) => {
-      router.replace({
-        path: '/dashboard',
-        query: { ...route.query },
-      })
-    })
-    .catch((e) => {
-      getCaptcha()
-    })
-    .finally(() => {
-      buttonLoading.value = false
-      Toast.clear()
-    })
 }
 
 getCaptcha()
 resetToken()
-
-// 重置路由计数
-store.commit('route/RESET')
-
 </script>
 
 <style lang="scss" scoped>
@@ -157,6 +117,15 @@ store.commit('route/RESET')
   .van-field__left-icon {
     margin-right: 15px;
     font-size: 18px;
+  }
+}
+
+:deep(.captcha) {
+  width: 96px;
+  height: 36px;
+  svg {
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

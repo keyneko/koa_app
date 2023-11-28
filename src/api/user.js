@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function captchaImage() {
+export function captcha() {
   return request({
-    url: '/captchaImage',
+    url: '/captcha',
     method: 'get'
   })
 }

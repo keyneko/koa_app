@@ -24,10 +24,10 @@ export const constantRoutes = [
     component: () => import('@/views/error-page/404'),
     hidden: true,
   },
-  {
-    path: '/',
-    redirect: '/dashboard',
-  },
+  // {
+  //   path: '/',
+  //   redirect: '/dashboard',
+  // },
 
   /**
    * 登录

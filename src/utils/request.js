@@ -68,7 +68,7 @@ service.interceptors.response.use(
     const res = response.data
     var { code, msg } = res
 
-    if (code == 200 || code == 0) {
+    if (code == 200 || code == 201) {
       return res
     }
     else {

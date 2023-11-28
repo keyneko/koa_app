@@ -28,11 +28,7 @@ module.exports = {
     proxy: {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://localhost:3000/api/`,
-        // target: `http://devrms.ywx.com/api/`,
-        // target: `http://rms.ywx.com/api/`,
-        // target: `http://rms.taromed.com/api/`,
-        // target: `http://n-rms.cloud.taro1.com/api/`,
+        target: `http://localhost:3000`,
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: '',

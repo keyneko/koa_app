@@ -69,9 +69,8 @@ svg {
   --header-height: 54px;
   --footer-height: 74px;
 
-  height: 100vh;
-  /*display: flex;*/
-  /*flex-flow: column;*/
+  display: flex;
+  flex-flow: column;
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: auto;
@@ -83,7 +82,7 @@ svg {
   }
 
   &__body {
-    /*flex: 1;*/
+    flex: 1;
     display: flex;
     flex-direction: column;
     min-height: calc(100vh - var(--header-height) - var(--footer-height));
@@ -97,16 +96,11 @@ svg {
     @extend .page;
 
     .page__header {
-      /*position: sticky;*/
-      position: fixed;
+      position: sticky;
       top: 0;
       right: 0;
       left: 0;
       z-index: 99;
-    }
-
-    .page__body {
-      margin-top: var(--header-height);
     }
   }
 
@@ -114,8 +108,7 @@ svg {
     @extend .page;
 
     .page__footer {
-      /*position: sticky;*/
-      position: fixed;
+      position: sticky;
       bottom: 0;
       left: 0;
       right: 0;
