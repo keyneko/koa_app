@@ -1,6 +1,5 @@
 import {
   captcha,
-  register,
   login,
   logout,
 } from '@/api/user'
@@ -35,20 +34,18 @@ const mutations = {
 const actions = {
   captcha({ commit }) {
     return new Promise((resolve, reject) => {
-      captcha().then(({ img, uuid }) => {
-        commit('SET_CAPTCHA', { img, uuid })
-        resolve({ img, uuid })
+      captcha().then(({ captcha, captchaId }) => {
+        commit('SET_CAPTCHA', { captcha, captchaId })
+        resolve({ captcha, captchaId })
       }).catch(error => {
         reject(error)
       })
     })
   },
 
-  // user login
-  register({ commit }, loginForm) {
-    const { username, password, code, uuid } = loginForm
+  login({ commit }, params) {
     return new Promise((resolve, reject) => {
-      register({ username: username.trim(), password, code, uuid }).then(res => {
+      login(params).then(res => {
         commit('SET_TOKEN', res.token)
         setToken(res.token)
         resolve()
@@ -58,22 +55,7 @@ const actions = {
     })
   },
 
-  // user login
-  login({ commit }, loginForm) {
-    const { username, password, code, uuid } = loginForm
-    return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password, code, uuid }).then(res => {
-        commit('SET_TOKEN', res.token)
-        setToken(res.token)
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },
-
-  // user logout
-  logout({ commit, state, dispatch }) {
+  logout({ commit }) {
     return new Promise((resolve, reject) => {
       logout().then(() => {
         commit('SET_TOKEN', '')
@@ -82,6 +64,14 @@ const actions = {
       }).catch(error => {
         reject(error)
       })
+    })
+  },
+
+  resetToken({ commit }) {
+    return new Promise(resolve => {
+      commit('SET_TOKEN', '')
+      removeToken()
+      resolve()
     })
   },
 

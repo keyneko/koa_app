@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Toast } from 'vant'
+import { Toast, Notify } from 'vant'
 import store from '@/store'
 import { getToken, removeToken } from '@/utils/auth'
 
@@ -66,40 +66,19 @@ service.interceptors.response.use(
    */
   (response) => {
     const res = response.data
-    var { code, msg } = res
+    var { code, message } = res
 
     if (code == 200 || code == 201) {
       return res
     }
     else {
-      if (code == 401) {
-        store.dispatch('user/resetToken')
-        return Promise.reject(res)
-      }
+      // if (code == 401) {
+      //   store.dispatch('user/resetToken')
+      //   return Promise.reject(res)
+      // }
 
-      if (msg) {
-
-        /**
-          * 如果 errorCode 在 noErrorCodes 描述列表中，则不会弹错误警告框
-          * 使用示例
-          export function request_api(data) {
-            return request({
-              url: "erp/api_address",
-              method: 'post',
-              data,
-              headers: {
-                noErrorCodes: '10017|10018|10019',
-              }
-            })
-          }
-         */
-        const noErrorCodes = response.config.headers?.noErrorCodes || ''
-        if (noErrorCodes.indexOf(code) == -1) {
-          setTimeout(() => {
-            Toast.allowMultiple()
-            Toast.fail({ message: msg, duration: 5000 })
-          }, 0)
-        }
+      if (message) {
+        Notify({ type: 'danger', message })
       }
 
       return Promise.reject(res)
@@ -107,20 +86,8 @@ service.interceptors.response.use(
   },
   (error) => {
     if (error.message) {
-      // 稍加延时弹错误提示，以防<finally>中调用<Toast.clear>把错误框也消除了
-      setTimeout(() => {
-        Toast.clear()
-        Toast.allowMultiple()
-        Toast.fail({ message: error.message, duration: 5000 })
-      }, 0)
+      Notify({ type: 'danger', message })
     }
-
-    try {
-      if (error.response.status === 403) {
-        store.dispatch('user/resetToken')
-      }
-    }
-    catch (e) {}
 
     return Promise.reject(error)
   }

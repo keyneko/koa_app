@@ -6,7 +6,7 @@ function resolve(dir) {
 }
 
 const name = 'TAROMED'
-const port = process.env.port || process.env.npm_config_port || 3001
+const port = process.env.port || process.env.npm_config_port || 4001
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
@@ -28,7 +28,7 @@ module.exports = {
     proxy: {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://localhost:3000`,
+        target: `http://localhost:4000`,
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: '',

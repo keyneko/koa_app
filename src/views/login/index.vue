@@ -46,7 +46,7 @@
           placeholder="请输入验证码"
           :rules="[{ required: true, message: '验证码不能为空' }]")
           template(#extra)
-            .captcha(v-html="captcha" @click='getCaptcha')
+            .captcha(v-html="captcha.captcha" @click='getCaptcha')
 
         van-cell(title)
           template(#extra)
@@ -59,11 +59,11 @@
   .page__footer.h-auto
     .page-tip
       | 没有帐号？
-      a 请联系管理员
+      router-link(:to="toRegister") 直接注册
 </template>
 
 <script setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, toRef, reactive, computed, watch } from 'vue'
 import { Toast } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import { encrypt, decrypt } from '@/utils/jsencrypt'
@@ -87,25 +87,52 @@ const formData = reactive({
   captchaId: '',
 })
 
-const captcha = ref('')
+const captcha = toRef(store.state.user, 'captcha')
+watch(captcha, value => {
+  formData.captchaId = value.captchaId
+})
+
+const toRegister = computed(() => {
+  return {
+    path: '/register',
+    query: {},
+  }
+})
 
 function getCaptcha() {
-  return API.captcha().then(res => {
-    captcha.value = res.captcha
-    formData.captchaId = res.captchaId
-  })
+  return store.dispatch('user/captcha')
 }
 
 function resetToken() {
-  // return store.dispatch('user/resetToken')
+  return store.dispatch('user/resetToken')
 }
 
 function onForgetPwd() {
-  Toast.fail('请联系管理员重置密码')
+  Toast('请联系管理员重置密码！')
 }
 
 function onSubmit() {
-
+  Toast.loading()
+  buttonLoading.value = true
+  return store.dispatch('user/login', formData).then(res => {
+    Toast.success('登录成功')
+    // TODO
+    setTimeout(() => {
+      store.dispatch('user/logout').then(res => {
+        Toast.success('登出成功')
+      })
+    }, 5000)
+  })
+  .catch(e => {
+    /*无效的验证码*/
+    if (e.code == 501) {
+      getCaptcha()
+    }
+  })
+  .finally(() => {
+    Toast.clear()
+    buttonLoading.value = false
+  })
 }
 
 getCaptcha()

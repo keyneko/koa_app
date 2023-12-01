@@ -39,6 +39,15 @@
             van-icon(:name="showPwd?'eye-o':'closed-eye'" @click='showPwd = !showPwd')
 
         van-field(
+          v-model='formData.password2'
+          data-testid="password2"
+          autocomplete="off"
+          left-icon="shield-o"
+          :type="showPwd?'':'password'"
+          placeholder="请重复密码"
+          :rules="[{ validator: v => v == formData.password, message: '密码不一致' }]")
+
+        van-field(
           v-model='formData.captcha'
           data-testid="captcha"
           left-icon="sign"
@@ -46,7 +55,7 @@
           placeholder="请输入验证码"
           :rules="[{ required: true, message: '验证码不能为空' }]")
           template(#extra)
-            .captcha(v-html="captcha" @click='getCaptcha')
+            .captcha(v-html="captcha.captcha" @click='getCaptcha')
 
       van-cell-group(inset)
         van-button(:loading='buttonLoading' block type='info' native-type='submit' data-testid="submit")
@@ -55,11 +64,11 @@
   .page__footer.h-auto
     .page-tip
       | 已有帐号？
-      a 直接登录
+      router-link(:to="toLogin") 直接登录
 </template>
 
 <script setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, toRef, reactive, computed, watch } from 'vue'
 import { Toast } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import { encrypt, decrypt } from '@/utils/jsencrypt'
@@ -79,25 +88,41 @@ const buttonLoading = ref(false)
 const formData = reactive({
   username: '',
   password: '',
+  password2: '',
   captcha: '',
   captchaId: '',
 })
 
-const captcha = ref('')
+const captcha = toRef(store.state.user, 'captcha')
+watch(captcha, value => {
+  formData.captchaId = value.captchaId
+})
+
+const toLogin = computed(() => {
+  return {
+    path: '/login',
+    query: {},
+  }
+})
 
 function getCaptcha() {
-  return API.captcha().then(res => {
-    captcha.value = res.captcha
-    formData.captchaId = res.captchaId
-  })
+  return store.dispatch('user/captcha')
 }
 
 function onSubmit() {
   Toast.loading()
   buttonLoading.value = true
   return API.register(formData).then(res => {
-    console.log('注册成功')
-  }).finally(() => {
+    Toast.success('注册成功')
+    router.replace( toLogin.value )
+  })
+  .catch(e => {
+    /*无效的验证码*/
+    if (e.code == 501) {
+      getCaptcha()
+    }
+  })
+  .finally(() => {
     Toast.clear()
     buttonLoading.value = false
   })

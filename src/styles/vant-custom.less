@@ -5,7 +5,7 @@
 @field-input-error-text-color: @gray-5;
 
 // 文件上传缩略图尺寸
-@uploader-size: 70px;
+@uploader-size: 64px;
 
 // 分隔线颜色
 @divider-border-color: @gray-4;
@@ -89,12 +89,6 @@
     font-size: 16px;
     font-weight: bold;
   }
-  .van-nav-bar__title {
-    margin-left: 15px;
-  }
-  .van-nav-bar__left + .van-nav-bar__title {
-    margin-left: 60px;
-  }
 
   .van-dropdown-menu .svg-icon {
     fill: #1989fa;
@@ -102,89 +96,89 @@
 }
 
 
-/* 仪表盘、HMI界面样式 */
-.dashboard {
-  background: linear-gradient(
-    to bottom,
-    @blue 10%,
-    rgba(@blue, 0.4) 70%,
-    rgba(@blue, 0.1) 80%,
-    rgba(@blue, 0.05) 85%
-  );
+// /* 仪表盘、HMI界面样式 */
+// .dashboard {
+//   background: linear-gradient(
+//     to bottom,
+//     @blue 10%,
+//     rgba(@blue, 0.4) 70%,
+//     rgba(@blue, 0.1) 80%,
+//     rgba(@blue, 0.05) 85%
+//   );
 
-  /* 下拉文字白色 */
-  .van-pull-refresh__head {
-    color: #fff;
-    .van-loading,
-    .van-loading__text {
-      color: #fff;
-    }
-  }
+//   /* 下拉文字白色 */
+//   .van-pull-refresh__head {
+//     color: #fff;
+//     .van-loading,
+//     .van-loading__text {
+//       color: #fff;
+//     }
+//   }
 
-  /* 导航栏样式 */
-  .van-nav-bar {
-    background-color: @blue;
-  }
+//   /* 导航栏样式 */
+//   .van-nav-bar {
+//     background-color: @blue;
+//   }
 
-  .van-nav-bar .van-icon,
-  .van-nav-bar__text,
-  .van-nav-bar__title {
-    color: #fff;
-  }
+//   .van-nav-bar .van-icon,
+//   .van-nav-bar__text,
+//   .van-nav-bar__title {
+//     color: #fff;
+//   }
 
-  .van-nav-bar__title {
-    margin-left: 15px;
-  }
+//   .van-nav-bar__title {
+//     margin-left: 15px;
+//   }
 
-  .van-hairline--bottom::after {
-    border-bottom: none;
-  }
+//   .van-hairline--bottom::after {
+//     border-bottom: none;
+//   }
 
-  .van-nav-bar__right .svg-icon {
-    fill: #fff;
-  }
+//   .van-nav-bar__right .svg-icon {
+//     fill: #fff;
+//   }
 
-  /* SOP网格样式 */
-  .van-grid {
-    .van-grid-item {
-      .label {
-        max-width: 90px;
-        margin-top: 6px;
-      }
-    }
+//   /* SOP网格样式 */
+//   .van-grid {
+//     .van-grid-item {
+//       .label {
+//         max-width: 90px;
+//         margin-top: 6px;
+//       }
+//     }
 
-    .svg-icon {
-      font-size: 28px;
-    }
+//     .svg-icon {
+//       font-size: 28px;
+//     }
 
-    .van-info--dot {
-      width: 12px;
-      height: 12px;
-    }
-  }
-}
+//     .van-info--dot {
+//       width: 12px;
+//       height: 12px;
+//     }
+//   }
+// }
 
-/* 视频播放弹框 */
-.video-player {
-  .wrapper {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #000;
-  }
-  .btn-close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    color: #fff;
-    z-index: 9;
-    font-size: 40px;
-    line-height: 1;
-    padding: 4px;
-  }
-}
+// /* 视频播放弹框 */
+// .video-player {
+//   .wrapper {
+//     width: 100vw;
+//     height: 100vh;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     background-color: #000;
+//   }
+//   .btn-close {
+//     position: absolute;
+//     top: 0;
+//     right: 0;
+//     color: #fff;
+//     z-index: 9;
+//     font-size: 40px;
+//     line-height: 1;
+//     padding: 4px;
+//   }
+// }
 
 /* Toast */
 .van-toast {
@@ -192,15 +186,15 @@
   width: max-content;
   max-width: 60%;
 
-  .van-toast__text {
-    font-size: 15px;
-  }
+  // .van-toast__text {
+  //   font-size: 15px;
+  // }
 
   &--fail {
     background-color: #ee0a24;
-    .van-toast__icon:before {
-      content: '\e68b';
-    }
+    // .van-toast__icon:before {
+    //   content: '\e68b';
+    // }
   }
 
   &--success {
@@ -208,44 +202,44 @@
   }
 }
 
-/**
- * 标签页样式
- */
-.van-tabs {
-  .van-tabs__nav {
-    background-color: #f0f2f5;
+// /**
+//  * 标签页样式
+//  */
+// .van-tabs {
+//   .van-tabs__nav {
+//     background-color: #f0f2f5;
 
-    .van-tab--active {
-      color: @blue;
-    }
+//     .van-tab--active {
+//       color: @blue;
+//     }
 
-    .van-tabs__line {
-      background-color: @blue;
-    }
+//     .van-tabs__line {
+//       background-color: @blue;
+//     }
 
-    .van-tab__text {
-      font-size: 15px;
-      font-weight: bold;
-    }
-  }
-}
+//     .van-tab__text {
+//       font-size: 15px;
+//       font-weight: bold;
+//     }
+//   }
+// }
 
-/**
- * 对话框样式
- */
-.van-dialog {
-  .van-dialog__header {
-    font-weight: bold;
-    padding-top: 15px;
-  }
-  .van-dialog__content {
-    max-height: 480px;
-    overflow: auto;
-  }
+// /**
+//  * 对话框样式
+//  */
+// .van-dialog {
+//   .van-dialog__header {
+//     font-weight: bold;
+//     padding-top: 15px;
+//   }
+//   .van-dialog__content {
+//     max-height: 480px;
+//     overflow: auto;
+//   }
 
-  .van-dialog__message {
-    padding-top: 16px;
-    white-space: normal;
-    line-height: 1.5em;
-  }
-}
+//   .van-dialog__message {
+//     padding-top: 16px;
+//     white-space: normal;
+//     line-height: 1.5em;
+//   }
+// }
