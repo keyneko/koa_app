@@ -12,8 +12,12 @@
 
   .page__body
     van-cell-group.mb-4.title-basis(inset)
-      van-cell(v-for="d in users" :key="d.id" :title='d.username')
-        .van-multi-ellipsis--l2.break-all(v-copy) {{ d.token }}
+      van-cell(v-for="d in users" :key="d.id" center)
+        template(#title)
+          b {{ d.username }}
+        template
+          van-button.mr-2(type="general" size="small" v-copy="d.token") 复制token
+          van-button(type="danger" size="small" @click="onDelete(d)") 删除用户
 </template>
 
 <script>
@@ -38,14 +42,28 @@ const users = ref([])
 router.archive()
 
 function getUsers() {
-  return API.getUsers().then(res => {
-    users.value = res.data
-  })
+  Toast.loading()
+  return API.getUsers()
+    .then((res) => {
+      users.value = res.data
+    })
+    .finally(() => {
+      Toast.clear()
+    })
+}
+
+function onDelete(d) {
+  Toast.loading()
+  return API.deleteUser(d.id)
+    .then((res) => {
+      this.getUsers()
+    })
+    .finally(() => {
+      Toast.clear()
+    })
 }
 
 getUsers()
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

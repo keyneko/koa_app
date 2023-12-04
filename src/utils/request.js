@@ -68,15 +68,10 @@ service.interceptors.response.use(
     const res = response.data
     var { code, message } = res
 
-    if (code == 200 || code == 201) {
+    if (code == 200) {
       return res
     }
     else {
-      // if (code == 401) {
-      //   store.dispatch('user/resetToken')
-      //   return Promise.reject(res)
-      // }
-
       if (message) {
         Notify({ type: 'danger', message })
       }
@@ -86,7 +81,7 @@ service.interceptors.response.use(
   },
   (error) => {
     if (error.message) {
-      Notify({ type: 'danger', message })
+      Notify({ type: 'danger', message: error.message })
     }
 
     return Promise.reject(error)
