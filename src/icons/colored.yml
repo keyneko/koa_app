@@ -1,0 +1,9 @@
+# replace default config
+
+# multipass: true
+# full: true
+
+plugins:
+
+  # ./colored - Colored SVG, compress but do not remove fill attribute
+  - removeTitle
