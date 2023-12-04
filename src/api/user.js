@@ -66,23 +66,26 @@ export function getUsers(data) {
 
 /**
  * 用户信息
- * @param  {[type]} id       [description]
+ * @param  {[type]} params.id       [description]
  */
-export function getUser(id) {
+export function getUser(params) {
   return request({
-    url: `/user/${id}`,
+    url: `/user`,
     method: 'get',
+    params,
   })
 }
 
 /**
- * 修改用户密码
- * @param  {[type]} id       [description]
+ * 修改用户信息
+ * @param  {[type]} data.id       [description]
+ * @param  {[type]} data.name [description]
  * @param  {[type]} data.password [description]
+ * @param  {[type]} data.avatar [description]
  */
-export function updateUser(id, data) {
+export function updateUser(data) {
   return request({
-    url: `/user/${id}`,
+    url: `/user`,
     method: 'put',
     data,
   })
@@ -90,11 +93,12 @@ export function updateUser(id, data) {
 
 /**
  * 删除用户
- * @param  {[type]} id       [description]
+ * @param  {[type]} data.id       [description]
  */
-export function deleteUser(id) {
+export function deleteUser(data) {
   return request({
-    url: `/user/${id}`,
+    url: `/user`,
     method: 'delete',
+    data,
   })
 }

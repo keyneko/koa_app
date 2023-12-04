@@ -133,10 +133,12 @@ function onSubmit() {
     //   })
     // }, 5000)
   })
+  .catch(e => {
+    getCaptcha()
+  })
   .finally(() => {
     Toast.clear()
     buttonLoading.value = false
-    getCaptcha()
   })
 }
 

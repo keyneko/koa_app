@@ -118,10 +118,12 @@ function onSubmit() {
     Toast.success('注册成功')
     router.replace( toLogin.value )
   })
+  .catch(e => {
+    getCaptcha()
+  })
   .finally(() => {
     Toast.clear()
     buttonLoading.value = false
-    getCaptcha()
   })
 }
 

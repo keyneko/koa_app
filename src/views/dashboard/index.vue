@@ -9,6 +9,8 @@
           style="margin-top: 8px;"
           :show-loading="false"
           :src="require('@/assets/logo/logo_white.png')")
+      template(#right)
+        Avatar(data-testid="avatar")
 
   .page__body
     van-cell-group.mb-4.title-basis(inset)
@@ -31,6 +33,8 @@ import { Toast } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import useScrollPage from '@/utils/useScrollPage'
 import * as API from '@/api/user'
+import store from '@/store'
+import Avatar from '@/components/Avatar'
 
 const router = useRouter()
 const route = useRoute()
@@ -40,6 +44,10 @@ const users = ref([])
 
 // 路由存档
 router.archive()
+
+// function getUser() {
+//   return store.dispatch('user/getUser')
+// }
 
 function getUsers() {
   Toast.loading()
@@ -63,7 +71,8 @@ function onDelete(d) {
     })
 }
 
-getUsers()
+// getUsers()
+// getUser()
 </script>
 
 <style lang="scss" scoped></style>

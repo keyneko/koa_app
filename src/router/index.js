@@ -57,6 +57,15 @@ export const constantRoutes = [
     meta: { cache: true },
   },
 
+  /**
+   * 设置
+   */
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: () => import('@/views/settings/index'),
+  },
+
 ] // end of constantRoutes
 
 

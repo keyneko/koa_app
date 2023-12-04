@@ -84,6 +84,14 @@ service.interceptors.response.use(
       Notify({ type: 'danger', message: error.message })
     }
 
+    const { status } = error.response
+
+    if (status == 401) {
+      store.dispatch('user/resetToken')
+      window.location.reload()
+      return
+    }
+
     return Promise.reject(error)
   }
 )
