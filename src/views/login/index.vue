@@ -99,7 +99,16 @@ const toRegister = computed(() => {
   }
 })
 
+const toDashboard = computed(() => {
+  return {
+    path: '/dashboard',
+    query: {},
+  }
+})
+
 function getCaptcha() {
+  formData.captcha = ''
+  formData.captchaId = ''
   return store.dispatch('user/captcha')
 }
 
@@ -116,22 +125,18 @@ function onSubmit() {
   buttonLoading.value = true
   return store.dispatch('user/login', formData).then(res => {
     Toast.success('登录成功')
+    router.replace( toDashboard.value )
     // TODO
-    setTimeout(() => {
-      store.dispatch('user/logout').then(res => {
-        Toast.success('登出成功')
-      })
-    }, 5000)
-  })
-  .catch(e => {
-    /*无效的验证码*/
-    if (e.code == 501) {
-      getCaptcha()
-    }
+    // setTimeout(() => {
+    //   store.dispatch('user/logout').then(res => {
+    //     Toast.success('登出成功')
+    //   })
+    // }, 5000)
   })
   .finally(() => {
     Toast.clear()
     buttonLoading.value = false
+    getCaptcha()
   })
 }
 

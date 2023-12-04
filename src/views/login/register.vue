@@ -106,6 +106,8 @@ const toLogin = computed(() => {
 })
 
 function getCaptcha() {
+  formData.captcha = ''
+  formData.captchaId = ''
   return store.dispatch('user/captcha')
 }
 
@@ -116,15 +118,10 @@ function onSubmit() {
     Toast.success('注册成功')
     router.replace( toLogin.value )
   })
-  .catch(e => {
-    /*无效的验证码*/
-    if (e.code == 501) {
-      getCaptcha()
-    }
-  })
   .finally(() => {
     Toast.clear()
     buttonLoading.value = false
+    getCaptcha()
   })
 }
 

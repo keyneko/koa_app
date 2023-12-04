@@ -6,7 +6,7 @@ import request from '@/utils/request'
 export function captcha() {
   return request({
     url: '/captcha',
-    method: 'get'
+    method: 'get',
   })
 }
 
@@ -22,7 +22,7 @@ export function register(data) {
   return request({
     url: '/register',
     method: 'post',
-    data
+    data,
   })
 }
 
@@ -38,7 +38,7 @@ export function login(data) {
   return request({
     url: '/login',
     method: 'post',
-    data
+    data,
   })
 }
 
@@ -49,6 +49,52 @@ export function logout(data) {
   return request({
     url: '/logout',
     method: 'post',
-    data
+    data,
+  })
+}
+
+/**
+ * 获取用户列表
+ */
+export function getUsers(data) {
+  return request({
+    url: '/users',
+    method: 'get',
+    data,
+  })
+}
+
+/**
+ * 用户信息
+ * @param  {[type]} id       [description]
+ */
+export function getUser(id) {
+  return request({
+    url: `/user/${id}`,
+    method: 'get',
+  })
+}
+
+/**
+ * 修改用户密码
+ * @param  {[type]} id       [description]
+ * @param  {[type]} data.password [description]
+ */
+export function updateUser(id, data) {
+  return request({
+    url: `/user/${id}`,
+    method: 'put',
+    data,
+  })
+}
+
+/**
+ * 删除用户
+ * @param  {[type]} id       [description]
+ */
+export function deleteUser(id) {
+  return request({
+    url: `/user/${id}`,
+    method: 'delete',
   })
 }

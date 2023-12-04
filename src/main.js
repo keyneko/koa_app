@@ -10,6 +10,7 @@ import Vue from 'vue'
 import App from './App'
 import store from './store'
 import router from './router'
+import directive from './directive'
 
 import Vant from 'vant'
 import { Toast } from 'vant'
@@ -19,6 +20,7 @@ import i18n, { vantLocales } from '@/lang'
 Vue.use(Vant, {
   i18n: (key, value) => i18n.t(key, value)
 })
+Vue.use(directive)
 
 Vue.config.productionTip = false
 Vue.config.devtools = true
