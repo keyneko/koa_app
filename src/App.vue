@@ -16,7 +16,7 @@ export default {
       return this.$route.path
     },
     cached() {
-      return this.$store.getters.cached
+      return this.$store.getters.cached || []
     },
   },
 }

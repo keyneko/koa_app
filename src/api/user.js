@@ -81,6 +81,7 @@ export function getUser(params) {
  * @param  {[type]} data.id       [description]
  * @param  {[type]} data.name [description]
  * @param  {[type]} data.password [description]
+ * @param  {[type]} data.newPassword [description]
  * @param  {[type]} data.avatar [description]
  */
 export function updateUser(data) {
@@ -93,12 +94,12 @@ export function updateUser(data) {
 
 /**
  * 删除用户
- * @param  {[type]} data.id       [description]
+ * @param  {[type]} params.id       [description]
  */
-export function deleteUser(data) {
+export function deleteUser(params) {
   return request({
     url: `/user`,
     method: 'delete',
-    data,
+    params,
   })
 }

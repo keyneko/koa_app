@@ -35,8 +35,6 @@ const router = useRouter()
 const route = useRoute()
 useScrollPage()
 
-const users = ref([])
-
 // 路由存档
 router.archive()
 </script>
