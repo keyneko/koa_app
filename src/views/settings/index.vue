@@ -8,12 +8,10 @@
       @click-left="$router.back()")
 
   .page__body
-    van-cell-group(inset).profile
-      van-cell(center)
-        //- 头像
+    van-cell-group(inset).mb-4
+      van-cell(center).text-white.bg-primary
         template(#icon)
-          Avatar
-        //- 昵称
+          Avatar.mr-4(size="48px")
         template(#title)
           .b {{ username }}
           .tel {{ name || '--' }}
@@ -82,28 +80,6 @@ function update() {
 </script>
 
 <style lang="scss">
-.profile {
-  margin: 15px;
-  border-radius: 8px;
-
-  .avatar-wrapper {
-    margin-right: 15px;
-    img {
-      width: 50px;
-      height: 50px;
-    }
-  }
-
-  .van-cell {
-    color: #fff;
-    background-color: #1989fa;
-
-    .tel {
-      letter-spacing: 1px;
-    }
-  }
-}
-
 .van-dropdown-menu__bar {
   height: auto;
   justify-content: flex-end;
@@ -111,10 +87,6 @@ function update() {
 .van-dropdown-menu__item {
   justify-content: end;
   justify-content: flex-end;
-}
-.van-dropdown-menu__title {
-  padding-left: 0;
-  font-size: inherit;
 }
 .van-dropdown-item {
   .van-overlay {
@@ -128,9 +100,5 @@ function update() {
     border-bottom-right-radius: 8px;
     margin-top: 12px;
   }
-}
-
-.van-cell__value {
-  overflow: visible;
 }
 </style>

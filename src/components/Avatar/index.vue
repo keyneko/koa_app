@@ -1,12 +1,18 @@
 <template lang="pug">
-div: router-link(to='/settings')
-  .avatar-wrapper(:class="{ off: false }")
-    img(:src='avatar')
+.avatar-wrapper(:class="{ off: false }")
+  img(:src='avatar' :style="{ width: size, height: size }")
 </template>
 
 <script setup>
 import { toRef } from 'vue'
 import store from '@/store'
+
+const props = defineProps({
+  size: {
+    type: String,
+    default: '40px',
+  },
+})
 
 const avatar = toRef(store.getters, 'avatar')
 const name = toRef(store.getters, 'name')

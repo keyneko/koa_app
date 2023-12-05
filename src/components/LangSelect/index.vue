@@ -71,6 +71,5 @@ function onItemClicked(d) {
 .svg-icon {
   height: 16px;
   vertical-align: text-top;
-  margin-top: 1px;
 }
 </style>

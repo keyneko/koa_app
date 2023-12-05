@@ -10,7 +10,8 @@
           :show-loading="false"
           :src="require('@/assets/logo/logo_white.png')")
       template(#right)
-        Avatar(data-testid="avatar")
+        router-link(to='/settings')
+          Avatar(data-testid="avatar")
 
   .page__body
 
