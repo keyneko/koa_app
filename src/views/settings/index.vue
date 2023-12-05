@@ -15,22 +15,24 @@
           Avatar
         //- 昵称
         template(#title)
-          .font-bold {{ username }}
+          .b {{ username }}
           .tel {{ name || '--' }}
 
     van-cell-group.mb-4(inset)
       van-cell(title="切换语言" center)
         LangSelect(:showText="true")
 
-      van-cell(title="更新昵称" is-link  @click="showDialog = true")
-      van-cell(title="更新头像" is-link  @click="showDialog = true")
-      van-cell(title="更新密码" is-link  @click="showDialog = true")
+      van-cell(title="更新昵称" is-link  @click="showDialogName = true")
+      van-cell(title="更新密码" is-link  @click="showDialogPassword = true")
+      van-cell(title="更新头像" is-link  @click="showDialogAvatar = true")
 
     van-cell-group(inset)
       van-button.r8(type='default' block @click='logoutCfm') 退出登录
 
-  //- 修改密码对话框
-  DialogName(v-model="showDialog" @update="update")
+  //- 对话框
+  DialogName(v-model="showDialogName" @update="update")
+  DialogAvatar(v-model="showDialogAvatar" @update="update")
+  DialogPassword(v-model="showDialogPassword" @update="update")
 </template>
 
 <script setup>
@@ -43,6 +45,8 @@ import storage from 'store2'
 import Avatar from '@/components/Avatar'
 import LangSelect from '@/components/LangSelect'
 import DialogName from './components/DialogName'
+import DialogAvatar from './components/DialogAvatar'
+import DialogPassword from './components/DialogPassword'
 
 const router = useRouter()
 const route = useRoute()
@@ -50,7 +54,9 @@ const route = useRoute()
 const name = toRef(store.getters, 'name')
 const username = toRef(store.getters, 'username')
 
-const showDialog = ref(false)
+const showDialogName = ref(false)
+const showDialogAvatar = ref(false)
+const showDialogPassword = ref(false)
 
 // 登出
 function logoutCfm() {
@@ -76,15 +82,9 @@ function update() {
 </script>
 
 <style lang="scss">
-$bg: #f0f2f5;
-$main_color: #1989fa;
-$dark_gray: #889aa4;
-$light_gray: #eee;
-$border-radius: 8px;
-
 .profile {
   margin: 15px;
-  border-radius: $border-radius;
+  border-radius: 8px;
 
   .avatar-wrapper {
     margin-right: 15px;
@@ -96,7 +96,7 @@ $border-radius: 8px;
 
   .van-cell {
     color: #fff;
-    background-color: $main_color;
+    background-color: #1989fa;
 
     .tel {
       letter-spacing: 1px;
@@ -124,8 +124,8 @@ $border-radius: 8px;
     left: 15px;
     width: calc(100% - 30px);
     box-shadow: 1px 2px 10px rgb(100 101 102 / 30%);
-    border-bottom-left-radius: $border-radius;
-    border-bottom-right-radius: $border-radius;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
     margin-top: 12px;
   }
 }

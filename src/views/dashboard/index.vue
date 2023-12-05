@@ -13,13 +13,7 @@
         Avatar(data-testid="avatar")
 
   .page__body
-    van-cell-group.mb-4.title-basis(inset)
-      van-cell(v-for="d in users" :key="d.id" center)
-        template(#title)
-          b {{ d.username }}
-        template
-          van-button.mr-2(type="general" size="small" v-copy="d.token") 复制token
-          van-button(type="danger" size="small" @click="onDelete(d)") 删除用户
+
 </template>
 
 <script>
@@ -38,41 +32,10 @@ import Avatar from '@/components/Avatar'
 
 const router = useRouter()
 const route = useRoute()
-const { y } = useScrollPage()
+useScrollPage()
 
 const users = ref([])
 
 // 路由存档
 router.archive()
-
-// function getUser() {
-//   return store.dispatch('user/getUser')
-// }
-
-function getUsers() {
-  Toast.loading()
-  return API.getUsers()
-    .then((res) => {
-      users.value = res.data
-    })
-    .finally(() => {
-      Toast.clear()
-    })
-}
-
-function onDelete(d) {
-  Toast.loading()
-  return API.deleteUser(d.id)
-    .then((res) => {
-      this.getUsers()
-    })
-    .finally(() => {
-      Toast.clear()
-    })
-}
-
-// getUsers()
-// getUser()
 </script>
-
-<style lang="scss" scoped></style>

@@ -51,6 +51,7 @@ watch(show, (value) => {
 
 function resetForm() {
   formData.name = ''
+  form.value.resetValidation()
 }
 
 function beforeClose(action, done) {

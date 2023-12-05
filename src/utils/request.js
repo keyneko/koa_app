@@ -34,8 +34,7 @@ service.interceptors.request.use(
               var subPart = encodeURIComponent(params) + '='
               url += subPart + encodeURIComponent(value[key]) + '&'
             }
-          }
-          else {
+          } else {
             url += part + encodeURIComponent(value) + '&'
           }
         }
@@ -49,7 +48,7 @@ service.interceptors.request.use(
   },
   (error) => {
     Promise.reject(error)
-  }
+  },
 )
 
 // response interceptor
@@ -70,8 +69,7 @@ service.interceptors.response.use(
 
     if (code == 200) {
       return res
-    }
-    else {
+    } else {
       if (message) {
         Notify({ type: 'danger', message })
       }
@@ -80,11 +78,11 @@ service.interceptors.response.use(
     }
   },
   (error) => {
-    if (error.message) {
-      Notify({ type: 'danger', message: error.message })
-    }
+    const { status, data } = error.response
 
-    const { status } = error.response
+    if (data) {
+      Notify({ type: 'danger', message: data })
+    }
 
     if (status == 401) {
       store.dispatch('user/resetToken')
@@ -93,7 +91,7 @@ service.interceptors.response.use(
     }
 
     return Promise.reject(error)
-  }
+  },
 )
 
 export default service
