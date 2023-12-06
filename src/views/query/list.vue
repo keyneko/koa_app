@@ -6,31 +6,21 @@
       left-arrow
       @click-left="$router.back()")
   .page__body
+    .m-4
+      van-tag.mr-3(
+        v-for="d in options('barcode_status')"
+        :key="d._id"
+        :type="d.value === queryParams.status?'primary':'default'"
+        :mark="true"
+        size="medium"
+        @click="onTagClicked(d)") {{ d.name }}
 
-    transition-group(
-      tag="div"
-      enter-active-class='fadeInRight'
-      leave-active-class='fadeOutLeft')
-
-      van-cell-group.title-basis.mb-4.animated.faster(v-for="(d, i) in list" :key="i" inset)
-        van-cell(title="条码：")
-          b.black {{ d.value }}
-        van-cell(title="名称：")
-          | {{ d.name }}
-        van-cell(title="状态：")
-          | {{ lut('barcode_status', d.status) }}
-        van-cell(value)
-          template(#extra)
-            van-button.ml-2(
-              size="small"
-              type="danger"
-              @click="onDelete(d)"
-              ) 删除条码
-            van-button.ml-2(
-              size="small"
-              type="general"
-              @click="onDetail(d)"
-              ) 查看详情
+    BarcodeList(
+      :list="list"
+      :total="total"
+      @update="getBarcodes"
+      @delete="onDelete"
+      @detail="onDetail")
 
   DialogResult(v-model="showDialog" :data="barcode")
 </template>
@@ -41,23 +31,38 @@ import { Toast } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import * as API from '@/api/query'
 import DialogResult from './components/DialogResult'
+import BarcodeList from './components/List'
 import useDicts from '@/utils/useDicts'
+import { concat } from 'lodash'
 
 const router = useRouter()
 const route = useRoute()
-const { lut } = useDicts()
+const { options } = useDicts()
 
 const buttonLoading = ref(false)
 const showDialog = ref(false)
 
 const list = ref([])
-const barcode = ref({})
+const total = ref(0)
+const pageSize = 10
 
-function getBarcodes() {
+const barcode = ref({})
+const queryParams = reactive({
+  status: '',
+})
+
+function getBarcodes(pageNum = 1) {
   Toast.loading()
-  return API.getBarcodes()
+  return API.getBarcodes({ ...queryParams, pageNum, pageSize })
     .then((res) => {
-      list.value = res.data
+      total.value = Math.ceil(res.total / pageSize)
+
+      if (pageNum == 1) {
+        list.value = res.data || []
+      }
+      else {
+        list.value = concat(list.value, res.data)
+      }
     })
     .finally(() => {
       Toast.clear()
@@ -68,7 +73,8 @@ function onDelete({ value }) {
   Toast.loading()
   return API.deleteBarcode({ value }).then((res) => {
     Toast.success('删除成功')
-    setTimeout(getBarcodes, 500)
+    // TODO: 删除后刷新列表
+    // setTimeout(getBarcodes, 500)
   })
 }
 
@@ -84,5 +90,25 @@ function onDetail({ value }) {
     })
 }
 
+function onTagClicked(d) {
+  queryParams.status = d.value
+  // TODO: 筛选列表
+}
+
 getBarcodes()
 </script>
+
+<style lang="scss">
+.van-dropdown-item {
+  .van-overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+  .van-dropdown-item__content {
+    left: 15px;
+    width: calc(100% - 30px);
+    box-shadow: 1px -2px 10px rgb(100 101 102 / 30%);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+}
+</style>

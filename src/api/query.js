@@ -3,10 +3,11 @@ import request from '@/utils/request'
 /**
  * 获取条码列表
  */
-export function getBarcodes() {
+export function getBarcodes(params) {
   return request({
     url: '/barcodes',
     method: 'get',
+    params,
   })
 }
 
