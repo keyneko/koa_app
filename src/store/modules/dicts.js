@@ -1,72 +1,32 @@
 import { set } from 'vue'
-import { map, pick, isArray } from 'lodash'
-import { getDicts } from '@/api/dicts'
+import { getDictionaries } from '@/api/dicts'
 
 const state = {
-  dicts: {}
+  dicts: {},
 }
 
 const mutations = {
-  SET_DICT: (state, { name, list }) => {
-    if (list.length) {
-      set(state.dicts, name, list)
-    }
-  }
+  SET_DICT: (state, { key, data }) => {
+    set(state.dicts, key, data)
+  },
 }
 
 const actions = {
-  getDict({ commit }, name) {
-    if (!state.dicts[name]) {
-      set(state.dicts, name, [])
+  getDictionaries({ commit }, key) {
+    if (!state.dicts[key]) {
+      set(state.dicts, key, [])
 
-      return getDicts(name)
-        .then(res => {
-          const list = map(res.data, d => {
-            return {
-              dictLabel: d.dictLabel,
-              dictValue: d.dictValue
-            }
-          })
-
-          // 要触发createPersistedState更新，必须通过提交commit才可以
-          commit('SET_DICT', { name, list })
-        })
+      return getDictionaries({ key }).then((res) => {
+        const { data } = res
+        commit('SET_DICT', { key, data })
+      })
     }
   },
-
-  // TODO: 移除该Action
-  getDicts({ commit }, items) {
-    if (isArray(items)) {
-      return Promise.all(
-
-        map(items, d => {
-          if (!state.dicts[d]) {
-            state.dicts[d] = []
-
-            return getDicts(d)
-              .then(({ data }) => {
-                const list = map(data, d => {
-                  return {
-                    dictLabel: d.dictLabel,
-                    dictValue: d.dictValue
-                  }
-                })
-                commit('SET_DICT', { name: d, list })
-              })
-          }
-        })
-
-      )
-    }
-    else {
-      return Promise.reject()
-    }
-  }
 }
 
 export default {
   namespaced: true,
   state,
   mutations,
-  actions
+  actions,
 }

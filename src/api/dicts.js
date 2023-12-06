@@ -1,22 +1,38 @@
 import request from '@/utils/request'
 
-export function getDicts(type) {
+/**
+ * 查询字典
+ * @param  {String} params.key [description]
+ */
+export function getDictionaries(params) {
   return request({
-    url: `/system/dict/data/type/${type}`,
-    method: 'get'
+    url: `/dictionaries`,
+    method: 'get',
+    params,
   })
 }
 
 /**
- * 查询指定产线事件类型（通用）
- * @param  {[type]} params.proLineId 产线ID
- * @param  {[type]} params.status    null则查询全部类别（报错已经删除的），0则查询未删除的事件
- * @return {[type]}                   [description]
+ * 创建字典
+ * @param  {String} data.key   [description]
+ * @param  {String[]} data.names [description]
  */
-export function selEvent(params) {
+export function createDictionaries(data) {
   return request({
-    url: `/erp/eventCategory/selEvent`,
-    method: 'get',
-    params
+    url: `/dictionaries`,
+    method: 'post',
+    data,
+  })
+}
+
+/**
+ * 删除字典
+ * @param  {String} params.key   [description]
+ */
+export function deleteDictionaries(params) {
+  return request({
+    url: `/dictionaries`,
+    method: 'delete',
+    params,
   })
 }

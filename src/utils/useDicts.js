@@ -3,11 +3,11 @@ import store from '@/store'
 import { find, debounce } from 'lodash'
 
 const getDictDebounced = debounce(
-  (name) => {
-    store.dispatch('dicts/getDict', name)
+  (key) => {
+    store.dispatch('dicts/getDictionaries', key)
   },
   1000,
-  { leading: true }
+  { leading: true },
 )
 
 export default function useDicts() {
@@ -15,34 +15,34 @@ export default function useDicts() {
 
   /**
    * 查找字典表（Look Up Table）
-   * @param  {String} name  字典表名称
+   * @param  {String} key  字典表名称
    * @param  {Number|String} value 字典项值
    * @return {String}       字典标签Label
    */
-  const lut = computed(() => (name, value) => {
-    const list = dicts.value[name]
+  const lut = computed(() => (key, value) => {
+    const list = dicts.value[key]
 
     if (!list) {
-      getDictDebounced(name)
+      getDictDebounced(key)
     }
 
-    const obj = find(dicts.value[name], (d) => d.dictValue == value) || {}
-    return obj.dictLabel || '-'
+    const obj = find(dicts.value[key], (d) => d.value == value) || {}
+    return obj.name || '-'
   })
 
   /**
    * 获取字典表下所有项列表
-   * @param  {String} name 字典表名称
+   * @param  {String} key 字典表名称
    * @return {Array}      字典表所有项列表
    */
-  const options = computed(() => (name) => {
-    const list = dicts.value[name]
+  const options = computed(() => (key) => {
+    const list = dicts.value[key]
 
     if (!list) {
-      getDictDebounced(name)
+      getDictDebounced(key)
     }
 
-    return dicts.value[name] || []
+    return dicts.value[key] || []
   })
 
   return { lut, options }
