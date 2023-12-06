@@ -66,6 +66,23 @@ export const constantRoutes = [
     component: () => import('@/views/settings/index'),
   },
 
+  /**
+   * 条码查询
+   */
+  {
+    path: '/query',
+    name: 'Query',
+    component: () => import('@/views/query/index'),
+  },
+  /**
+   * 条码列表
+   */
+  {
+    path: '/query/list',
+    name: 'QueryList',
+    component: () => import('@/views/query/list'),
+  },
+
 ] // end of constantRoutes
 
 

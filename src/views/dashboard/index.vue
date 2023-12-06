@@ -14,7 +14,18 @@
           Avatar(data-testid="avatar")
 
   .page__body
-
+    van-cell-group(inset)
+      van-cell.head(title="我的技能")
+      van-grid(
+        clickable
+        center
+        border
+        :column-num="3")
+        van-grid-item(:to="toQuery")
+          template(#icon)
+            svg-icon(name='条码和仓位查询')
+          template(#text)
+            .label.van-ellipsis 条码查询
 </template>
 
 <script>
@@ -37,4 +48,19 @@ useScrollPage()
 
 // 路由存档
 router.archive()
+
+const toQuery = computed(() => {
+  return {
+    path: '/query',
+    query: {}
+  }
+})
 </script>
+
+<style lang="scss" scoped>
+.head {
+  font-size: 15px;
+  font-weight: bold;
+  background-color: #f0f2f5;
+}
+</style>
