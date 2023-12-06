@@ -15,12 +15,13 @@ import directive from './directive'
 import Vant from 'vant'
 import { Toast } from 'vant'
 import i18n, { vantLocales } from '@/lang'
-
+import animate from 'animate.css'
 
 Vue.use(Vant, {
   i18n: (key, value) => i18n.t(key, value)
 })
 Vue.use(directive)
+Vue.use(animate)
 
 Vue.config.productionTip = false
 Vue.config.devtools = true
