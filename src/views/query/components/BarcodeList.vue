@@ -12,7 +12,7 @@ van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
         .animated.faster(v-for="d in list" :key="d._id")
           van-cell-group.title-basis.mb-4(inset)
             van-cell(title="条码：")
-              b.black {{ d.value }}
+              b.black(v-copy) {{ d.value }}
             van-cell(title="名称：")
               | {{ d.name }}
             van-cell(title="状态：")

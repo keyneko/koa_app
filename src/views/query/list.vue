@@ -27,13 +27,13 @@
 
 <script setup>
 import { ref, reactive, computed, onBeforeUnmount } from 'vue'
-import { Toast } from 'vant'
+import { Toast, Dialog } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import * as API from '@/api/query'
 import DialogResult from './components/DialogResult'
-import BarcodeList from './components/List'
+import BarcodeList from './components/BarcodeList'
 import useDicts from '@/utils/useDicts'
-import { concat } from 'lodash'
+import { concat, without } from 'lodash'
 
 const router = useRouter()
 const route = useRoute()
@@ -59,8 +59,7 @@ function getBarcodes(pageNum = 1) {
 
       if (pageNum == 1) {
         list.value = res.data || []
-      }
-      else {
+      } else {
         list.value = concat(list.value, res.data)
       }
     })
@@ -69,13 +68,19 @@ function getBarcodes(pageNum = 1) {
     })
 }
 
-function onDelete({ value }) {
-  Toast.loading()
-  return API.deleteBarcode({ value }).then((res) => {
-    Toast.success('删除成功')
-    // TODO: 删除后刷新列表
-    // setTimeout(getBarcodes, 500)
+function onDelete(d) {
+  Dialog.confirm({
+    title: '提示',
+    message: '确认<b class=red>删除</b>该条码吗？',
   })
+    .then(() => {
+      Toast.loading()
+      return API.deleteBarcode({ value: d.value }).then((res) => {
+        Toast.success('删除成功')
+        list.value = without(list.value, d)
+      })
+    })
+    .catch(() => {})
 }
 
 function onDetail({ value }) {
@@ -92,7 +97,7 @@ function onDetail({ value }) {
 
 function onTagClicked(d) {
   queryParams.status = d.value
-  // TODO: 筛选列表
+  getBarcodes(1)
 }
 
 getBarcodes()
