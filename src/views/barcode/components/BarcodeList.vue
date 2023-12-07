@@ -16,9 +16,9 @@ van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
                 van-image.mr-4(
                   width='64'
                   height='64'
-                  radius="3"
+                  radius="5"
                   lazy-load
-                  fit="contain"
+                  fit="cover"
                   :src="d.files[0]"
                   @click.native.stop="ImagePreview(d.files)")
               template
@@ -38,6 +38,11 @@ van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
                   type="danger"
                   @click="emits('delete', d)"
                   ) 删除条码
+                van-button.ml-2(
+                  size="small"
+                  type="general"
+                  @click="emits('update', d)"
+                  ) 更新条码
                 van-button.ml-2(
                   size="small"
                   type="general"
@@ -62,7 +67,7 @@ const props = defineProps({
     default: 1,
   },
 })
-const emits = defineEmits(['update'])
+const emits = defineEmits([])
 const refreshing = ref(false)
 const loading = ref(false)
 const finished = ref(false)
@@ -70,11 +75,9 @@ const pageNum = ref(1)
 
 function onRefresh() {
   pageNum.value = 1
-  emits('update', 1)
+  emits('fetch', 1)
 
   setTimeout(() => {
-    Toast.success('刷新成功')
-
     finished.value = false
     loading.value = false
     refreshing.value = false
@@ -84,10 +87,15 @@ function onRefresh() {
 function onLoad() {
   if (pageNum.value < props.total) {
     pageNum.value++
-    emits('update', pageNum.value)
+    emits('fetch', pageNum.value)
   } else {
     finished.value = true
   }
   loading.value = false
 }
+
+defineExpose({
+  pageNum,
+  onRefresh,
+})
 </script>

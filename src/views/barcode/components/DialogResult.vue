@@ -13,11 +13,24 @@ van-dialog(
       | {{ data.quantity }}{{ data.basicUnit }}
     van-cell(title="状态：")
       | {{ lut('barcode_status', data.status) }}
+    van-cell(title="图片：")
+      van-row(gutter="10")
+        van-col(span="6" v-for="(d, i) in data.files" :key="i")
+          van-image(
+            :src="d"
+            fit="cover"
+            style="aspect-ratio: 1"
+            @click.native=" \
+              ImagePreview({ \
+                images: data.files, \
+                startPosition: i \
+              }) \
+            ")
 </template>
 
 <script setup>
 import { ref, computed, watch } from 'vue'
-import { Toast } from 'vant'
+import { Toast, ImagePreview } from 'vant'
 import useDicts from '@/utils/useDicts'
 
 const emit = defineEmits(['input'])

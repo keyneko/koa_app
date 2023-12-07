@@ -17,13 +17,16 @@
         @click="onTagClicked(d)") {{ d.name }}
 
     BarcodeList(
+      ref="listRef"
       :list="list"
       :total="total"
-      @update="getBarcodes"
+      @fetch="getBarcodes"
       @delete="onDelete"
+      @update="onUpdate"
       @detail="onDetail")
 
-  DialogResult(v-model="showDialog" :data="barcode")
+  DialogResult(v-model="showDialogResult" :data="barcode")
+  DialogUpdate(v-model="showDialogUpdate" :data="barcode" @updated="reflashList")
 </template>
 
 <script setup>
@@ -31,18 +34,22 @@ import { ref, reactive, computed, onBeforeUnmount } from 'vue'
 import { Toast, Dialog } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import * as API from '@/api/barcode'
-import DialogResult from './components/DialogResult'
-import BarcodeList from './components/BarcodeList'
 import useDicts from '@/utils/useDicts'
-import { concat, without } from 'lodash'
+import { concat, without, range } from 'lodash'
+
+import BarcodeList from './components/BarcodeList'
+import DialogResult from './components/DialogResult'
+import DialogUpdate from './components/DialogUpdate'
 
 const router = useRouter()
 const route = useRoute()
 const { options } = useDicts()
 
 const buttonLoading = ref(false)
-const showDialog = ref(false)
+const showDialogResult = ref(false)
+const showDialogUpdate = ref(false)
 
+const listRef = ref(null)
 const list = ref([])
 const total = ref(0)
 const pageSize = 10
@@ -84,12 +91,24 @@ function onDelete(d) {
     .catch(() => {})
 }
 
+function onUpdate({ value }) {
+  Toast.loading()
+  return API.getBarcode({ value })
+    .then((res) => {
+      barcode.value = res.data
+      showDialogUpdate.value = true
+    })
+    .finally(() => {
+      Toast.clear()
+    })
+}
+
 function onDetail({ value }) {
   Toast.loading()
   return API.getBarcode({ value })
     .then((res) => {
       barcode.value = res.data
-      showDialog.value = true
+      showDialogResult.value = true
     })
     .finally(() => {
       Toast.clear()
@@ -98,23 +117,22 @@ function onDetail({ value }) {
 
 function onTagClicked(d) {
   queryParams.status = d.value
-  getBarcodes(1)
+  listRef.value.onRefresh()
+}
+
+async function reflashList() {
+  const { pageNum } = listRef.value
+  let newList = []
+  let newTotal
+
+  for (const i of range(pageNum)) {
+    const res = await API.getBarcodes({ ...queryParams, pageNum: i + 1, pageSize })
+    newList = concat(newList, res.data)
+    newTotal = res.total
+  }
+  list.value = newList
+  total.value = newTotal
 }
 
 getBarcodes()
 </script>
-
-<style lang="scss">
-.van-dropdown-item {
-  .van-overlay {
-    background-color: rgba(0, 0, 0, 0.3);
-  }
-  .van-dropdown-item__content {
-    left: 15px;
-    width: calc(100% - 30px);
-    box-shadow: 1px -2px 10px rgb(100 101 102 / 30%);
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-  }
-}
-</style>
