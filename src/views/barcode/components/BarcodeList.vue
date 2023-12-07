@@ -1,6 +1,6 @@
 <template lang="pug">
 van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
-  van-empty(v-if='list.length == 0' description="暂无数据")
+  van-empty(v-if='list.length == 0' :description="$t('noData')")
   template(v-else)
     van-list(v-model='loading' :finished='finished' :immediate-check='false' :offset='10' @load='onLoad')
 
@@ -23,13 +23,13 @@ van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
                   @click.native.stop="ImagePreview(d.files)")
               template
                 .van-ellipsis
-                  span 条码：
+                  span {{ $t('barcode') }}：
                   b.black(v-copy) {{ d.value }}
                 .van-ellipsis
-                  span 名称：
+                  span {{ $t('name') }}：
                   | {{ d.name }}
                 .van-ellipsis
-                  span 状态：
+                  span {{ $t('status') }}：
                   | {{ lut('barcode_status', d.status) }}
             van-cell(value)
               template(#extra)
@@ -37,17 +37,17 @@ van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
                   size="small"
                   type="danger"
                   @click="emits('delete', d)"
-                  ) 删除条码
+                  ) {{ $t('barcodes.delete') }}
                 van-button.ml-2(
                   size="small"
                   type="general"
                   @click="emits('update', d)"
-                  ) 更新条码
+                  ) {{ $t('barcodes.update') }}
                 van-button.ml-2(
                   size="small"
                   type="general"
                   @click="emits('detail', d)"
-                  ) 查看详情
+                  ) {{ $t('barcodes.view') }}
 </template>
 
 <script setup>

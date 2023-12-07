@@ -1,19 +1,19 @@
 <template lang="pug">
 van-dialog(
   v-model='show'
-  title="查询结果"
+  :title="$t('barcodeQuery.results')"
   :show-cancel-button='false'
   :closeOnClickOverlay='true')
   van-cell-group.title-basis.mt-4
-    van-cell(title="条码：")
+    van-cell(:title="$t('barcode')")
       b.black(v-copy) {{ data.value }}
-    van-cell(title="名称：")
+    van-cell(:title="$t('name')")
       | {{ data.name }}
-    van-cell(title="数量：")
+    van-cell(:title="$t('qty')")
       | {{ data.quantity }}{{ data.basicUnit }}
-    van-cell(title="状态：")
+    van-cell(:title="$t('status')")
       | {{ lut('barcode_status', data.status) }}
-    van-cell(title="图片：")
+    van-cell(:title="$t('pictures')")
       van-row(gutter="10")
         van-col(span="6" v-for="(d, i) in data.files" :key="i")
           van-image(

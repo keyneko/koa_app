@@ -1,7 +1,7 @@
 <template lang="pug">
 van-dialog(
   v-model='show'
-  title="更新头像"
+  :title="$t('settings.updateAvatar')"
   :show-cancel-button='true'
   :closeOnClickOverlay='true'
   :beforeClose="beforeClose")
@@ -11,7 +11,7 @@ van-dialog(
     @submit="onSubmit")
     van-field(
       required
-      :rules="[{ required: true, message: '请上传图片' }]")
+      :rules="[{ required: true, message: $t('settings.requireAvatar') }]")
       template(#input)
         van-uploader(
           v-model="files"
@@ -42,6 +42,7 @@ van-dialog(
 import { ref, reactive, computed, watch } from 'vue'
 import { Toast } from 'vant'
 import * as API from '@/api/user'
+import i18n from '@/lang'
 import { VueCropper } from 'vue-cropper'
 import { base64ToFile, upload } from '@/utils/fileUpload'
 
@@ -119,7 +120,7 @@ async function beforeClose(action, done) {
 function onSubmit() {
   Toast.loading()
   return API.updateUser(formData).then((res) => {
-    Toast.success('头像更新成功')
+    Toast.success( i18n.t('settings.avatarUpdated') )
     emit('update')
   })
 }

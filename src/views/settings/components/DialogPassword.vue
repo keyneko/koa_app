@@ -1,7 +1,7 @@
 <template lang="pug">
 van-dialog(
   v-model='show'
-  title="更新密码"
+  :title="$t('settings.updatePswd')"
   :show-cancel-button='true'
   :closeOnClickOverlay='true'
   :beforeClose="beforeClose")
@@ -14,28 +14,29 @@ van-dialog(
       type="password"
       required
       autocomplete="off"
-      placeholder="请输入原密码"
-      :rules="[{ required: true, message: '原密码不能为空' }]")
+      :placeholder="$t('settings.plhrOldPswd')"
+      :rules="[{ required: true, message: $t('settings.requireOldPswd') }]")
     van-field.bg-gray-50.mb-2(
       v-model='formData.newPassword'
       type="password"
       required
       autocomplete="off"
-      placeholder="请输入新密码"
-      :rules="[{ required: true, message: '新密码不能为空' }]")
+      :placeholder="$t('settings.plhrNewPswd')"
+      :rules="[{ required: true, message: $t('settings.requireNewPswd') }]")
     van-field.bg-gray-50(
       v-model='formData.newPasswordRe'
       type="password"
       required
       autocomplete="off"
-      placeholder="请重复新密码"
-      :rules="[{ validator: v => v == formData.newPassword, message: '新密码不一致' }]")
+      :placeholder="$t('settings.plhrRepeatPswd')"
+      :rules="[{ validator: v => v == formData.newPassword, message: $t('settings.inconsistentPswd') }]")
 </template>
 
 <script setup>
 import { ref, reactive, computed, watch } from 'vue'
 import { Toast } from 'vant'
 import * as API from '@/api/user'
+import i18n from '@/lang'
 
 const buttonLoading = ref(false)
 const form = ref(null)
@@ -93,7 +94,7 @@ function onSubmit() {
   Toast.loading()
   return API.updateUser(formData)
     .then((res) => {
-      Toast.success('密码更新成功')
+      Toast.success( i18n.t('settings.pswdUpdated') )
       emit('update')
     })
 }

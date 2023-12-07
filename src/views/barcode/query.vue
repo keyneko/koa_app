@@ -2,27 +2,27 @@
 .page--fixed
   .page__header
     van-nav-bar(
-      title="条码查询"
+      :title="$t('routes.barcodeQuery')"
       left-arrow
       @click-left="$router.back()")
 
   .page__body
     ScanView.mb-4
-      | 请扫描条码
+      | {{ $t('barcodeQuery.scanTip') }}
 
     van-form(
       validate-first
       @submit="onSubmit"
       ref='form')
-      van-cell-group(inset title="查询条码")
+      van-cell-group(inset :title="$t('barcode')")
         van-field(
           v-model='formData.value'
           data-testid='input'
-          placeholder="输入条形码"
+          :placeholder="$t('plhrBarcode')"
           required
           :rules="[ \
-            { required: true, message: '条码不能为空' }, \
-            { validator: fn, message: '条码格式错误' }, \
+            { required: true, message: $t('requireBarcode') }, \
+            { validator: fn, message: $t('formatErrBarcode') }, \
           ]")
 
   .page__footer.p-4.flex.gap-4
@@ -32,12 +32,12 @@
       block
       :disabled="buttonLoading"
       @click='() => $refs.form.submit()'
-      ) 提交查询
+      ) {{ $t('barcodeQuery.submit') }}
     van-button.r8(
       type='default'
       block
       :to="toList"
-      ) 查看所有条码
+      ) {{ $t('barcodeQuery.viewAll') }}
 
   DialogResult(v-model="showDialog" :data="barcode")
 </template>
@@ -48,6 +48,7 @@ import { Toast } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import ScanView from '@/components/ScanView'
 import jsBridge from '@/utils/jsBridge'
+import i18n from '@/lang'
 import * as API from '@/api/barcode'
 import DialogResult from './components/DialogResult'
 
@@ -75,7 +76,7 @@ jsBridge.register('barcode', (res) => {
   if (fn(res)) {
     formData.value = res
   } else {
-    Toast(`扫码结果： ${res}`)
+    Toast(i18n.t('barcodeQuery.scanned') + res)
   }
 })
 

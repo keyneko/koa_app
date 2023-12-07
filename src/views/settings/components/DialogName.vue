@@ -1,7 +1,7 @@
 <template lang="pug">
 van-dialog(
   v-model='show'
-  title="更新昵称"
+  :title="$t('settings.updateName')"
   :show-cancel-button='true'
   :closeOnClickOverlay='true'
   :beforeClose="beforeClose")
@@ -13,14 +13,15 @@ van-dialog(
       v-model='formData.name'
       required
       autocomplete="off"
-      placeholder="请输入昵称"
-      :rules="[{ required: true, message: '昵称不能为空' }]")
+      :placeholder="$t('settings.plhrName')"
+      :rules="[{ required: true, message: $t('settings.requireName') }]")
 </template>
 
 <script setup>
 import { ref, reactive, computed, watch } from 'vue'
 import { Toast } from 'vant'
 import * as API from '@/api/user'
+import i18n from '@/lang'
 
 const buttonLoading = ref(false)
 const form = ref(null)
@@ -75,11 +76,9 @@ function onSubmit() {
   Toast.loading()
   return API.updateUser(formData)
     .then((res) => {
+      Toast.success( i18n.t('settings.nameUpdated') )
       resetForm()
       emit('update')
-    })
-    .finally(() => {
-      Toast.clear()
     })
 }
 </script>

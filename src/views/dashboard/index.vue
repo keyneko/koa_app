@@ -1,7 +1,7 @@
 <template lang="pug">
 .page--fixed-header.dashboard
   .page__header
-    van-nav-bar(title="Dashboard")
+    van-nav-bar(:title="$t('routes.dashboard')")
       template(#title)
         van-image.logo(
           fit="contain"
@@ -15,7 +15,7 @@
 
   .page__body
     van-cell-group(inset)
-      van-cell.head(title="我的技能")
+      van-cell.head(:title="$t('dashboard.mySkills')")
       van-grid(
         clickable
         center
@@ -25,12 +25,12 @@
           template(#icon)
             svg-icon(name='条码查询')
           template(#text)
-            .label.van-ellipsis 条码生成
+            .label.van-ellipsis {{ $t('dashboard.barcodeGenerate') }}
         van-grid-item(:to="toQuery")
           template(#icon)
             svg-icon(name='条码查询')
           template(#text)
-            .label.van-ellipsis 条码查询
+            .label.van-ellipsis {{ $t('dashboard.barcodeQuery') }}
 </template>
 
 <script>

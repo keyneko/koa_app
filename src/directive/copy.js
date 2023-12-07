@@ -12,11 +12,11 @@ const Copy = {
       })
 
       function clipboardSuccess(toast) {
-        Toast.success(toast || i18n.t('gp.copied'))
+        Toast.success(toast || i18n.t('copied'))
       }
 
       function clipboardError() {
-        Toast.fail(i18n.t('gp.copyFailed'))
+
       }
 
       clipboard.on('success', () => {

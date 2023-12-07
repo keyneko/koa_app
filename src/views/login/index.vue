@@ -1,8 +1,10 @@
 <template lang="pug">
 .page--fixed
   .page__header
-    van-nav-bar(title="登录" left-arrow)
+    van-nav-bar(:title="$t('routes.login')" left-arrow)
       template(#left): div
+      template(#right)
+        LangSelect
 
   .page__body.justify-center
     van-form(
@@ -24,8 +26,8 @@
           data-testid="username"
           autocomplete="off"
           left-icon="manager-o"
-          placeholder="请输入用户名"
-          :rules="[{ required: true, message: '用户名不能为空' }]")
+          :placeholder="$t('login.plhrUsername')"
+          :rules="[{ required: true, message: $t('login.requireUsername') }]")
 
         van-field(
           v-model='formData.password'
@@ -33,8 +35,8 @@
           autocomplete="off"
           left-icon="shield-o"
           :type="showPwd?'':'password'"
-          placeholder="请输入密码"
-          :rules="[{ required: true, message: '密码不能为空' }]")
+          :placeholder="$t('login.plhrPswd')"
+          :rules="[{ required: true, message: $t('login.requirePswd') }]")
           template(#right-icon)
             van-icon(:name="showPwd?'eye-o':'closed-eye'" @click='showPwd = !showPwd')
 
@@ -43,23 +45,23 @@
           data-testid="captcha"
           left-icon="sign"
           autocomplete="off"
-          placeholder="请输入验证码"
-          :rules="[{ required: true, message: '验证码不能为空' }]")
+          :placeholder="$t('login.plhrCaptcha')"
+          :rules="[{ required: true, message: $t('login.requireCaptcha') }]")
           template(#extra)
             .captcha(v-html="captcha.captcha" @click='getCaptcha')
 
         van-cell(title)
           template(#extra)
-            a.gray(@click='onForgetPwd') 忘记密码？
+            a.gray(@click='onForgetPwd') {{ $t('login.forgetPswd') }}
 
       van-cell-group(inset)
         van-button(:loading='buttonLoading' block type='info' native-type='submit' data-testid="submit")
-          | 登录
+          | {{ $t('login.login') }}
 
   .page__footer.h-auto
     .page-tip
-      | 没有帐号？
-      router-link(:to="toRegister") 直接注册
+      | {{ $t('login.noAccount') }}&nbsp;
+      router-link.underline(:to="toRegister") {{ $t('login.toRegister') }}
 </template>
 
 <script setup>
@@ -69,9 +71,9 @@ import { useRouter, useRoute } from '@/router'
 import { encrypt, decrypt } from '@/utils/jsencrypt'
 import Cookies from 'js-cookie'
 import store from '@/store'
-import storage from 'store2'
 import i18n from '@/lang'
 import * as API from '@/api/user'
+import LangSelect from '@/components/LangSelect'
 
 const router = useRouter()
 const route = useRoute()
@@ -117,14 +119,13 @@ function resetToken() {
 }
 
 function onForgetPwd() {
-  Toast('请联系管理员重置密码！')
+  Toast( i18n.t('login.callAdmin') )
 }
 
 function onSubmit() {
   Toast.loading()
   buttonLoading.value = true
   return store.dispatch('user/login', formData).then(res => {
-    Toast.success('登录成功')
     router.replace( toDashboard.value )
   })
   .catch(e => {

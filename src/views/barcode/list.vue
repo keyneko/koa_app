@@ -2,7 +2,7 @@
 .page--fixed
   .page__header
     van-nav-bar(
-      title="条码列表"
+      :title="$t('routes.barcodes')"
       left-arrow
       @click-left="$router.back()")
 
@@ -34,6 +34,7 @@ import { ref, reactive, computed, onBeforeUnmount } from 'vue'
 import { Toast, Dialog } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import * as API from '@/api/barcode'
+import i18n from '@/lang'
 import useDicts from '@/utils/useDicts'
 import { concat, without, range } from 'lodash'
 
@@ -78,13 +79,13 @@ function getBarcodes(pageNum = 1) {
 
 function onDelete(d) {
   Dialog.confirm({
-    title: '提示',
-    message: '确认<b class=red>删除</b>该条码吗？',
+    title: i18n.t('barcodes.deleteCfm'),
+    message: i18n.t('barcodes.deleteCfmMsg'),
   })
     .then(() => {
       Toast.loading()
       return API.deleteBarcode({ value: d.value }).then((res) => {
-        Toast.success('删除成功')
+        Toast.success(i18n.t('barcodes.deleted'))
         list.value = without(list.value, d)
       })
     })

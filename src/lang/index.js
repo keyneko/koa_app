@@ -5,32 +5,26 @@ import { Locale } from 'vant'
 
 import vantEnLocale from 'vant/lib/locale/lang/en-US'
 import vantZhLocale from 'vant/lib/locale/lang/zh-CN'
-import vantHkLocale from 'vant/lib/locale/lang/zh-HK'
 import vantJaLocale from 'vant/lib/locale/lang/ja-JP'
 
 import enLocale from './en'
 import zhLocale from './zh'
-import hkLocale from './hk'
 import jaLocale from './ja'
 
 Vue.use(VueI18n)
 
 const messages = {
   en: {
+    ...vantEnLocale,
     ...enLocale,
-    ...vantEnLocale
   },
   zh: {
+    ...vantZhLocale,
     ...zhLocale,
-    ...vantZhLocale
-  },
-  hk: {
-    ...hkLocale,
-    ...vantHkLocale
   },
   ja: {
+    ...vantJaLocale,
     ...jaLocale,
-    ...vantJaLocale
   }
 }
 
@@ -41,11 +35,6 @@ const dateTimeFormats = {
     long: { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long', hour: 'numeric', minute: 'numeric' }
   },
   'zh': {
-    short: { year: 'numeric', month: 'short', day: 'numeric' },
-    medium: { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' },
-    long: { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long', hour: 'numeric', minute: 'numeric', hour12: true }
-  },
-  'hk': {
     short: { year: 'numeric', month: 'short', day: 'numeric' },
     medium: { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' },
     long: { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long', hour: 'numeric', minute: 'numeric', hour12: true }
@@ -78,9 +67,6 @@ export function vantLocales(lang) {
   }
   else if (lang === 'zh') {
     Locale.use(lang, vantZhLocale)
-  }
-  else if (lang === 'hk') {
-    Locale.use(lang, vantHkLocale)
   }
   else if (lang === 'ja') {
     Locale.use(lang, vantJaLocale)

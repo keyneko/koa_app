@@ -39,9 +39,7 @@ const item = ref(null)
 
 const options = [
   { icon: 'cn', text: '简体中文', value: 'zh' },
-  { icon: 'hk', text: '繁体中文', value: 'hk' },
   { icon: 'us', text: 'English', value: 'en' },
-  { icon: 'es', text: 'Español', value: 'es' },
   { icon: 'jp', text: '日本語', value: 'ja' },
 ]
 
@@ -54,7 +52,7 @@ function onItemClicked(d) {
   i18n.locale = d.value
   vantLocales(d.value)
   store.dispatch('app/setLanguage', d.value)
-  Toast.success(i18n.t('gp.languageSwitched'))
+  Toast.success(i18n.t('langSwitched'))
 }
 </script>
 

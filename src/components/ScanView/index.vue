@@ -1,7 +1,9 @@
-ww<template lang="pug">
+ww
+<template lang="pug">
 .block.relative
   transition(name='fade' tag='div' enter-active-class='fadeInRight' leave-active-class='fadeOutRight')
-    .tip.animated.faster(v-if='showTip') 按PDA的红色按钮扫码
+    .absolute.w-full.h-full.animated.faster(v-if='showTip')
+      .tip {{ $t('pdaScanTip') }}
 
   svg-icon(name='扫码' :width="width" :height="height" viewBox="0 0 480 480")
   .text-center
@@ -43,7 +45,6 @@ export default {
   created() {
     this.timerId = setTimeout(() => {
       this.showTip = true
-
       this.timerId = setTimeout(() => {
         this.showTip = false
       }, 5000)
@@ -66,18 +67,17 @@ export default {
 .tip {
   color: #fff;
   background: red;
-  padding: 0px 12px;
-  height: 32px;
-  line-height: 32px;
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-  border-top-right-radius: 2px;
-  border-bottom-right-radius: 2px;
+  padding: 8px 12px;
+  max-width: 80%;
+  height: auto;
+  line-height: 1.2;
+  border-radius: 5px;
 
   position: absolute;
   z-index: 999;
   right: 15px;
-  top: 44%;
+  top: 50%;
+  transform: translateY(-50%);
 
   &::after {
     content: '';
@@ -87,12 +87,13 @@ export default {
     line-height: 0;
     font-size: 0px;
 
-    border: 16px solid transparent;
+    border: 10px solid transparent;
     border-left-color: red;
 
     position: absolute;
-    top: 0;
-    right: -31px;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -20px;
   }
 }
 

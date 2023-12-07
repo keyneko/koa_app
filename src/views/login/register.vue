@@ -1,8 +1,10 @@
 <template lang="pug">
 .page--fixed
   .page__header
-    van-nav-bar(title="注册" left-arrow)
+    van-nav-bar(:title="$t('routes.register')" left-arrow)
       template(#left): div
+      template(#right)
+        LangSelect
 
   .page__body.justify-center
     van-form(
@@ -24,8 +26,8 @@
           data-testid="username"
           autocomplete="off"
           left-icon="manager-o"
-          placeholder="请输入用户名"
-          :rules="[{ required: true, message: '用户名不能为空' }]")
+          :placeholder="$t('login.plhrUsername')"
+          :rules="[{ required: true, message: $t('login.requireUsername') }]")
 
         van-field(
           v-model='formData.password'
@@ -33,8 +35,8 @@
           autocomplete="off"
           left-icon="shield-o"
           :type="showPwd?'':'password'"
-          placeholder="请输入密码"
-          :rules="[{ required: true, message: '密码不能为空' }]")
+          :placeholder="$t('login.plhrPswd')"
+          :rules="[{ required: true, message: $t('login.requirePswd') }]")
           template(#right-icon)
             van-icon(:name="showPwd?'eye-o':'closed-eye'" @click='showPwd = !showPwd')
 
@@ -44,27 +46,27 @@
           autocomplete="off"
           left-icon="shield-o"
           :type="showPwd?'':'password'"
-          placeholder="请重复密码"
-          :rules="[{ validator: v => v == formData.password, message: '密码不一致' }]")
+          :placeholder="$t('login.plhrRepeatPswd')"
+          :rules="[{ validator: v => v == formData.password, message: $t('login.inconsistentPswd') }]")
 
         van-field(
           v-model='formData.captcha'
           data-testid="captcha"
           left-icon="sign"
           autocomplete="off"
-          placeholder="请输入验证码"
-          :rules="[{ required: true, message: '验证码不能为空' }]")
+          :placeholder="$t('login.plhrCaptcha')"
+          :rules="[{ required: true, message: $t('login.requireCaptcha') }]")
           template(#extra)
             .captcha(v-html="captcha.captcha" @click='getCaptcha')
 
       van-cell-group(inset)
         van-button(:loading='buttonLoading' block type='info' native-type='submit' data-testid="submit")
-          | 注册
+          | {{ $t('login.register') }}
 
   .page__footer.h-auto
     .page-tip
-      | 已有帐号？
-      router-link(:to="toLogin") 直接登录
+      | {{ $t('login.hasAccount') }}&nbsp;
+      router-link.underline(:to="toLogin") {{ $t('login.toLogin') }}
 </template>
 
 <script setup>
@@ -74,9 +76,9 @@ import { useRouter, useRoute } from '@/router'
 import { encrypt, decrypt } from '@/utils/jsencrypt'
 import Cookies from 'js-cookie'
 import store from '@/store'
-import storage from 'store2'
 import i18n from '@/lang'
 import * as API from '@/api/user'
+import LangSelect from '@/components/LangSelect'
 
 const router = useRouter()
 const route = useRoute()
@@ -115,7 +117,7 @@ function onSubmit() {
   Toast.loading()
   buttonLoading.value = true
   return API.register(formData).then(res => {
-    Toast.success('注册成功')
+    Toast.success( i18n.t('login.registered') )
     router.replace( toLogin.value )
   })
   .catch(e => {

@@ -3,7 +3,7 @@
 .page--fixed
   .page__header
     van-nav-bar(
-      title="设置"
+      :title="$t('routes.settings')"
       left-arrow
       @click-left="$router.back()")
 
@@ -17,15 +17,14 @@
           .tel {{ name || '--' }}
 
     van-cell-group.mb-4(inset)
-      van-cell(title="切换语言" center)
+      van-cell(:title="$t('settings.switchLang')" center)
         LangSelect(:showText="true")
-
-      van-cell(title="更新昵称" is-link  @click="showDialogName = true")
-      van-cell(title="更新密码" is-link  @click="showDialogPassword = true")
-      van-cell(title="更新头像" is-link  @click="showDialogAvatar = true")
+      van-cell(:title="$t('settings.updateName')" is-link  @click="showDialogName = true")
+      van-cell(:title="$t('settings.updatePswd')" is-link  @click="showDialogPassword = true")
+      van-cell(:title="$t('settings.updateAvatar')" is-link  @click="showDialogAvatar = true")
 
     van-cell-group(inset)
-      van-button.r8(type='default' block @click='logoutCfm') 退出登录
+      van-button.r8(type='default' block @click='logoutCfm') {{ $t('settings.logout') }}
 
   //- 对话框
   DialogName(v-model="showDialogName" @update="update")
@@ -38,7 +37,7 @@ import { ref, toRef, computed } from 'vue'
 import { Toast, Dialog } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import store from '@/store'
-import storage from 'store2'
+import i18n from '@/lang'
 
 import Avatar from '@/components/Avatar'
 import LangSelect from '@/components/LangSelect'
@@ -59,8 +58,8 @@ const showDialogPassword = ref(false)
 // 登出
 function logoutCfm() {
   Dialog.confirm({
-    title: '确认登出',
-    message: '确定注销并退出系统吗？',
+    title: i18n.t('settings.logoutCfm'),
+    message: i18n.t('settings.logoutCfmMsg'),
   }).then(async () => {
     try {
       Toast.loading()

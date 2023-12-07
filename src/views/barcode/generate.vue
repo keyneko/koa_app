@@ -2,7 +2,7 @@
 .page--fixed
   .page__header
     van-nav-bar(
-      title="条码生成"
+      :title="$t('routes.barcodeGen')"
       left-arrow
       @click-left="$router.back()")
 
@@ -15,46 +15,46 @@
       van-cell-group.mb-4(inset)
         van-field(
           v-model='formData.category'
-          label="分类"
-          placeholder="请输入分类"
+          :label="$t('barcodeGen.category')"
+          :placeholder="$t('barcodeGen.plhrCategory')"
           required
           :rules="[ \
-            { required: true, message: '分类不能为空' }, \
-            { validator: fn, message: '分类格式错误（两位大写字母）' }, \
+            { required: true, message: $t('barcodeGen.requireCategory') }, \
+            { validator: fn, message: $t('barcodeGen.formatErrCategory') }, \
           ]")
       //- 名称
       van-cell-group.mb-4(inset)
         van-field(
           v-model='formData.name'
-          label="名称"
-          placeholder="请输入名称"
+          :label="$t('name')"
+          :placeholder="$t('plhrName')"
           required
           :rules="[ \
-            { required: true, message: '名称不能为空' }, \
+            { required: true, message: $t('requireName') }, \
           ]")
       //- 数量
       van-cell-group.mb-4(inset)
         van-field(
           v-model='formData.quantity'
-          label="数量"
-          placeholder="请输入数量"
+          :label="$t('qty')"
+          :placeholder="$t('plhrQty')"
           type="number"
           required
           :rules="[ \
-            { required: true, message: '数量不能为空' }, \
+            { required: true, message: $t('requireQty') }, \
           ]")
       //- 基础单位
       van-cell-group.mb-4(inset)
         van-field(
           v-model='formData.basicUnit'
-          label="基础单位"
-          placeholder="请输入基础单位")
+          :label="$t('basicUnit')"
+          :placeholder="$t('plhrBasicUnit')")
       //- 拍照
       van-cell-group(inset)
         van-field(
           required
-          label="上传照片"
-          :rules="[{ required: true, message: '请上传照片' }]")
+          :label="$t('pictures')"
+          :rules="[{ required: true, message: $t('requirePictures') }]")
           template(#input)
             van-uploader(
               v-model="formData.files"
@@ -68,7 +68,7 @@
       block
       :disabled="buttonLoading"
       @click='() => $refs.form.submit()'
-      ) 提交
+      ) {{ $t('barcodeGen.submit') }}
 </template>
 
 <script setup>
@@ -76,6 +76,7 @@ import { ref, reactive, computed } from 'vue'
 import { Toast } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import { upload } from '@/utils/fileUpload'
+import i18n from '@/lang'
 import * as API from '@/api/barcode'
 import { map } from 'lodash'
 
@@ -91,8 +92,8 @@ const fn = (v) => /^[A-Z]{2}$/.test(v)
 const formData = reactive({
   category: '',
   name: '',
-  quantity: 1,
-  basicUnit: 'pcs',
+  quantity: '',
+  basicUnit: '',
   files: [],
 })
 
@@ -105,7 +106,6 @@ function fileUpload(file) {
 
 function resetForm() {
   formData.name = ''
-  formData.quantity = 1
   formData.files = []
 }
 
@@ -114,7 +114,7 @@ function onSubmit() {
   buttonLoading.value = true
   return API.createBarcode({ ...formData, files: map(formData.files, (f) => f.url) })
     .then((res) => {
-      Toast.success(`条码创建成功`)
+      Toast.success( i18n.t('barcodeGen.created') )
       resetForm()
     })
     .finally(() => {

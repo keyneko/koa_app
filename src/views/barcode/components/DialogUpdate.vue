@@ -1,7 +1,7 @@
 <template lang="pug">
 van-dialog(
   v-model='show'
-  title="更新条码"
+  :title="$t('barcodes.update')"
   :show-cancel-button='true'
   :closeOnClickOverlay='true'
   :beforeClose="beforeClose")
@@ -10,48 +10,45 @@ van-dialog(
     ref='form')
     van-cell-group.title-basis
       //- 条码
-      van-cell(title="条码：")
+      van-cell(:title="$t('barcode')")
         b.black {{ formData.value }}
       //- 名称
       van-field.bg-gray-50.mb-2(
         v-model='formData.name'
         required
-        label="名称："
-        autocomplete="off"
-        placeholder="请输入名称"
-        :rules="[{ required: true, message: '名称不能为空' }]")
+        :label="$t('name')"
+        :placeholder="$t('plhrName')"
+        :rules="[{ required: true, message: $t('requireName') }]")
       //- 数量
       van-field.bg-gray-50.mb-2(
         v-model='formData.quantity'
         required
-        label="数量："
         type="number"
-        autocomplete="off"
-        placeholder="请输入数量"
-        :rules="[{ required: true, message: '数量不能为空' }]")
+        :label="$t('qty')"
+        :placeholder="$t('plhrQty')"
+        :rules="[{ required: true, message: $t('requireQty') }]")
       //- 基础单位
       van-field.bg-gray-50.mb-2(
         v-model='formData.basicUnit'
         required
-        label="基础单位："
-        autocomplete="off"
-        placeholder="请输入基础单位"
-        :rules="[{ required: true, message: '基础单位不能为空' }]")
+        :label="$t('basicUnit')"
+        :placeholder="$t('plhrBasicUnit')"
+        :rules="[{ required: true, message: $t('requireBasicUnit') }]")
       //- 状态
       van-field.bg-gray-50(
         readonly
         clickable
         is-link
         arrow-direction="down"
-        label="状态："
+        :label="$t('status')"
+        :placeholder="$t('plhrStatus')"
         :value='lut("barcode_status", formData.status)'
-        placeholder="请选择状态"
         @click='showStatusPicker = true')
       //- 拍照
       van-field(
         _required
-        label="图片："
-        _rules="[{ required: true, message: '请上传照片' }]")
+        :label="$t('pictures')"
+        _rules="[{ required: true, message: $t('requirePictures') }]")
         template(#input)
           van-uploader(
             v-model="formData.files"
@@ -72,6 +69,7 @@ import { ref, reactive, computed, watch } from 'vue'
 import { Toast } from 'vant'
 import useDicts from '@/utils/useDicts'
 import { upload } from '@/utils/fileUpload'
+import i18n from '@/lang'
 import { map } from 'lodash'
 import * as API from '@/api/barcode'
 
@@ -161,7 +159,7 @@ async function beforeClose(action, done) {
 function onSubmit() {
   Toast.loading()
   return API.updateBarcode({ ...formData, files: map(formData.files, (f) => f.url) }).then((res) => {
-    Toast.success('条码更新成功')
+    Toast.success(i18n.t('barcodes.updated'))
     emits('updated')
   })
 }
