@@ -94,7 +94,7 @@ export default {
     submit: 'Submit',
     viewAll: 'View all',
     scanned: 'Scanned: ',
-    results: 'Query Results',
+    results: 'Barcode information',
   },
 
   barcodes: {

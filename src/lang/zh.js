@@ -94,7 +94,7 @@ export default {
     submit: '提交查询',
     viewAll: '查看所有条码',
     scanned: '扫码结果：',
-    results: '查询结果',
+    results: '条码信息',
   },
 
   barcodes: {

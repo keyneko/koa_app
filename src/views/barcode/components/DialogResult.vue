@@ -3,7 +3,7 @@ van-dialog(
   v-model='show'
   :title="$t('barcodeQuery.results')"
   :show-cancel-button='false'
-  :closeOnClickOverlay='true')
+  :closeOnClickOverlay='false')
   van-cell-group.title-basis.mt-4
     van-cell(:title="$t('barcode')")
       b.black(v-copy) {{ data.value }}

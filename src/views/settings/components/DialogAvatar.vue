@@ -3,7 +3,7 @@ van-dialog(
   v-model='show'
   :title="$t('settings.updateAvatar')"
   :show-cancel-button='true'
-  :closeOnClickOverlay='true'
+  :closeOnClickOverlay='false'
   :beforeClose="beforeClose")
   van-form(
     validate-first

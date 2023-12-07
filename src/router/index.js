@@ -90,9 +90,7 @@ export const constantRoutes = [
     name: 'BarcodeGenerate',
     component: () => import('@/views/barcode/generate'),
   },
-
 ] // end of constantRoutes
-
 
 /**
  * asyncRoutes

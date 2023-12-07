@@ -3,7 +3,7 @@ van-dialog(
   v-model='show'
   :title="$t('barcodes.update')"
   :show-cancel-button='true'
-  :closeOnClickOverlay='true'
+  :closeOnClickOverlay='false'
   :beforeClose="beforeClose")
   van-form(
     validate-first
