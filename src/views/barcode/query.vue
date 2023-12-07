@@ -5,6 +5,7 @@
       title="条码查询"
       left-arrow
       @click-left="$router.back()")
+
   .page__body
     ScanView.mb-4
       | 请扫描条码
@@ -47,7 +48,7 @@ import { Toast } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import ScanView from '@/components/ScanView'
 import jsBridge from '@/utils/jsBridge'
-import * as API from '@/api/query'
+import * as API from '@/api/barcode'
 import DialogResult from './components/DialogResult'
 
 const router = useRouter()
@@ -65,7 +66,7 @@ const formData = reactive({
 const barcode = ref({})
 
 const toList = computed(() => ({
-  path: '/query/list',
+  path: '/barcode/list',
   query: {},
 }))
 
@@ -83,36 +84,6 @@ onBeforeUnmount(() => {
   jsBridge.unregister('barcode')
 })
 
-function getBarcodes() {
-  API.getBarcodes().then((res) => {
-    console.log(res.data)
-  })
-}
-
-function getBarcode(value) {
-  API.getBarcode({ value }).then((res) => {
-    console.log(res.data)
-  })
-}
-
-function createBarcode(formData) {
-  API.createBarcode(formData).then((res) => {
-    console.log(res.data)
-  })
-}
-
-function updateBarcode(params, formData) {
-  API.updateBarcode(params, formData).then((res) => {
-    console.log(res.data)
-  })
-}
-
-function deleteBarcode(params) {
-  API.deleteBarcode(params).then((res) => {
-    console.log(res.data)
-  })
-}
-
 function onSubmit() {
   Toast.loading()
   buttonLoading.value = true
@@ -126,24 +97,4 @@ function onSubmit() {
       buttonLoading.value = false
     })
 }
-
-// getBarcodes()
-// getBarcode('SJ202312060001')
-// createBarcode({
-//   category: 'WJ',
-//   name: '超级飞侠乐迪模型',
-//   quantity: 1,
-//   basicUnit: '只',
-//   status: 1,
-// })
-// updateBarcode(
-//   { value: 'WJ202312060004' },
-//   {
-//     name: '超级飞侠小爱模型',
-//     quantity: 2,
-//     basicUnit: '只',
-//     status: 1,
-//   },
-// )
-// deleteBarcode({ value: 'WJ202312060003' })
 </script>

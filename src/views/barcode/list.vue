@@ -5,6 +5,7 @@
       title="条码列表"
       left-arrow
       @click-left="$router.back()")
+
   .page__body
     .m-4
       van-tag.mr-3(
@@ -29,7 +30,7 @@
 import { ref, reactive, computed, onBeforeUnmount } from 'vue'
 import { Toast, Dialog } from 'vant'
 import { useRouter, useRoute } from '@/router'
-import * as API from '@/api/query'
+import * as API from '@/api/barcode'
 import DialogResult from './components/DialogResult'
 import BarcodeList from './components/BarcodeList'
 import useDicts from '@/utils/useDicts'

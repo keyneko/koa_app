@@ -70,17 +70,25 @@ export const constantRoutes = [
    * 条码查询
    */
   {
-    path: '/query',
-    name: 'Query',
-    component: () => import('@/views/query/index'),
+    path: '/barcode/query',
+    name: 'BarcodeQuery',
+    component: () => import('@/views/barcode/query'),
   },
   /**
    * 条码列表
    */
   {
-    path: '/query/list',
-    name: 'QueryList',
-    component: () => import('@/views/query/list'),
+    path: '/barcode/list',
+    name: 'BarcodeList',
+    component: () => import('@/views/barcode/list'),
+  },
+  /**
+   * 条码生成
+   */
+  {
+    path: '/barcode/generate',
+    name: 'BarcodeGenerate',
+    component: () => import('@/views/barcode/generate'),
   },
 
 ] // end of constantRoutes

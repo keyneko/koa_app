@@ -21,9 +21,14 @@
         center
         border
         :column-num="3")
+        van-grid-item(:to="toGenerate")
+          template(#icon)
+            svg-icon(name='条码查询')
+          template(#text)
+            .label.van-ellipsis 条码生成
         van-grid-item(:to="toQuery")
           template(#icon)
-            svg-icon(name='条码和仓位查询')
+            svg-icon(name='条码查询')
           template(#text)
             .label.van-ellipsis 条码查询
 </template>
@@ -49,12 +54,15 @@ useScrollPage()
 // 路由存档
 router.archive()
 
-const toQuery = computed(() => {
-  return {
-    path: '/query',
-    query: {}
-  }
-})
+const toGenerate = computed(() => ({
+  path: '/barcode/generate',
+  query: {},
+}))
+
+const toQuery = computed(() => ({
+  path: '/barcode/query',
+  query: {},
+}))
 </script>
 
 <style lang="scss" scoped>

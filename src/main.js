@@ -13,13 +13,29 @@ import router from './router'
 import directive from './directive'
 
 import Vant from 'vant'
-import { Toast } from 'vant'
+import { Toast, Lazyload } from 'vant'
 import i18n, { vantLocales } from '@/lang'
+import VueTouch from 'vue-touch'
 import animate from 'animate.css'
+
+
+Toast.setDefaultOptions('loading', {
+  forbidClick: true,
+})
+Toast.setDefaultOptions('fail', {
+  duration: 5000,
+  closeOnClick: true,
+})
+VueTouch.registerCustomEvent('doubletap', {
+  type: 'tap',
+  taps: 2
+})
 
 Vue.use(Vant, {
   i18n: (key, value) => i18n.t(key, value)
 })
+Vue.use(Lazyload)
+Vue.use(VueTouch, { name: 'v-touch' })
 Vue.use(directive)
 Vue.use(animate)
 

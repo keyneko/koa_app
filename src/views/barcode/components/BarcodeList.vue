@@ -11,12 +11,26 @@ van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
         )
         .animated.faster(v-for="d in list" :key="d._id")
           van-cell-group.title-basis.mb-4(inset)
-            van-cell(title="条码：")
-              b.black(v-copy) {{ d.value }}
-            van-cell(title="名称：")
-              | {{ d.name }}
-            van-cell(title="状态：")
-              | {{ lut('barcode_status', d.status) }}
+            van-cell(center)
+              template(#icon)
+                van-image.mr-4(
+                  width='64'
+                  height='64'
+                  radius="3"
+                  lazy-load
+                  fit="contain"
+                  :src="d.files[0]"
+                  @click.native.stop="ImagePreview(d.files)")
+              template
+                .van-ellipsis
+                  span 条码：
+                  b.black(v-copy) {{ d.value }}
+                .van-ellipsis
+                  span 名称：
+                  | {{ d.name }}
+                .van-ellipsis
+                  span 状态：
+                  | {{ lut('barcode_status', d.status) }}
             van-cell(value)
               template(#extra)
                 van-button.ml-2(
@@ -33,7 +47,7 @@ van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
 
 <script setup>
 import { ref, computed } from 'vue'
-import { Toast } from 'vant'
+import { Toast, ImagePreview } from 'vant'
 import useDicts from '@/utils/useDicts'
 
 const { lut, options } = useDicts()
