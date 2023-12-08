@@ -61,7 +61,7 @@
 
       van-cell-group(inset)
         van-button(:loading='buttonLoading' block type='info' native-type='submit' data-testid="submit")
-          | {{ $t('login.register') }}
+          | {{ $t('register') }}
 
   .page__footer.h-auto
     .page-tip
@@ -117,7 +117,7 @@ function onSubmit() {
   Toast.loading()
   buttonLoading.value = true
   return API.register(formData).then(res => {
-    Toast.success( i18n.t('login.registered') )
+    Toast.success( i18n.t('registered') )
     router.replace( toLogin.value )
   })
   .catch(e => {

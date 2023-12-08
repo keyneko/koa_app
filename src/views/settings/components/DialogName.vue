@@ -76,7 +76,7 @@ function onSubmit() {
   Toast.loading()
   return API.updateUser(formData)
     .then((res) => {
-      Toast.success( i18n.t('settings.nameUpdated') )
+      Toast.success( i18n.t('updated') )
       resetForm()
       emit('update')
     })

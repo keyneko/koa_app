@@ -1,7 +1,7 @@
 <template lang="pug">
 van-dialog(
   v-model='show'
-  :title="$t('barcodes.update')"
+  :title="$t('positions.update')"
   :show-cancel-button='true'
   :closeOnClickOverlay='false'
   :beforeClose="beforeClose")
@@ -10,7 +10,7 @@ van-dialog(
     ref='form')
     van-cell-group.title-basis
       //- 条码
-      van-cell(:title="$t('barcode')")
+      van-cell(:title="$t('position')")
         b.black {{ formData.value }}
       //- 名称
       van-field.bg-gray-50.mb-2(
@@ -19,21 +19,15 @@ van-dialog(
         :label="$t('name')"
         :placeholder="$t('plhrName')"
         :rules="[{ required: true, message: $t('requireName') }]")
-      //- 数量
+      //- 是否可堆叠
       van-field.bg-gray-50.mb-2(
-        v-model='formData.quantity'
         required
-        type="number"
-        :label="$t('qty')"
-        :placeholder="$t('plhrQty')"
-        :rules="[{ required: true, message: $t('requireQty') }]")
-      //- 基础单位
-      van-field.bg-gray-50.mb-2(
-        v-model='formData.basicUnit'
-        required
-        :label="$t('basicUnit')"
-        :placeholder="$t('plhrBasicUnit')"
-        :rules="[{ required: true, message: $t('requireBasicUnit') }]")
+        :label="$t('positionGen.isStackable')"
+        :rules="[{ required: true, message: $t('positionGen.requireIsStackable') }]")
+        template(#input)
+          van-radio-group(v-model='formData.isStackable' direction='horizontal')
+            van-radio(:name='0') 不可堆叠
+            van-radio(:name='1') 可堆叠
       //- 状态
       van-field.bg-gray-50(
         readonly
@@ -42,7 +36,7 @@ van-dialog(
         arrow-direction="down"
         :label="$t('status')"
         :placeholder="$t('plhrStatus')"
-        :value='lut("barcode_status", formData.status)'
+        :value='lut("position_status", formData.status)'
         @click='showStatusPicker = true')
       //- 拍照
       van-field(
@@ -71,7 +65,7 @@ import useDicts from '@/utils/useDicts'
 import { upload } from '@/utils/fileUpload'
 import i18n from '@/lang'
 import { map } from 'lodash'
-import * as API from '@/api/barcode'
+import * as API from '@/api/position'
 
 const emits = defineEmits(['input'])
 const { lut, options } = useDicts()
@@ -94,14 +88,13 @@ const showStatusPicker = ref(false)
 const formData = reactive({
   value: '',
   name: '',
-  quantity: '',
-  basicUnit: '',
+  isStackable: '',
   status: '',
   files: [],
 })
 
 const statusColumns = computed(() =>
-  map(options.value('barcode_status'), (d) => ({
+  map(options.value('position_status'), (d) => ({
     text: d.name,
     value: d,
   })),
@@ -123,8 +116,7 @@ watch(
   (value) => {
     formData.value = value.value
     formData.name = value.name
-    formData.quantity = value.quantity
-    formData.basicUnit = value.basicUnit
+    formData.isStackable = value.isStackable
     formData.status = value.status
     formData.files = map(value.files, (f) => ({ url: f }))
   },
@@ -158,7 +150,7 @@ async function beforeClose(action, done) {
 
 function onSubmit() {
   Toast.loading()
-  return API.updateBarcode({ ...formData, files: map(formData.files, (f) => f.url) }).then((res) => {
+  return API.updatePosition({ ...formData, files: map(formData.files, (f) => f.url) }).then((res) => {
     Toast.success(i18n.t('updated'))
     emits('updated')
   })

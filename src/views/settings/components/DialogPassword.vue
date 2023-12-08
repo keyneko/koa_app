@@ -94,7 +94,7 @@ function onSubmit() {
   Toast.loading()
   return API.updateUser(formData)
     .then((res) => {
-      Toast.success( i18n.t('settings.pswdUpdated') )
+      Toast.success( i18n.t('updated') )
       emit('update')
     })
 }

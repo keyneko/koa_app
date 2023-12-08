@@ -56,7 +56,7 @@
 
       van-cell-group(inset)
         van-button(:loading='buttonLoading' block type='info' native-type='submit' data-testid="submit")
-          | {{ $t('login.login') }}
+          | {{ $t('logIn') }}
 
   .page__footer.h-auto
     .page-tip

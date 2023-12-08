@@ -6,8 +6,10 @@ const state = {
 }
 
 const mutations = {
-  SET_DICT: (state, { key, data }) => {
-    set(state.dicts, key, data)
+  SET_DICT: (state, { key, list }) => {
+    if (list.length) {
+      set(state.dicts, key, list)
+    }
   },
 }
 
@@ -17,8 +19,7 @@ const actions = {
       set(state.dicts, key, [])
 
       return getDictionaries({ key }).then((res) => {
-        const { data } = res
-        commit('SET_DICT', { key, data })
+        commit('SET_DICT', { key, list: res.data })
       })
     }
   },

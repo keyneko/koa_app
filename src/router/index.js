@@ -90,6 +90,31 @@ export const constantRoutes = [
     name: 'BarcodeGenerate',
     component: () => import('@/views/barcode/generate'),
   },
+
+  /**
+   * 库位码查询
+   */
+  {
+    path: '/position/query',
+    name: 'PositionQuery',
+    component: () => import('@/views/position/query'),
+  },
+  /**
+   * 库位码列表
+   */
+  {
+    path: '/position/list',
+    name: 'PositionList',
+    component: () => import('@/views/position/list'),
+  },
+  /**
+   * 库位码生成
+   */
+  {
+    path: '/position/generate',
+    name: 'PositionGenerate',
+    component: () => import('@/views/position/generate'),
+  },
 ] // end of constantRoutes
 
 /**

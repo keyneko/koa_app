@@ -21,16 +21,26 @@
         center
         border
         :column-num="3")
-        van-grid-item(:to="toGenerate")
+        van-grid-item(:to="toBarcodeGenerate")
           template(#icon)
             svg-icon(name='条码查询')
           template(#text)
             .label.van-ellipsis {{ $t('dashboard.barcodeGenerate') }}
-        van-grid-item(:to="toQuery")
+        van-grid-item(:to="toBarcodeQuery")
           template(#icon)
             svg-icon(name='条码查询')
           template(#text)
             .label.van-ellipsis {{ $t('dashboard.barcodeQuery') }}
+        van-grid-item(:to="toPositionGenerate")
+          template(#icon)
+            svg-icon(name='条码查询')
+          template(#text)
+            .label.van-ellipsis {{ $t('dashboard.positionGenerate') }}
+        van-grid-item(:to="toPositionQuery")
+          template(#icon)
+            svg-icon(name='条码查询')
+          template(#text)
+            .label.van-ellipsis {{ $t('dashboard.positionQuery') }}
 </template>
 
 <script>
@@ -54,13 +64,23 @@ useScrollPage()
 // 路由存档
 router.archive()
 
-const toGenerate = computed(() => ({
+const toBarcodeGenerate = computed(() => ({
   path: '/barcode/generate',
   query: {},
 }))
 
-const toQuery = computed(() => ({
+const toBarcodeQuery = computed(() => ({
   path: '/barcode/query',
+  query: {},
+}))
+
+const toPositionGenerate = computed(() => ({
+  path: '/position/generate',
+  query: {},
+}))
+
+const toPositionQuery = computed(() => ({
+  path: '/position/query',
   query: {},
 }))
 </script>

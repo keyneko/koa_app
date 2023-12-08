@@ -2,27 +2,27 @@
 .page--fixed
   .page__header
     van-nav-bar(
-      :title="$t('routes.barcodeQuery')"
+      :title="$t('routes.positionQuery')"
       left-arrow
       @click-left="$router.back()")
 
   .page__body
     ScanView.mb-4
-      | {{ $t('barcodeQuery.scanTip') }}
+      | {{ $t('positionQuery.scanTip') }}
 
     van-form(
       validate-first
       @submit="onSubmit"
       ref='form')
-      van-cell-group(inset :title="$t('barcode')")
+      van-cell-group(inset :title="$t('position')")
         van-field(
           v-model='formData.value'
           data-testid='input'
-          :placeholder="$t('plhrBarcode')"
+          :placeholder="$t('plhrPosition')"
           required
           :rules="[ \
-            { required: true, message: $t('requireBarcode') }, \
-            { validator: fn, message: $t('formatErrBarcode') }, \
+            { required: true, message: $t('requirePosition') }, \
+            { validator: fn, message: $t('formatErrPosition') }, \
           ]")
 
   .page__footer.p-4.flex.gap-4
@@ -39,7 +39,7 @@
       :to="toList"
       ) {{ $t('viewAll') }}
 
-  DialogResult(v-model="showDialog" :data="barcode")
+  DialogResult(v-model="showDialog" :data="position")
 </template>
 
 <script setup>
@@ -49,7 +49,7 @@ import { useRouter, useRoute } from '@/router'
 import ScanView from '@/components/ScanView'
 import jsBridge from '@/utils/jsBridge'
 import i18n from '@/lang'
-import * as API from '@/api/barcode'
+import * as API from '@/api/position'
 import DialogResult from './components/DialogResult'
 
 const router = useRouter()
@@ -59,15 +59,15 @@ const buttonLoading = ref(false)
 const showDialog = ref(false)
 
 const form = ref(null)
-const fn = (v) => /^[A-Z]{2}\d{8}\d{4}$/.test(v)
+const fn = (v) => /^KW[A-Z0-9]{4}[A-Z0-9]{2}[A-Z0-9]{2}\d{4}$/.test(v)
 
 const formData = reactive({
   value: '',
 })
-const barcode = ref({})
+const position = ref({})
 
 const toList = computed(() => ({
-  path: '/barcode/list',
+  path: '/position/list',
   query: {},
 }))
 
@@ -76,7 +76,7 @@ jsBridge.register('barcode', (res) => {
   if (fn(res)) {
     formData.value = res
   } else {
-    Toast(i18n.t('barcodeQuery.scanned') + res)
+    Toast(i18n.t('positionQuery.scanned') + res)
   }
 })
 
@@ -88,9 +88,9 @@ onBeforeUnmount(() => {
 function onSubmit() {
   Toast.loading()
   buttonLoading.value = true
-  return API.getBarcode(formData)
+  return API.getPosition(formData)
     .then((res) => {
-      barcode.value = res.data
+      position.value = res.data
       showDialog.value = true
     })
     .finally(() => {

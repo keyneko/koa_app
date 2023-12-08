@@ -23,14 +23,14 @@ van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
                   @click.native.stop="ImagePreview(d.files)")
               template
                 .van-ellipsis
-                  span {{ $t('barcode') }}：
+                  span {{ $t('position') }}：
                   b.black(v-copy) {{ d.value }}
                 .van-ellipsis
                   span {{ $t('name') }}：
                   | {{ d.name }}
                 .van-ellipsis
                   span {{ $t('status') }}：
-                  | {{ lut('barcode_status', d.status) }}
+                  | {{ lut('position_status', d.status) }}
             van-cell(value)
               template(#extra)
                 van-button.ml-2(

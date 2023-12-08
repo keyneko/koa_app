@@ -120,7 +120,7 @@ async function beforeClose(action, done) {
 function onSubmit() {
   Toast.loading()
   return API.updateUser(formData).then((res) => {
-    Toast.success( i18n.t('settings.avatarUpdated') )
+    Toast.success( i18n.t('updated') )
     emit('update')
   })
 }
