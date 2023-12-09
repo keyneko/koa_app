@@ -10,12 +10,12 @@
     .mb-2.mx-5
       div {{ $t('positionGen.isStackable') }}
       van-tag.mr-3(
-        v-for="d in [0, 1]"
-        :key="d"
-        :type="d === queryParams.isStackable?'primary':'default'"
+        v-for="d in options('position_stackable')"
+        :key="d._id"
+        :type="d.value === queryParams.isStackable?'primary':'default'"
         :mark="true"
         size="medium"
-        @click="onStackableTagClicked(d)") {{ d == 0?'不可堆叠': '可堆叠' }}
+        @click="onStackableTagClicked(d.value)") {{ d.name }}
 
     .mb-4.mx-5
       div {{ $t('status') }}
@@ -25,7 +25,7 @@
         :type="d.value === queryParams.status?'primary':'default'"
         :mark="true"
         size="medium"
-        @click="onStatusTagClicked(d)") {{ d.name }}
+        @click="onStatusTagClicked(d.value)") {{ d.name }}
 
     PositionList(
       ref="listRef"
@@ -137,7 +137,7 @@ function onStackableTagClicked(value) {
   listRef.value.onRefresh()
 }
 
-function onStatusTagClicked({ value }) {
+function onStatusTagClicked(value) {
   if (queryParams.status === value) {
     queryParams.status = ''
   } else {

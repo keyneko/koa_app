@@ -26,8 +26,7 @@ van-dialog(
         :rules="[{ required: true, message: $t('positionGen.requireIsStackable') }]")
         template(#input)
           van-radio-group(v-model='formData.isStackable' direction='horizontal')
-            van-radio(:name='0') 不可堆叠
-            van-radio(:name='1') 可堆叠
+            van-radio(v-for="d in options('position_stackable')" :key="d._id" :name='d.value') {{ d.name }}
       //- 状态
       van-field.bg-gray-50(
         readonly

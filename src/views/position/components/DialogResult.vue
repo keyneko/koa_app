@@ -10,7 +10,7 @@ van-dialog(
     van-cell(:title="$t('name')")
       | {{ data.name }}
     van-cell(:title="$t('positionGen.isStackable')")
-      | {{ data.isStackable == 0? '否': '是' }}
+      | {{ lut('position_stackable', data.isStackable) }}
     van-cell(:title="$t('status')")
       | {{ lut('position_status', data.status) }}
     van-cell(:title="$t('pictures')")

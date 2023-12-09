@@ -1,5 +1,5 @@
 export default {
-  copied: 'copied!',
+  copied: 'Copied!',
   langSwitched: 'Switched!',
   pdaScanTip: 'Press the red button on the side of the PDA to scan barcode',
   noData: 'No data',

@@ -81,8 +81,8 @@ export default {
     updateName: 'ニックネーム更新',
     updatePswd: 'パスワード更新',
     updateAvatar: 'アバター更新',
-    logout: 'サインアウト',
-    logoutCfm: 'サインアウト',
+    logout: 'ログアウト',
+    logoutCfm: 'ログアウト確認',
     logoutCfmMsg: 'システムからログアウトしますか?',
     plhrName: 'ニックネームを入力してください',
     requireName: 'ニックネームは空にできません',
@@ -99,7 +99,7 @@ export default {
     category: 'カテゴリー',
     plhrCategory: 'カテゴリーをご入力ください',
     requireCategory: 'カテゴリーは空にできません',
-    formatErrCategory: 'カテゴリーフォーマットエラー (大文字 2 文字)',
+    formatErrCategory: 'カテゴリーフォーマットエラー (2つの英大文字)',
   },
 
   barcodeQuery: {
@@ -118,16 +118,16 @@ export default {
     areaCode: 'エリア番号',
     plhrAreaCode: 'エリア番号をご入力ください',
     requireAreaCode: 'エリア番号は空にできません',
-    formatErrAreaCode: 'エリア番号フォーマットエラー (不大于四位字符)',
+    formatErrAreaCode: 'エリア番号フォーマットエラー (4文字以内の数字と英大文字)',
     buildingCode: 'ビル番号',
     plhrBuildingCode: 'ビル番号をご入力ください',
     requireBuildingCode: 'ビル番号は空にできません',
-    formatErrBuildingCode: 'ビル番号フォーマットエラー (不大于两位字符)',
+    formatErrBuildingCode: 'ビル番号フォーマットエラー (2文字以内の数字と英大文字)',
     floorCode: 'フロア番号',
     plhrFloorCode: 'フロア番号をご入力ください',
     requireFloorCode: 'フロア番号は空にできません',
-    formatErrFloorCode: 'フロア番号フォーマットエラー (不大于两位字符)',
-    isStackable: 'スタッキング可能',
+    formatErrFloorCode: 'フロア番号フォーマットエラー (2文字以内の数字と英大文字)',
+    isStackable: 'スタッキング可能ですか？',
     requireIsStackable: 'スタッキング可能かどうかを選択してください',
   },
 
@@ -139,7 +139,7 @@ export default {
 
   positions: {
     update: 'ポジションコード更新',
-    deleteCfm: '削除の確認',
+    deleteCfm: '削除確認',
     deleteCfmMsg: 'このポジションコードを<b class=red>削除</b>してもよろしいですか?',
   },
 }
