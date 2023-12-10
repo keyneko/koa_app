@@ -114,7 +114,7 @@ const formData = reactive({
   category: '',
   name: '',
   quantity: '',
-  basicUnit: 'pcs',
+  basicUnit: '',
   status: 0,
   files: [],
 })

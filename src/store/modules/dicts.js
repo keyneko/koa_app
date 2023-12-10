@@ -11,13 +11,16 @@ const mutations = {
       set(state.dicts, key, list)
     }
   },
+
+  EMPTY_DICTS: (state) => {
+    state.dicts = {}
+  },
 }
 
 const actions = {
   getDictionaries({ commit }, key) {
     if (!state.dicts[key]) {
-      set(state.dicts, key, [])
-
+      // set(state.dicts, key, [])
       return getDictionaries({ key }).then((res) => {
         commit('SET_DICT', { key, list: res.data })
       })
