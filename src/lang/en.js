@@ -37,12 +37,18 @@ export default {
   requirePictures: 'Please upload pictures',
   status: 'Status',
   plhrStatus: 'Please select a status',
+  title: 'Title',
+  plhrTitle: 'Please type title',
+  requireTitle: 'Title cannot be empty',
+  roles: 'Roles',
+  username: 'Username',
 
   routes: {
     login: 'Login',
     register: 'Register',
     dashboard: 'Dashboard',
     settings: 'Settings',
+    users: "User Management",
     barcodeGen: 'Barcode Generate',
     barcodeQuery: 'Barcode Query',
     barcodes: 'Barcodes',
@@ -70,10 +76,17 @@ export default {
 
   dashboard: {
     mySkills: 'My Skills',
+    users: 'Users',
     barcodeGenerate: 'Barcode Gen',
     barcodeQuery: 'Barcode Query',
     positionGenerate: 'Position Gen',
     positionQuery: 'Position Query',
+  },
+
+  users: {
+    update: 'Update User',
+    deleteCfm: 'Delete Confirm',
+    deleteCfmMsg: 'Are you sure to <b class=red>delete</b> this user?',
   },
 
   settings: {

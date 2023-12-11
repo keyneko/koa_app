@@ -37,12 +37,18 @@ export default {
   requirePictures: '请上传图片',
   status: '状态',
   plhrStatus: '请选择状态',
+  title: '标题',
+  plhrTitle: '请输入标题',
+  requireTitle: '标题不能为空',
+  roles: '角色',
+  username: '用户名',
 
   routes: {
     login: '登录',
     register: '注册',
     dashboard: '仪表盘',
     settings: '设置',
+    users: "用户管理",
     barcodeGen: '条码生成',
     barcodeQuery: '条码查询',
     barcodes: '条码列表',
@@ -70,10 +76,17 @@ export default {
 
   dashboard: {
     mySkills: '我的技能',
+    users: '用户管理',
     barcodeGenerate: '条码生成',
     barcodeQuery: '条码查询',
     positionGenerate: '库位码生成',
     positionQuery: '库位码查询',
+  },
+
+  users: {
+    update: '更新用户',
+    deleteCfm: '确认删除',
+    deleteCfmMsg: '确认<b class=red>删除</b>该用户吗？',
   },
 
   settings: {

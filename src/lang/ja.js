@@ -23,9 +23,9 @@ export default {
   plhrPosition: 'ポジションコードを入力してください',
   requirePosition: 'ポジションコードは空にはできません',
   formatErrPosition: 'ポジションコードフォーマットエラー',
-  name: 'タイトル',
-  plhrName: 'タイトルを入力してください',
-  requireName: 'タイトルは空白にできません',
+  name: 'ネーム',
+  plhrName: 'ネームを入力してください',
+  requireName: 'ネームは空白にできません',
   qty: '数量',
   plhrQty: '数量を入力してください',
   requireQty: '数量は空にはできません',
@@ -37,12 +37,18 @@ export default {
   requirePictures: '写真をアップロードしてください',
   status: 'ステータス',
   plhrStatus: 'ステータスを選択してください',
+  title: 'タイトル',
+  plhrTitle: 'タイトルを入力してください',
+  requireTitle: 'タイトルは空白にできません',
+  roles: 'ロール',
+  username: 'ユーザー名',
 
   routes: {
     login: 'ログイン',
     register: '登録',
     dashboard: 'ダッシュボード',
     settings: '設定',
+    users: "ユーザー管理",
     barcodeGen: 'バーコード生成',
     barcodeQuery: 'バーコードクエリ',
     barcodes: 'バーコードリスト',
@@ -70,10 +76,17 @@ export default {
 
   dashboard: {
     mySkills: 'スキル',
+    users: 'ユーザー管理',
     barcodeGenerate: 'バーコード生成',
     barcodeQuery: 'バーコードクエリ',
     positionGenerate: 'ポジションコード生成',
     positionQuery: 'ポジションコードクエリ',
+  },
+
+  users: {
+    update: 'ユーザー更新',
+    deleteCfm: '削除確認',
+    deleteCfmMsg: 'このユーザーを<b class=red>削除</b>してもよろしいですか?',
   },
 
   settings: {

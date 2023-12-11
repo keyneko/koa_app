@@ -19,14 +19,14 @@ export default function useDicts() {
    * @param  {Number|String} value 字典项值
    * @return {String}       字典标签Label
    */
-  const lut = computed(() => (key, value) => {
+  const lut = computed(() => (key, value, fetch = true) => {
     const list = dicts.value[key]
 
-    if (!list) {
+    if (!list && fetch) {
       getDictDebounced(key)
     }
 
-    const obj = find(dicts.value[key], (d) => d.value == value) || {}
+    const obj = find(dicts.value[key], (d) => value !== '' && d.value == value) || {}
     return obj.name || '-'
   })
 
@@ -35,10 +35,10 @@ export default function useDicts() {
    * @param  {String} key 字典表名称
    * @return {Array}      字典表所有项列表
    */
-  const options = computed(() => (key) => {
+  const options = computed(() => (key, fetch = true) => {
     const list = dicts.value[key]
 
-    if (!list) {
+    if (!list && fetch) {
       getDictDebounced(key)
     }
 

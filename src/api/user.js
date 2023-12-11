@@ -56,11 +56,11 @@ export function logout(data) {
 /**
  * 获取用户列表
  */
-export function getUsers(data) {
+export function getUsers(params) {
   return request({
     url: '/users',
     method: 'get',
-    data,
+    params,
   })
 }
 

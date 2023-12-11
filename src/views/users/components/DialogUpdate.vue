@@ -1,7 +1,7 @@
 <template lang="pug">
 van-dialog(
   v-model='show'
-  :title="$t('positions.update')"
+  :title="$t('users.update')"
   :show-cancel-button='true'
   :closeOnClickOverlay='false'
   :beforeClose="beforeClose")
@@ -9,26 +9,13 @@ van-dialog(
     validate-first
     ref='form')
     van-cell-group.title-basis
-      //- 条码
-      van-cell(:title="$t('position')")
-        b.black {{ formData.value }}
       //- 名称
-      van-field.bg-gray-50.mb-2(
+      van-field(
         v-model='formData.name'
-        required
-        :label="$t('name')"
-        :placeholder="$t('plhrName')"
-        :rules="[{ required: true, message: $t('requireName') }]")
-      //- 是否可堆叠
-      van-field.bg-gray-50.mb-2(
-        required
-        :label="$t('positionGen.isStackable')"
-        :rules="[{ required: true, message: $t('positionGen.requireIsStackable') }]")
-        template(#input)
-          van-radio-group(v-model='formData.isStackable' direction='horizontal')
-            van-radio.mb-1(v-for="d in options('position_stackable')" :key="d._id" :name='d.value') {{ d.name }}
+        readonly
+        :label="$t('name')")
       //- 状态
-      van-field.bg-gray-50(
+      van-field.bg-gray-50.mb-2(
         readonly
         clickable
         is-link
@@ -37,17 +24,12 @@ van-dialog(
         :placeholder="$t('plhrStatus')"
         :value='lut("status", formData.status)'
         @click='showStatusPicker = true')
-      //- 拍照
-      van-field(
-        _required
-        :label="$t('pictures')"
-        _rules="[{ required: true, message: $t('requirePictures') }]")
+      //- 角色
+      van-field.bg-gray-50.mb-2(
+        :label="$t('roles')")
         template(#input)
-          van-uploader(
-            v-model="formData.files"
-            multiple
-            :preview-size="44"
-            :before-read="fileUpload")
+          van-checkbox-group(v-model='formData.roles')
+            van-checkbox.mb-1(v-for="d in options('roles')" :key="d.value" shape="square" :name='d.value') {{ d.name }}
 
   van-popup(v-model='showStatusPicker' position='bottom')
     van-picker(
@@ -64,7 +46,8 @@ import useDicts from '@/utils/useDicts'
 import { upload } from '@/utils/fileUpload'
 import i18n from '@/lang'
 import { map } from 'lodash'
-import * as API from '@/api/position'
+import * as roleApi from '@/api/role'
+import * as API from '@/api/user'
 
 const emits = defineEmits(['input'])
 const { lut, options } = useDicts()
@@ -84,12 +67,12 @@ const form = ref(null)
 const show = ref(false)
 const showStatusPicker = ref(false)
 
+const roles = ref([])
 const formData = reactive({
-  value: '',
+  username: '',
   name: '',
-  isStackable: '',
   status: '',
-  files: [],
+  roles: [],
 })
 
 const statusColumns = computed(() =>
@@ -113,20 +96,12 @@ watch(show, (value) => {
 watch(
   () => props.data,
   (value) => {
-    formData.value = value.value
+    formData.username = value.username
     formData.name = value.name
-    formData.isStackable = value.isStackable
     formData.status = value.status
-    formData.files = map(value.files, (f) => ({ url: f }))
+    formData.roles = value.roles
   },
 )
-
-function fileUpload(file) {
-  upload(file).then((res) => {
-    formData.files.push({ url: res.data })
-  })
-  return false
-}
 
 function onStatusPicked({ value }) {
   formData.status = value.value
@@ -139,17 +114,26 @@ async function beforeClose(action, done) {
       await form.value.validate()
       await onSubmit()
       done()
+      resetForm()
     } catch (e) {
       done(false)
     }
   } else {
     done()
+    resetForm()
   }
+}
+
+function resetForm() {
+  formData.username = ''
+  formData.name = ''
+  formData.status = ''
+  formData.roles = []
 }
 
 function onSubmit() {
   Toast.loading()
-  return API.updatePosition({ ...formData, files: map(formData.files, (f) => f.url) }).then((res) => {
+  return API.updateUser(formData).then((res) => {
     Toast.success(i18n.t('updated'))
     emits('updated')
   })

@@ -21,6 +21,11 @@
         center
         border
         :column-num="3")
+        van-grid-item(:to="toUsers")
+          template(#icon)
+            svg-icon(name='更多应用')
+          template(#text)
+            .label.van-ellipsis {{ $t('dashboard.users') }}
         van-grid-item(:to="toBarcodeGenerate")
           template(#icon)
             svg-icon(name='条码查询')
@@ -63,6 +68,11 @@ useScrollPage()
 
 // 路由存档
 router.archive()
+
+const toUsers = computed(() => ({
+  path: '/users',
+  query: {},
+}))
 
 const toBarcodeGenerate = computed(() => ({
   path: '/barcode/generate',
