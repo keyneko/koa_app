@@ -1,7 +1,7 @@
 <template lang="pug">
 van-dialog(
   v-model='show'
-  :title="$t('users.update')"
+  :title="$t('roles.update')"
   :show-cancel-button='true'
   :closeOnClickOverlay='false'
   :beforeClose="beforeClose")
@@ -29,12 +29,12 @@ van-dialog(
         :placeholder="$t('plhrStatus')"
         :value='lut("status", formData.status)'
         @click='showStatusPicker = true')
-      //- 角色
+      //- SOPs
       van-field.bg-gray-50.mb-2(
-        :label="$t('roles_')")
+        :label="$t('sops')")
         template(#input)
-          van-checkbox-group(v-model='formData.roles')
-            van-checkbox.mb-1(v-for="d in options('roles')" :key="d.value" shape="square" :name='d.value') {{ d.name }}
+          van-checkbox-group(v-model='formData.sops')
+            van-checkbox.mb-1(v-for="d in options('sops')" :key="d.value" shape="square" :name='d.value') {{ d.name }}
 
   van-popup(v-model='showStatusPicker' position='bottom')
     van-picker(
@@ -51,8 +51,7 @@ import useDicts from '@/utils/useDicts'
 import { upload } from '@/utils/fileUpload'
 import i18n from '@/lang'
 import { map } from 'lodash'
-import * as roleApi from '@/api/role'
-import * as API from '@/api/user'
+import * as API from '@/api/role'
 
 const emits = defineEmits(['input'])
 const { lut, options } = useDicts()
@@ -72,12 +71,11 @@ const form = ref(null)
 const show = ref(false)
 const showStatusPicker = ref(false)
 
-const roles = ref([])
 const formData = reactive({
-  username: '',
+  value: '',
   name: '',
+  sops: [],
   status: '',
-  roles: [],
 })
 
 const statusColumns = computed(() =>
@@ -101,10 +99,10 @@ watch(show, (value) => {
 watch(
   () => props.data,
   (value) => {
-    formData.username = value.username
+    formData.value = value.value
     formData.name = value.name
+    formData.sops = value.sops
     formData.status = value.status
-    formData.roles = value.roles
   },
 )
 
@@ -130,15 +128,15 @@ async function beforeClose(action, done) {
 }
 
 function resetForm() {
-  formData.username = ''
+  formData.value = ''
   formData.name = ''
+  formData.sops = []
   formData.status = ''
-  formData.roles = []
 }
 
 function onSubmit() {
   Toast.loading()
-  return API.updateUser(formData).then((res) => {
+  return API.updateRole(formData).then((res) => {
     Toast.success(i18n.t('updated'))
     emits('updated')
   })

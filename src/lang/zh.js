@@ -40,14 +40,16 @@ export default {
   title: '标题',
   plhrTitle: '请输入标题',
   requireTitle: '标题不能为空',
-  roles: '角色',
+  roles_: '角色',
   username: '用户名',
+  sops: 'SOP',
 
   routes: {
     login: '登录',
     register: '注册',
     dashboard: '仪表盘',
     settings: '设置',
+    roles: "角色管理",
     users: "用户管理",
     barcodeGen: '条码生成',
     barcodeQuery: '条码查询',
@@ -76,11 +78,19 @@ export default {
 
   dashboard: {
     mySkills: '我的技能',
+    roles: '角色管理',
     users: '用户管理',
     barcodeGenerate: '条码生成',
     barcodeQuery: '条码查询',
     positionGenerate: '库位码生成',
     positionQuery: '库位码查询',
+  },
+
+  roles: {
+    create: '创建角色',
+    update: '更新角色',
+    deleteCfm: '确认删除',
+    deleteCfmMsg: '确认<b class=red>删除</b>该角色吗？',
   },
 
   users: {

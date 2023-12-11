@@ -23,8 +23,8 @@
           template
             .van-ellipsis {{ $t('username') }}: {{ d.username }}
             .van-ellipsis {{ $t('name') }}: {{ d.name }}
-            ._van-ellipsis {{ $t('roles') }}: {{ map(d.roles, v => lut('roles', v, false)).join('、') }}
             .van-ellipsis {{ $t('status') }}: {{ lut('status', d.status) }}
+            ._van-ellipsis {{ $t('roles_') }}: {{ map(d.roles, v => lut('roles', v, false)).join('、') }}
         van-cell(value)
           template(#extra)
             van-button.ml-2(

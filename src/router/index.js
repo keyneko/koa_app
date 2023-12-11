@@ -67,6 +67,15 @@ export const constantRoutes = [
   },
 
   /**
+   * 角色管理
+   */
+  {
+    path: '/roles',
+    name: 'Roles',
+    component: () => import('@/views/roles/index'),
+  },
+
+  /**
    * 用户管理
    */
   {

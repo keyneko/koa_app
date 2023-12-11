@@ -40,14 +40,16 @@ export default {
   title: 'タイトル',
   plhrTitle: 'タイトルを入力してください',
   requireTitle: 'タイトルは空白にできません',
-  roles: 'ロール',
+  roles_: 'ロール',
   username: 'ユーザー名',
+  sops: 'SOP',
 
   routes: {
     login: 'ログイン',
     register: '登録',
     dashboard: 'ダッシュボード',
     settings: '設定',
+    roles: "ロール管理",
     users: "ユーザー管理",
     barcodeGen: 'バーコード生成',
     barcodeQuery: 'バーコードクエリ',
@@ -76,11 +78,19 @@ export default {
 
   dashboard: {
     mySkills: 'スキル',
+    roles: 'ロール管理',
     users: 'ユーザー管理',
     barcodeGenerate: 'バーコード生成',
     barcodeQuery: 'バーコードクエリ',
     positionGenerate: 'ポジションコード生成',
     positionQuery: 'ポジションコードクエリ',
+  },
+
+  roles: {
+    create: 'ロールの生成',
+    update: 'ロールの更新',
+    deleteCfm: '削除確認',
+    deleteCfmMsg: 'このロールを<b class=red>削除</b>してもよろしいですか?',
   },
 
   users: {

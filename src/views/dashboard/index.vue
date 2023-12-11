@@ -21,6 +21,11 @@
         center
         border
         :column-num="3")
+        van-grid-item(:to="toRoles")
+          template(#icon)
+            svg-icon(name='更多应用')
+          template(#text)
+            .label.van-ellipsis {{ $t('dashboard.roles') }}
         van-grid-item(:to="toUsers")
           template(#icon)
             svg-icon(name='更多应用')
@@ -68,6 +73,11 @@ useScrollPage()
 
 // 路由存档
 router.archive()
+
+const toRoles = computed(() => ({
+  path: '/roles',
+  query: {},
+}))
 
 const toUsers = computed(() => ({
   path: '/users',

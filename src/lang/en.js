@@ -40,15 +40,17 @@ export default {
   title: 'Title',
   plhrTitle: 'Please type title',
   requireTitle: 'Title cannot be empty',
-  roles: 'Roles',
+  roles_: 'Roles',
   username: 'Username',
+  sops: 'SOPs',
 
   routes: {
     login: 'Login',
     register: 'Register',
     dashboard: 'Dashboard',
     settings: 'Settings',
-    users: "User Management",
+    roles: "Roles Management",
+    users: "Users Management",
     barcodeGen: 'Barcode Generate',
     barcodeQuery: 'Barcode Query',
     barcodes: 'Barcodes',
@@ -76,11 +78,19 @@ export default {
 
   dashboard: {
     mySkills: 'My Skills',
-    users: 'Users',
-    barcodeGenerate: 'Barcode Gen',
+    roles: 'Roles Management',
+    users: 'Users Management',
+    barcodeGenerate: 'Barcode Generate',
     barcodeQuery: 'Barcode Query',
-    positionGenerate: 'Position Gen',
+    positionGenerate: 'Position Generate',
     positionQuery: 'Position Query',
+  },
+
+  roles: {
+    create: 'Create Role',
+    update: 'Update Role',
+    deleteCfm: 'Delete Confirm',
+    deleteCfmMsg: 'Are you sure to <b class=red>delete</b> this role?',
   },
 
   users: {
