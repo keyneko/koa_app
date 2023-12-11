@@ -30,7 +30,7 @@ van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
                   | {{ d.name }}
                 .van-ellipsis
                   span {{ $t('status') }}：
-                  | {{ lut('position_status', d.status) }}
+                  | {{ lut('status', d.status) }}
             van-cell(value)
               template(#extra)
                 van-button.ml-2(

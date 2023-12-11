@@ -12,7 +12,7 @@ van-dialog(
     van-cell(:title="$t('positionGen.isStackable')")
       | {{ lut('position_stackable', data.isStackable) }}
     van-cell(:title="$t('status')")
-      | {{ lut('position_status', data.status) }}
+      | {{ lut('status', data.status) }}
     van-cell(:title="$t('pictures')")
       van-row(gutter="10")
         van-col(span="6" v-for="(d, i) in data.files" :key="i")

@@ -72,7 +72,7 @@
           arrow-direction="down"
           :label="$t('status')"
           :placeholder="$t('plhrStatus')"
-          :value='lut("position_status", formData.status)'
+          :value='lut("status", formData.status)'
           @click='showStatusPicker = true')
       //- 拍照
       van-cell-group(inset)
@@ -134,7 +134,7 @@ const formData = reactive({
 })
 
 const statusColumns = computed(() =>
-  map(options.value('position_status'), (d) => ({
+  map(options.value('status'), (d) => ({
     text: d.name,
     value: d,
   })),

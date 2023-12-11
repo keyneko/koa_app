@@ -20,7 +20,7 @@
     .mb-4.mx-5
       div {{ $t('status') }}
       van-tag.mr-3(
-        v-for="d in options('position_status')"
+        v-for="d in options('status')"
         :key="d._id"
         :type="d.value === queryParams.status?'primary':'default'"
         :mark="true"
