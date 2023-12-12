@@ -7,7 +7,7 @@
         LangSelect
 
   .page__body.justify-center
-    van-form(
+    van-form.mb-20(
       validate-first
       @submit='onSubmit'
       ref='form')

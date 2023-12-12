@@ -5,7 +5,7 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = 'TAROMED'
+const name = 'NekoYa'
 const port = process.env.port || process.env.npm_config_port || 4001
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
