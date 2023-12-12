@@ -39,19 +39,16 @@ export default {
 }
 </script>
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount, onActivated } from 'vue'
+import { ref, computed } from 'vue'
 import { Toast } from 'vant'
 import { useRouter, useRoute } from '@/router'
-import useScrollPage from '@/utils/useScrollPage'
 import useDicts from '@/utils/useDicts'
 import useSops from '@/utils/useSops'
 import * as API from '@/api/user'
-import store from '@/store'
 import Avatar from '@/components/Avatar'
 
 const router = useRouter()
 const route = useRoute()
-useScrollPage()
 const { lut, options } = useDicts()
 const { sops, sopIcon, getEntryPath } = useSops()
 </script>

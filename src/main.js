@@ -1,6 +1,6 @@
 import './icons'
 import './permission'
-import './utils/error-logger'
+import './utils/errorLogger'
 
 import '@/styles/tailwind.scss'
 import 'vant/lib/index.less'
