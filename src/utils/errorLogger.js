@@ -11,11 +11,11 @@ if (errorLog.includes(env)) {
   // 打开或创建 IndexedDB 数据库
   const request = indexedDB.open('errorLogsDB', 1)
 
-  request.onerror = function (event) {
+  request.onerror = function(event) {
     console.error('Failed to open database:', event.target.error)
   }
 
-  request.onupgradeneeded = function (event) {
+  request.onupgradeneeded = function(event) {
     const db = event.target.result
     // 检查是否存在名为'errorLogs'的object store
     if (!db.objectStoreNames.contains('errorLogs')) {
@@ -29,12 +29,12 @@ if (errorLog.includes(env)) {
     }
   }
 
-  request.onsuccess = function (event) {
+  request.onsuccess = function(event) {
     const db = event.target.result
     console.info('Database opened successfully')
 
     // Vue应用的错误处理函数
-    Vue.config.errorHandler = function (err, vm, info) {
+    Vue.config.errorHandler = function(err, vm, info) {
       Vue.nextTick(() => {
         const errorLog = {
           timestamp: +new Date(),
@@ -49,7 +49,7 @@ if (errorLog.includes(env)) {
         // 将错误日志写入 IndexedDB
         writeErrorLogToIndexedDB(db, errorLog)
 
-        // 服务端面接口未实现
+        // 错误日志上报
         API.log({
           message: JSON.stringify(errorLog),
         })
@@ -99,18 +99,19 @@ function checkErrorLogsInIndexedDB(db) {
 
   const errorLogs = []
 
-  request.onsuccess = function (event) {
+  request.onsuccess = function(event) {
     const cursor = event.target.result
     if (cursor) {
       errorLogs.push(cursor.value) // 将每个日志添加到数组中
       cursor.continue()
-    } else {
+    }
+    else {
       // 使用检索到的数据更新 log state
       store.commit('errorLog/ADD_ERROR_LOGS', errorLogs)
     }
   }
 
-  request.onerror = function (event) {
+  request.onerror = function(event) {
     console.error('Error during retrieval:', event.target.errorCode)
   }
 }
@@ -127,7 +128,7 @@ function cleanupOldLogs(db) {
   const keyRange = IDBKeyRange.upperBound(oneWeekAgo.getTime())
   const request = objectStore.openCursor(keyRange)
 
-  request.onsuccess = function (event) {
+  request.onsuccess = function(event) {
     const cursor = event.target.result
     if (cursor) {
       // 如果日志时间早于7天前，删除它
@@ -136,11 +137,11 @@ function cleanupOldLogs(db) {
     }
   }
 
-  request.onerror = function (event) {
+  request.onerror = function(event) {
     console.error('Error during cleanup:', event.target.errorCode)
   }
 
-  transaction.onerror = function (event) {
+  transaction.onerror = function(event) {
     console.error('Transaction failed:', event.target.errorCode)
   }
 }
