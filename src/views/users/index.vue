@@ -47,7 +47,7 @@ import { Toast, Dialog, ImagePreview } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import useDicts from '@/utils/useDicts'
 import i18n from '@/lang'
-import * as roleApi from '@/api/role'
+import { getRoles } from '@/api/role'
 import * as API from '@/api/user'
 import store from '@/store'
 import { map, without } from 'lodash'
@@ -72,8 +72,11 @@ function getUsers() {
     })
 }
 
-function getRoles() {
-  return roleApi.getRoles().then((res) => {
+function getRoleDicts() {
+  const { dicts } = store.state.dicts
+  if (dicts['roles']) return
+
+  return getRoles({ sortOrder: 'asc' }).then((res) => {
     store.commit('dicts/SET_DICT', {
       key: 'roles',
       list: map(res.data, (d) => ({
@@ -108,5 +111,5 @@ function onUpdate(d) {
 }
 
 getUsers()
-getRoles()
+getRoleDicts()
 </script>

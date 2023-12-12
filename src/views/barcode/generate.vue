@@ -55,6 +55,7 @@
           readonly
           clickable
           is-link
+          required
           arrow-direction="down"
           :label="$t('status')"
           :placeholder="$t('plhrStatus')"
@@ -63,9 +64,9 @@
       //- 拍照
       van-cell-group(inset)
         van-field(
-          required
+          _required
           :label="$t('pictures')"
-          :rules="[{ required: true, message: $t('requirePictures') }]")
+          _rules="[{ required: true, message: $t('requirePictures') }]")
           template(#input)
             van-uploader(
               v-model="formData.files"

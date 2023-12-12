@@ -3,8 +3,7 @@ export default {
   langSwitched: '切替完了！',
   pdaScanTip: 'PDA の側面にある赤いボタンを押してコードをスキャンします',
   noData: 'データなし',
-  logIn: 'ログイン',
-  loggedIn: 'ログイン成功',
+  login_: 'ログイン',
   register: '登録',
   registered: '登録完了',
   submit: 'サブミット',
@@ -151,7 +150,7 @@ export default {
     requireFloorCode: 'フロア番号は空にできません',
     formatErrFloorCode: 'フロア番号フォーマットエラー (2文字以内の数字と英大文字)',
     isStackable: 'スタッキング可能ですか？',
-    requireIsStackable: 'スタッキング可能かどうかを選択してください',
+    requireStackable: 'スタッキング可能かどうかを選択してください',
   },
 
   positionQuery: {

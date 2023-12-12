@@ -3,8 +3,7 @@ export default {
   langSwitched: '切换成功！',
   pdaScanTip: '按PDA的侧边红色按钮扫码',
   noData: '暂无数据',
-  logIn: '登录',
-  loggedIn: '登录成功',
+  login_: '登录',
   register: '注册',
   registered: '注册成功',
   submit: '提交',
@@ -151,7 +150,7 @@ export default {
     requireFloorCode: '楼层编号不能为空',
     formatErrFloorCode: '楼层编号格式错误（不大于两位字符）',
     isStackable: '是否可堆叠',
-    requireIsStackable: '请选择是否可堆叠',
+    requireStackable: '请选择是否可堆叠',
   },
 
   positionQuery: {

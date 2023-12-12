@@ -3,8 +3,7 @@ export default {
   langSwitched: 'Switched!',
   pdaScanTip: 'Press the red button on the side of the PDA to scan barcode',
   noData: 'No data',
-  logIn: 'Login',
-  loggedIn: 'Logined',
+  login_: 'Login',
   register: 'Register',
   registered: 'Registered',
   submit: 'Submit',
@@ -150,8 +149,8 @@ export default {
     plhrFloorCode: 'Please type floor code',
     requireFloorCode: 'Floor code cannot be empty',
     formatErrFloorCode: 'Floor code format error (No more than 2 characters)',
-    isStackable: 'Is stackable',
-    requireIsStackable: 'Please select whether it is stackable',
+    isStackable: 'Stackable',
+    requireStackable: 'Please select whether it is stackable',
   },
 
   positionQuery: {

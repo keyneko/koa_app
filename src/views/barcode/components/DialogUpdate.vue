@@ -39,6 +39,7 @@ van-dialog(
         readonly
         clickable
         is-link
+        required
         arrow-direction="down"
         :label="$t('status')"
         :placeholder="$t('plhrStatus')"

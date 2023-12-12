@@ -16,41 +16,21 @@
   .page__body
     van-cell-group(inset)
       van-cell.head(:title="$t('dashboard.mySkills')")
-      van-grid(
-        clickable
-        center
-        border
-        :column-num="3")
-        van-grid-item(:to="toRoles")
-          template(#icon)
-            svg-icon(name='更多应用')
-          template(#text)
-            .label.van-ellipsis {{ $t('dashboard.roles') }}
-        van-grid-item(:to="toUsers")
-          template(#icon)
-            svg-icon(name='更多应用')
-          template(#text)
-            .label.van-ellipsis {{ $t('dashboard.users') }}
-        van-grid-item(:to="toBarcodeGenerate")
-          template(#icon)
-            svg-icon(name='条码查询')
-          template(#text)
-            .label.van-ellipsis {{ $t('dashboard.barcodeGenerate') }}
-        van-grid-item(:to="toBarcodeQuery")
-          template(#icon)
-            svg-icon(name='条码查询')
-          template(#text)
-            .label.van-ellipsis {{ $t('dashboard.barcodeQuery') }}
-        van-grid-item(:to="toPositionGenerate")
-          template(#icon)
-            svg-icon(name='条码查询')
-          template(#text)
-            .label.van-ellipsis {{ $t('dashboard.positionGenerate') }}
-        van-grid-item(:to="toPositionQuery")
-          template(#icon)
-            svg-icon(name='条码查询')
-          template(#text)
-            .label.van-ellipsis {{ $t('dashboard.positionQuery') }}
+      van-empty(v-if='sops.length == 0' image-size="64" :description="$t('noData')")
+      template(v-else)
+        van-grid(
+          clickable
+          center
+          border
+          :column-num="3")
+          van-grid-item(
+            v-for="(sop, i) in sops"
+            :key="i"
+            :to="{path: getEntryPath(sop)}")
+            template(#icon)
+              svg-icon(:name='sopIcon(sop)')
+            template(#text)
+              .label.van-ellipsis {{ lut('sops', sop) }}
 </template>
 
 <script>
@@ -63,6 +43,8 @@ import { ref, computed, onMounted, onBeforeUnmount, onActivated } from 'vue'
 import { Toast } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import useScrollPage from '@/utils/useScrollPage'
+import useDicts from '@/utils/useDicts'
+import useSops from '@/utils/useSops'
 import * as API from '@/api/user'
 import store from '@/store'
 import Avatar from '@/components/Avatar'
@@ -70,39 +52,8 @@ import Avatar from '@/components/Avatar'
 const router = useRouter()
 const route = useRoute()
 useScrollPage()
-
-// 路由存档
-router.archive()
-
-const toRoles = computed(() => ({
-  path: '/roles',
-  query: {},
-}))
-
-const toUsers = computed(() => ({
-  path: '/users',
-  query: {},
-}))
-
-const toBarcodeGenerate = computed(() => ({
-  path: '/barcode/generate',
-  query: {},
-}))
-
-const toBarcodeQuery = computed(() => ({
-  path: '/barcode/query',
-  query: {},
-}))
-
-const toPositionGenerate = computed(() => ({
-  path: '/position/generate',
-  query: {},
-}))
-
-const toPositionQuery = computed(() => ({
-  path: '/position/query',
-  query: {},
-}))
+const { lut, options } = useDicts()
+const { sops, sopIcon, getEntryPath } = useSops()
 </script>
 
 <style lang="scss" scoped>

@@ -23,7 +23,7 @@ van-dialog(
       van-field.bg-gray-50.mb-2(
         required
         :label="$t('positionGen.isStackable')"
-        :rules="[{ required: true, message: $t('positionGen.requireIsStackable') }]")
+        :rules="[{ required: true, message: $t('positionGen.requireStackable') }]")
         template(#input)
           van-radio-group(v-model='formData.isStackable' direction='horizontal')
             van-radio.mb-1(v-for="d in options('position_stackable')" :key="d._id" :name='d.value') {{ d.name }}
@@ -32,6 +32,7 @@ van-dialog(
         readonly
         clickable
         is-link
+        required
         arrow-direction="down"
         :label="$t('status')"
         :placeholder="$t('plhrStatus')"
