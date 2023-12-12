@@ -76,7 +76,10 @@ function getRoleDicts() {
   const { dicts } = store.state.dicts
   if (dicts['roles']) return
 
-  return getRoles({ sortOrder: 'asc' }).then((res) => {
+  return getRoles({
+    sortBy: 'value',
+    sortOrder: 'asc',
+  }).then((res) => {
     store.commit('dicts/SET_DICT', {
       key: 'roles',
       list: map(res.data, (d) => ({
