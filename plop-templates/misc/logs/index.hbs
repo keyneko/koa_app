@@ -1,0 +1,56 @@
+<template lang="pug">
+.page--fixed
+  .page__header
+    van-nav-bar(
+      title="{{pascalCase name}}"
+      left-arrow
+      @click-left="$router.back()")
+
+  .page__body
+    van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
+      van-empty(v-if='logs.length == 0' description="暂无数据")
+      van-cell-group.mb-4(v-else inset)
+        van-collapse(v-model='activeNames')
+          van-collapse-item(v-for="d in logs" :key="d.timestamp" :name='d.timestamp' center)
+            template(#title)
+              van-tag.mr-2(type="danger") \{{ dateformat(d.timestamp) }}
+              b \{{ d.info }}
+            .px-2.break-all(v-copy)
+              div
+                van-tag.mr-2(type="primary") url:&nbsp;
+                | \{{ d.url }}
+              div
+                van-tag.mr-2(type="success") user:&nbsp;
+                | \{{ d.user }}
+              div
+                van-tag.mr-2(type="warning") vm:&nbsp;
+                | \{{ d.vm }}
+              .whitespace-pre-wrap
+                van-tag.mr-2(type="danger") trace:&nbsp;
+                | \{{ d.error }}
+</template>
+
+<script>
+export default {
+  name: "{{upperCamelCase moduleName name}}",
+}
+</script>
+<script setup>
+import { ref, toRef, computed } from 'vue'
+import { Toast } from 'vant'
+import store from '@/store'
+import dayjs from 'dayjs'
+
+const logs = toRef(store.state.errorLog, 'logs')
+const activeNames = ref([])
+const refreshing = ref(false)
+
+const dateformat = computed(() => (value, format = "YYYY-MM-DD HH:mm:ss") => dayjs(value).format(format))
+
+function onRefresh() {
+  setTimeout(() => {
+    Toast.success('刷新成功')
+    refreshing.value = false
+  }, 1000)
+}
+</script>

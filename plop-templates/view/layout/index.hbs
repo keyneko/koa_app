@@ -1,0 +1,58 @@
+<template lang="pug">
+{{#if fixed}}
+.page--{{ fixed }}
+{{else}}
+.page
+{{/if}}
+  .page__header
+    van-nav-bar(
+      title="{{pascalCase name}}"
+      left-arrow
+      @click-left="$router.back()")
+      template(#right)
+        van-button(
+          type='default'
+          round size="small"
+          :disabled="buttonLoading"
+          @click="") 按钮1
+  .page__body
+    .test.p-4 自由编辑{{ name }}页面
+
+  .page__footer.p-4
+    van-button.r8(
+      type='info'
+      block
+      :disabled="buttonLoading"
+      @click="") 按钮2
+</template>
+
+{{#if hasCache}}
+<script>
+export default {
+  name: "{{upperCamelCase moduleName name}}",
+}
+</script>
+{{/if}}
+<script setup>
+import { ref, computed } from 'vue'
+import { Toast } from 'vant'
+import { useRouter, useRoute } from '@/router'
+{{#if hasCache}}
+import useScrollPage from '@/utils/useScrollPage'
+{{/if}}
+
+const router = useRouter()
+const route = useRoute()
+{{#if hasCache}}
+useScrollPage()
+{{/if}}
+
+const buttonLoading = ref(false)
+
+</script>
+
+<style lang="scss" scoped>
+:deep(.test) {
+
+}
+</style>

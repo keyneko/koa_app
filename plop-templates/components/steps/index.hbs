@@ -1,0 +1,101 @@
+<template lang="pug">
+.page--fixed-header
+  .page__header
+    van-nav-bar(
+      title="{{pascalCase name}}"
+      left-arrow
+      @click-left="$router.back()")
+  .page__body
+    //- 步骤条
+    Steps.mb15(active='-1')
+      Step
+        template(#num) 1
+        template(#title) 扫库位码
+      Step
+        template(#num) 2
+        template(#title) 扫条形码
+      Step
+        template(#num) 3
+        template(#title) 提交
+
+    //- 步骤条
+    Steps.mb15(active='0')
+      Step
+        template(#num) 1
+        template(#title) 扫库位码
+      Step
+        template(#num) 2
+        template(#title) 扫条形码
+      Step
+        template(#num) 3
+        template(#title) 提交
+
+    //- 步骤条
+    Steps.mb15(active='1')
+      Step
+        template(#num)
+          van-icon(name='success')
+        template(#title) 扫库位码
+      Step
+        template(#num) 2
+        template(#title) 扫条形码
+      Step
+        template(#num) 3
+        template(#title) 提交
+
+    //- 步骤条
+    Steps.mb15(active='2')
+      Step
+        template(#num)
+          van-icon(name='success')
+        template(#title) 扫库位码
+      Step
+        template(#num)
+          van-icon(name='success')
+        template(#title) 扫条形码
+      Step
+        template(#num) 3
+        template(#title) 提交
+
+    //- 步骤条
+    Steps.mb15(active='3')
+      Step
+        template(#num)
+          van-icon(name='success')
+        template(#title) 扫库位码
+      Step
+        template(#num)
+          van-icon(name='success')
+        template(#title) 扫条形码
+      Step
+        template(#num)
+          van-icon(name='success')
+        template(#title) 提交
+
+    //- 步骤条
+    Steps.mb15(active='3')
+      Step
+        template(#num)
+          van-icon(name='success')
+        template(#title) 扫库位码
+      Step
+        template(#num)
+          van-icon(name='cross' color='red')
+        template(#title) 扫条形码
+      Step
+        template(#num)
+          van-icon(name='success')
+        template(#title) 提交
+</template>
+
+<script setup>
+import { ref, reactive, computed } from 'vue'
+import { Toast } from 'vant'
+import { useRouter, useRoute } from '@/router'
+import Steps from '@/components/Steps/Steps'
+import Step from '@/components/Steps/Step'
+
+const router = useRouter()
+const route = useRoute()
+
+</script>

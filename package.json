@@ -8,9 +8,11 @@
     "build:dev": "vue-cli-service build --mode development",
     "build:prod": "vue-cli-service build --mode production",
     "build:test": "vue-cli-service build --mode staging",
+    "bundle-report": "webpack-bundle-analyzer --port 8888 dist/stats.json",
     "lint": "eslint --ext .js,.vue src --fix",
     "lint:html": "eslint --fix --ext .js,.vue src --format html -o reports/eslint.html",
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml",
+    "new": "plop",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -58,6 +60,7 @@
     "babel-plugin-transform-require-context": "^0.1.1",
     "chalk": "2.4.2",
     "chokidar": "2.1.5",
+    "compression-webpack-plugin": "^6.1.1",
     "connect": "3.6.6",
     "cypress": "^9.7.0",
     "engine-strict": "^1.0.0",
@@ -73,6 +76,7 @@
     "lint-staged": "8.1.5",
     "mocker-api": "2.0.1",
     "mockjs": "1.0.1-beta3",
+    "plop": "3.0.5",
     "postcss": "^7.0.39",
     "pug": "^3.0.2",
     "pug-html-loader": "^1.1.5",
@@ -85,7 +89,8 @@
     "svgo": "^0.7.2",
     "svgo-loader": "^1.2.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.17",
-    "vue-template-compiler": "~2.7.14"
+    "vue-template-compiler": "~2.7.14",
+    "webpack-bundle-analyzer": "^4.9.1"
   },
   "browserslist": [
     "> 1%",

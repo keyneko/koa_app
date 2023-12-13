@@ -1,0 +1,143 @@
+<template lang="pug">
+.page--fixed
+  .page__header
+    van-nav-bar(
+      title="{{pascalCase name}}"
+      left-arrow
+      @click-left="$router.back()")
+      template(#right)
+        van-button(
+          type='default'
+          round size="small"
+          :disabled="buttonLoading"
+          @click="") 按钮
+  .page__body
+    ScanView.mb-4
+      | 请扫描条码
+
+    van-form(
+      validate-first
+      @submit="onSubmit"
+      ref='form')
+      //- 库位
+      van-cell-group.mb-4(inset)
+        van-field(
+          v-model='formData.position'
+          label="库位码"
+          placeholder="请输入库位码"
+          required
+          :rules="[ \
+            { required: true, message: '库位码不能为空' }, \
+            { validator: isPosition, message: '库位码格式错误' }, \
+          ]")
+      //- 条码
+      van-cell-group.mb-4(inset)
+        van-field(
+          v-model='formData.barCodeNo'
+          label="条码"
+          placeholder="请输入条形码"
+          required
+          :rules="[ \
+            { required: true, message: '条码不能为空' }, \
+            { validator: isBarcode, message: '条码格式错误' }, \
+          ]")
+      //- 拍照
+      van-cell-group(inset)
+        van-field(
+          required
+          label="上传照片"
+          :rules="[{ required: true, message: '请上传照片' }]")
+          template(#input)
+            van-uploader(
+              v-model="formData.files"
+              multiple
+              preview-size='68px'
+              :before-read="fileUpload"
+              )
+
+  .page__footer.p-4
+    van-button.r8(
+      type='info'
+      block
+      :disabled="buttonLoading"
+      @click='() => $refs.form.submit()'
+      ) 提交
+</template>
+
+{{#if hasCache}}
+<script>
+export default {
+  name: "{{upperCamelCase moduleName name}}",
+}
+</script>
+{{/if}}
+
+<script setup>
+import { ref, reactive, computed, onBeforeUnmount } from 'vue'
+import { Toast } from 'vant'
+import { useRouter, useRoute } from '@/router'
+{{#if hasCache}}
+import useScrollPage from '@/utils/useScrollPage'
+{{/if}}
+import ScanView from '@/components/ScanView/index2'
+import { isBarcode, isPosition } from '@/utils'
+import jsBridge from '@/utils/jsBridge'
+import { upload } from '@/utils/fileUpload'
+import i18n from '@/lang'
+
+const router = useRouter()
+const route = useRoute()
+{{#if hasCache}}
+useScrollPage()
+{{/if}}
+
+const buttonLoading = ref(false)
+
+const form = ref(null)
+
+const formData = reactive({
+  position: '',
+  barCodeNo: '',
+  files: [],
+})
+
+function fileUpload(file) {
+  upload(file)
+    .then(ret => {
+      formData.files.push(ret)
+    })
+  return false
+}
+
+// 注册扫码回调
+jsBridge.register('barcode', (res) => {
+  if (isPosition(res)) {
+    formData.position = res
+  }
+  else if (isBarcode(res)) {
+    formData.barCodeNo = res
+  }
+  else {
+    Toast(`扫码结果： ${res}`)
+  }
+})
+
+// 注销扫码回调
+onBeforeUnmount(() => {
+  jsBridge.unregister('barcode')
+})
+
+function onSubmit() {
+  console.log("submit")
+}
+</script>
+
+<style lang="scss" scoped>
+:deep(.van-field) {
+  .van-cell__title {
+    width: 4.6em;
+    text-align-last: justify;
+    text-align: justify;
+  }
+}
+</style>

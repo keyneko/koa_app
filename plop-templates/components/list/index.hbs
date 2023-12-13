@@ -1,0 +1,117 @@
+<template lang="pug">
+.page--fixed-header
+  .page__header
+    van-nav-bar(
+      title="{{pascalCase name}}"
+      left-arrow
+      @click-left="$router.back()")
+      template(#right)
+        van-button(
+          type='default'
+          round size="small"
+          :disabled="buttonLoading"
+          @click="") 新增
+  .page__body
+    {{#if hasTabs}}
+    van-tabs(v-model="activeName" animated swipeable)
+      van-tab(title="进行中" name="todo")
+        List(:list='list["todo"]' :total='total["todo"]' @update='updateList0')
+      van-tab(title="已完成" name="done")
+        List(:list='list["done"]' :total='total["done"]' @update='updateList1')
+    {{else}}
+    List(:list='list' :total='total' @update='updateList')
+    {{/if}}
+</template>
+
+<script setup>
+import { ref, reactive, computed } from 'vue'
+import { Toast } from 'vant'
+import { useRouter, useRoute } from '@/router'
+import { concat } from 'lodash'
+import List from './components/{{componentName}}'
+import * as API from '@/api/test' // mock api for test
+
+const router = useRouter()
+const route = useRoute()
+
+const buttonLoading = ref(false)
+const pageSize = 10
+
+{{#if hasTabs}}
+const activeName = ref('')
+const list = reactive({
+  "todo": [],
+  "done": [],
+})
+const total = reactive({
+  "todo": 1,
+  "done": 1,
+})
+
+function updateList0(pageNum = 1) {
+  Toast.loading()
+  API.plopList({ pageNum, pageSize }).then(res => {
+    console.log(res)
+
+    total["todo"] = Math.ceil(res.total / pageSize)
+    if (pageNum == 1) {
+      list["todo"] = res.rows || []
+    }
+    else {
+      list["todo"] = concat(list["todo"], res.rows)
+    }
+  }).finally(() => {
+    Toast.clear()
+  })
+}
+
+function updateList1(pageNum = 1) {
+  Toast.loading()
+  API.plopList({ pageNum, pageSize }).then(res => {
+    console.log(res)
+
+    total["done"] = Math.ceil(res.total / pageSize)
+    if (pageNum == 1) {
+      list["done"] = res.rows || []
+    }
+    else {
+      list["done"] = concat(list["done"], res.rows)
+    }
+  }).finally(() => {
+    Toast.clear()
+  })
+}
+
+updateList0()
+updateList1()
+
+{{else}}
+const list = ref([])
+const total = ref(1)
+
+function updateList(pageNum = 1) {
+  Toast.loading()
+  API.plopList({ pageNum, pageSize }).then(res => {
+    console.log(res)
+
+    total.value = Math.ceil(res.total / pageSize)
+    if (pageNum == 1) {
+      list.value = res.rows || []
+    }
+    else {
+      list.value = concat(list.value, res.rows)
+    }
+  }).finally(() => {
+    Toast.clear()
+  })
+}
+
+updateList()
+{{/if}}
+</script>
+
+<style lang="scss" scoped>
+:deep(.test) {
+
+}
+</style>

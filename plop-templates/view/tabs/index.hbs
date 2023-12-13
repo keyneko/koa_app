@@ -1,0 +1,132 @@
+<template lang="pug">
+.page--fixed
+  .page__header
+    van-nav-bar(
+      title="{{pascalCase name}}"
+      left-arrow
+      @click-left="$router.back()")
+      template(#right)
+        van-button(
+          type='default'
+          round size="small"
+          :disabled="buttonLoading"
+          @click="") 按钮
+  .page__body
+    {{#if hasSubTabs}}
+    v-touch(
+      class="v-touch"
+      @swipeleft="onSwipeLeft"
+      @swiperight="onSwipeRight")
+      van-tabs(
+        v-model='activeName'
+        animated
+        sticky
+        offset-top='54')
+        van-tab(title="进行中" :name='tabs[0].name')
+          van-tabs(
+            v-model="activeNameSub[tabs[0].name]"
+            animated
+            swipeable)
+            van-tab(title="标签页一" :name='tabs[0].sub[0]')
+              .m-4
+                .h-40.p-4.bg-gray-200 标签页一内容
+            van-tab(title="标签页二" :name='tabs[0].sub[1]')
+              .m-4
+                .h-40.p-4.bg-gray-200 标签页二内容
+        van-tab(title="已完成" :name='tabs[1].name')
+          .m-4
+            .h-40.p-4.bg-gray-200 标签页三内容
+
+    {{else}}
+    van-tabs(
+      v-model='activeName'
+      animated
+      swipeable
+      sticky
+      offset-top='54')
+      van-tab(title="标签页一" name='0')
+        .m-4
+          .h-40.p-4.bg-gray-200 标签页一内容
+      van-tab(title="标签页二" name='1')
+        .m-4
+          .h-40.p-4.bg-gray-200 标签页二内容
+      van-tab(title="标签页三" name='2')
+        .m-4
+          .h-40.p-4.bg-gray-200 标签页三内容
+    {{/if}}
+
+  .page__footer.p-4
+</template>
+
+{{#if hasCache}}
+<script>
+export default {
+  name: "{{upperCamelCase moduleName name}}",
+}
+</script>
+{{/if}}
+
+<script setup>
+import { ref, reactive, computed } from 'vue'
+import { Toast } from 'vant'
+import { useRouter, useRoute } from '@/router'
+{{#if hasCache}}
+import useScrollPage from '@/utils/useScrollPage'
+{{/if}}
+{{#if hasSubTabs}}
+import useSwipeTabs from '@/utils/useSwipeTabs'
+{{/if}}
+
+const router = useRouter()
+const route = useRoute()
+{{#if hasCache}}
+useScrollPage()
+{{/if}}
+
+const buttonLoading = ref(false)
+
+{{#if hasSubTabs}}
+// 定义tabs
+const tabs = [
+  { name: 'todo', sub: ['0', '1'] },
+  { name: 'done', sub: [] },
+]
+const { activeName, activeNameSub, onSwipeLeft, onSwipeRight } = useSwipeTabs(tabs)
+{{else}}
+const activeName = ref('')
+{{/if}}
+</script>
+
+{{#if hasSubTabs}}
+<style lang="scss" scoped>
+/* 二级标签页样式 */
+:deep(.van-tabs) {
+  .van-tabs {
+    .van-tabs__nav {
+      display: block;
+      padding: 0px 15px;
+      padding-top: 15px;
+      padding-left: 30px;
+
+      .van-tab {
+        display: inline-block;
+        margin-right: 5px;
+        color: #bbb;
+        &.van-tab--active {
+          color: #444;
+        }
+      }
+    }
+    .van-tab__text {
+      font-size: smaller;
+    }
+    .van-tab__pane {
+      padding-top: 0px;
+    }
+  }
+}
+.v-touch {
+  touch-action: pan-y !important;
+}
+</style>
+{{/if}}

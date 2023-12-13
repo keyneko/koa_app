@@ -1,0 +1,64 @@
+<template lang="pug">
+van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
+  van-empty(v-if='list.length == 0' description="暂无数据")
+  template(v-else)
+    van-list(v-model='loading' :finished='finished' :immediate-check='false' :offset='10' @load='onLoad')
+      van-cell-group.mb-4(v-for='(d, i) in list' :key='i' inset)
+        van-cell(center)
+          template(#icon)
+            van-image.mr-4(
+              width='64'
+              height='64'
+              radius="3"
+              lazy-load
+              :src="d.img"
+              @click.native.stop="ImagePreview([d.img])")
+          template
+            .van-ellipsis.b \{{ d.title }}
+            .van-ellipsis \{{ d.describe }}
+</template>
+
+<script setup>
+import { ref, computed } from 'vue'
+import { Toast, ImagePreview } from 'vant'
+
+const props = defineProps({
+  list: {
+    type: Array,
+    default: () => [],
+  },
+  total: {
+    type: Number,
+    default: 1,
+  },
+})
+const emits = defineEmits(['update'])
+const refreshing = ref(false)
+const loading = ref(false)
+const finished = ref(false)
+const pageNum = ref(1)
+
+function onRefresh() {
+  pageNum.value = 1
+  emits('update', 1)
+
+  setTimeout(() => {
+    Toast.success('刷新成功')
+
+    finished.value = false
+    loading.value = false
+    refreshing.value = false
+  }, 1000)
+}
+
+function onLoad() {
+  if (pageNum.value < props.total) {
+    pageNum.value++
+    emits('update', pageNum.value)
+  }
+  else {
+    finished.value = true
+  }
+  loading.value = false
+}
+</script>

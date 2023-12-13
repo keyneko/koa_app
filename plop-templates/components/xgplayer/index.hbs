@@ -1,0 +1,42 @@
+<template lang="pug">
+.page--fixed-header
+  .page__header
+    van-nav-bar(
+      title="{{pascalCase name}}"
+      left-arrow
+      @click-left="$router.back()")
+
+  .page__body
+    Player(:src="url" :height="240")
+
+</template>
+
+{{#if hasCache}}
+<script>
+export default {
+  name: "{{upperCamelCase moduleName name}}",
+}
+</script>
+{{/if}}
+<script setup>
+import { ref, computed } from 'vue'
+import { Toast } from 'vant'
+import { useRouter, useRoute } from '@/router'
+{{#if hasCache}}
+import useScrollPage from '@/utils/useScrollPage'
+{{/if}}
+import Player from './components/{{componentName}}.vue'
+
+const router = useRouter()
+const route = useRoute()
+{{#if hasCache}}
+useScrollPage()
+{{/if}}
+
+// // 可以在页面跳转时传入url参数
+// {
+//   path: "/test/video",
+//   query: { url: "//sf1-cdn-tos.huoshanstatic.com/obj/media-fe/xgplayer_doc_video/hls/xgplayer-demo.m3u8" },
+// }
+const { url } = route.query
+</script>

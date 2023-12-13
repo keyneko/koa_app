@@ -1,0 +1,140 @@
+<template lang="pug">
+div(ref="container")
+</template>
+
+<script setup>
+import { ref, computed, defineProps, watch, onMounted, onBeforeUnmount } from 'vue'
+import * as echarts from 'echarts'
+import { merge, isEmpty, debounce } from 'lodash'
+
+const props = defineProps({
+  width: {
+    type: Number,
+  },
+  height: {
+    type: Number,
+    default: 320,
+  },
+  data: {
+    type: Object,
+    default: () => {
+      return {
+        // xAxis: [
+        //   {
+        //     data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        //   },
+        // ],
+        // series: [
+        //   {
+        //     name: 'Direct',
+        //     data: [10, 52, 200, 334, 390, 330, 220],
+        //   },
+        // ],
+      }
+    },
+  },
+})
+
+// 图表容器
+const container = ref(null)
+
+// echarts图表对象
+let chart = null
+
+// 基础Options
+const initOption = {
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow',
+    },
+  },
+  legend: {
+    right: '0%',
+    top: '1%',
+  },
+  grid: {
+    left: '3%',
+    right: '4%',
+    top: '10%',
+    bottom: '3%',
+    containLabel: true,
+  },
+  xAxis: [
+    {
+      type: 'category',
+      axisTick: {
+        alignWithLabel: true,
+      },
+    },
+  ],
+  yAxis: [
+    {
+      type: 'value',
+    },
+  ],
+  series: [
+    {
+      type: 'bar',
+      showBackground: true,
+      barWidth: '60%',
+    },
+  ],
+}
+
+function draw(container) {
+  if (props.width) {
+    container.style.width = props.width + 'px'
+  }
+  container.style.height = props.height + 'px'
+
+  setTimeout(() => {
+    chart = echarts.init(container)
+    let option = {}
+
+    if (isEmpty(props.data)) {
+      option = {
+        graphic: {
+          type: 'text',
+          left: 'center',
+          top: '50%',
+          zlevel: 9999,
+          silent: true,
+          invisible: false,
+          style: {
+            fill: '#aaa',
+            text: '暂无数据',
+            fontSize: '14px',
+          },
+        },
+      }
+    } else {
+      option = merge({}, initOption, props.data, { graphic: { invisible: true } })
+    }
+    chart.setOption(option/*, true*/)
+  }, 0)
+}
+
+watch(
+  () => props.data,
+  () => {
+    draw(container.value)
+  },
+)
+
+const onResize = debounce(() => {
+  chart && chart.resize()
+  // console.log('触发resize')
+}, 100)
+
+onMounted(() => {
+  draw(container.value)
+  window.addEventListener('resize', onResize)
+  // console.log('侦听resize')
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', onResize)
+  // console.log('取消侦听resize')
+})
+</script>

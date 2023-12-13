@@ -1,11 +1,15 @@
 const path = require('path')
-// const apiMocker = require('mocker-api')
+const CompressionPlugin = require("compression-webpack-plugin")
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const apiMocker = require('mocker-api')
+const settings = require('./src/settings')
+
 
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = 'NekoYa'
+const name = settings.title || 'NekoYa'
 const port = process.env.port || process.env.npm_config_port || 4001
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
@@ -22,9 +26,9 @@ module.exports = {
       warnings: false,
       errors: true,
     },
-    // before(app) {
-    //   apiMocker(app, path.resolve('./mock'))
-    // },
+    before(app) {
+      apiMocker(app, path.resolve('./mock'))
+    },
     proxy: {
       // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
@@ -42,11 +46,37 @@ module.exports = {
     // it can be accessed in index.html to inject the correct title.
     config.name = name
 
+    config.externals = {
+      echarts: "echarts",
+    }
+
     Object.assign(config.resolve, {
       alias: {
         '@': resolve('src'),
       },
     })
+
+    // If building a production package, enable gzip compression and bundle analyzer tool
+    if (process.env.NODE_ENV === "production") {
+      config.plugins.push(
+        new CompressionPlugin({
+          filename: "[path][base].gz",
+          algorithm: "gzip",
+          test: /\.js$/,
+          threshold: 10240,
+          minRatio: 0.8,
+          deleteOriginalAssets: false,
+        })
+      )
+
+      config.plugins.push(
+        new BundleAnalyzerPlugin({
+          analyzerMode: 'disabled',
+          generateStatsFile: true,
+          statsOptions: { source: false }
+        }),
+      )
+    }
   },
   css: {
     loaderOptions: {

@@ -1,0 +1,39 @@
+<template lang="pug">
+.page--fixed
+  .page__header
+    van-nav-bar(
+      title="{{pascalCase name}}"
+      left-arrow
+      @click-left="$router.back()")
+
+  .page__body
+
+    //- 使用示例
+    //- 1、通过字典名和键查询值:
+    //- div \{{ lut('sys_process_text', 'P000058') }}
+    //-
+    //- 2、通过字典名获取值列表:
+    //- div(v-for="(d, i) in options('tr_iv_type')")
+    //-   | \{{ d.dictValue }}: \{{ d.dictLabel }}
+
+    van-cell-group.mb-2(inset)
+      van-field._bg-gray-50(v-model='dictName' placeholder='输入字典名称')
+
+    van-cell-group(inset v-if="dictName")
+      van-cell(v-for="(d, i) in options(dictName)" :key="i" :title="d.dictLabel" :value="d.dictValue")
+</template>
+
+<script setup>
+import { ref, computed } from 'vue'
+import { Toast } from 'vant'
+import { useRouter, useRoute } from '@/router'
+import useDicts from '@/utils/useDicts'
+
+const router = useRouter()
+const route = useRoute()
+const { lut, options } = useDicts()
+const { name } = route.query
+
+const dictName = ref(name || '')
+const dictList = ref([])
+</script>

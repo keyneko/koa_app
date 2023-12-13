@@ -31,6 +31,8 @@
               svg-icon(:name='sopIcon(sop)')
             template(#text)
               .label.van-ellipsis {{ lut('sops', sop) }}
+          //- entrance for test
+          include ./fragments/testItems
 </template>
 
 <script>

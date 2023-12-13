@@ -1,4 +1,6 @@
 module.exports = {
+  title: 'NekoYa',
+
   /**
    * @type {string | array} 'production' | ['production', 'development']
    * @description Need show err logs component.

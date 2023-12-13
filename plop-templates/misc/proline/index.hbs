@@ -1,0 +1,71 @@
+<template lang="pug">
+.page--fixed
+  .page__header
+    van-nav-bar(
+      title="{{pascalCase name}}"
+      left-arrow
+      @click-left="$router.back()")
+
+  .page__body
+    van-cell-group.mb-4(inset)
+      van-field(
+        clickable
+        readonly
+        :value="proLine.name"
+        placeholder="请选择产线"
+        @click='showPicker = true')
+
+    van-cell-group(inset v-if="!isEmpty(proLine)")
+      van-cell(title="factoryName" :value="proLine.name")
+      van-cell(title="factoryId" :value="proLine.factoryId")
+      van-cell(title="proLineCode" :value="proLine.proLineCode")
+      van-cell(title="status" :value="proLine.status")
+      van-cell(title="uuidCode" :value="proLine.uuidCode" @click="copyText(proLine.uuidCode, $event)")
+      van-cell(title="status" :value="proLine.status")
+      van-cell(title="plcConnectStatus" :value="proLine.plcConnectStatus")
+      van-cell(title="plcReadingStatus" :value="proLine.plcReadingStatus")
+
+  van-popup(v-model='showPicker' position='bottom')
+    van-picker(
+      show-toolbar
+      :columns='dataColumns'
+      @confirm='onPicked'
+      @cancel='showPicker = false')
+</template>
+
+<script setup>
+import { ref, computed } from 'vue'
+import { Toast } from 'vant'
+import { useRouter, useRoute } from '@/router'
+import * as API from '@/api/producing'
+import { map, isEmpty } from 'lodash'
+import copyText from '@/utils/clipboard'
+
+const router = useRouter()
+const route = useRoute()
+
+const showPicker = ref(false)
+const proLines = ref([])
+const proLine = ref({})
+
+const dataColumns = computed(() =>
+  map(proLines.value, (d) => ({
+    text: d.name,
+    value: d,
+  })),
+)
+
+Toast.loading()
+API.queryProLineList()
+  .then((res) => {
+    proLines.value = res.data
+  })
+  .finally(() => {
+    Toast.clear()
+  })
+
+function onPicked({ value }) {
+  showPicker.value = false
+  proLine.value = value
+}
+</script>

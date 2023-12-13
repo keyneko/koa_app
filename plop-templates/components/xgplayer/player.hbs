@@ -1,0 +1,73 @@
+<template lang="pug">
+#mse(ref="el")
+</template>
+
+<script setup>
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
+import { Toast } from 'vant'
+import { debounce } from 'lodash'
+
+import Player, { Events } from 'xgplayer'
+import 'xgplayer/dist/index.min.css'
+import HlsJsPlugin from 'xgplayer-hls.js'
+
+let player = null
+const el = ref(null)
+
+const props = defineProps({
+  src: {
+    type: String,
+    default: '',
+  },
+  width: {
+    type: Number | String,
+    default: '',
+  },
+  height: {
+    type: Number | String,
+    default: '',
+  },
+})
+
+watch(
+  () => props.src,
+  () => {
+    initPlayer(el.value)
+  },
+)
+
+function initPlayer(container) {
+  setTimeout(() => {
+    player = new Player({
+      el: container,
+      // url: '//sf1-cdn-tos.huoshanstatic.com/obj/media-fe/xgplayer_doc_video/hls/xgplayer-demo.m3u8',
+      url: props.src,
+      plugins: [HlsJsPlugin],
+      autoplay: true,
+      playsinline: true,
+      width: props.width,
+      height: props.height,
+    })
+
+    player.on(Events.LOADED_DATA, ({ originalEvent: evt }) => {
+      const width = container.clientWidth
+      const { videoWidth, videoHeight } = evt.target
+      const ratio = width / videoWidth
+
+      // 如果设置了定高，则根据原始视频比例自动调整高度
+      if (props.height) {
+        container.style.height = videoHeight * ratio + 'px'
+      }
+    })
+  }, 0)
+}
+
+onMounted(() => {
+  initPlayer(el.value)
+})
+
+onBeforeUnmount(() => {
+  player.destroy()
+  player = null
+})
+</script>

@@ -133,7 +133,14 @@ export const constantRoutes = [
     name: 'PositionGenerate',
     component: () => import('@/views/position/generate'),
   },
+  // SensorDht11
+  {
+    path: '/sensor/dht11',
+    name: 'SensorDht11',
+    component: () => import('@/views/sensor/dht11'),
+  },
 ] // end of constantRoutes
+
 
 /**
  * asyncRoutes

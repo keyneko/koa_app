@@ -1,0 +1,152 @@
+<template lang="pug">
+.canvas(ref="canvas")
+</template>
+
+<script setup>
+import { ref, computed, defineProps, watch, onMounted, onBeforeUnmount } from 'vue'
+import * as zrender from 'zrender'
+import CanvasPainter from 'zrender/lib/canvas/Painter'
+import { debounce } from 'lodash'
+import marker from '/public/img/marker.jpg'
+
+// zrender bug fix in production, see https://github.com/ecomfe/zrender/issues/805
+zrender.registerPainter('canvas', CanvasPainter)
+
+const props = defineProps({
+  width: {
+    type: Number,
+  },
+  height: {
+    type: Number,
+    default: 320,
+  },
+})
+
+// 容器
+const canvas = ref(null)
+
+// zrender绘图对象
+let zr = null
+let stage = null
+let layer = null
+
+// 缩放比例
+let ratio = 1
+
+function initCanvas(container) {
+  const width = props.width || container.offsetWidth
+  const height = props.height
+
+  if (zr) zr.dispose()
+  zr = zrender.init(container/*, { renderer: 'svg' }*/)
+  stage = new zrender.Group()
+  layer = new zrender.Group()
+  zr.add(stage)
+  zr.add(layer)
+  zr.resize({ width, height })
+}
+
+function addRect(x, y, width, height) {
+  const rect = new zrender.Rect({
+    draggable: false,
+    shape: {
+      x: x * ratio,
+      y: y * ratio,
+      width: width * ratio,
+      height: height * ratio,
+    },
+    style: {
+      fill: 'transparent',
+      stroke: '#F54F32',
+      lineWidth: 2,
+      lineDash: [4, 2],
+    },
+    z: 1,
+  }).on('click', () => {
+    console.log('rect:', x * ratio, y * ratio, width * ratio, height * ratio)
+  })
+  layer.add(rect)
+}
+
+function addMarker(x, y, marker) {
+  const img = new zrender.Image({
+    position: [-22 / 2, -22],
+    style: {
+      x: x * ratio,
+      y: y * ratio,
+      image: marker,
+      width: 22,
+      height: 22,
+    },
+    draggable: false,
+  }).on('click', () => {
+    console.log('marker:', x * ratio, y * ratio)
+  })
+  layer.add(img)
+}
+
+function loadMap(imageUrl) {
+  return new Promise((resolve) => {
+    const img = new Image()
+    img.src = imageUrl
+    img.crossOrigin = 'anonymous'
+    img.onload = () => {
+      const width = props.width || canvas.value.offsetWidth
+      ratio = width / img.width
+      const height = (ratio * img.height) >> 0
+      // console.log('init map: ', width, height, ratio)
+
+      zr.resize({ width, height })
+      var zrImg = new zrender.Image({
+        silent: true,
+        style: {
+          image: img,
+          x: 0,
+          y: 0,
+          width,
+          height,
+        },
+        zlevel: 0,
+      })
+      stage.add(zrImg)
+      resolve()
+    }
+  })
+}
+
+async function draw(container) {
+  initCanvas(container)
+  await loadMap(
+    'https://src0.leju.com/imp/imp/encrypt/mWaRmmVncGVsbWeZmZRpxZxgw5lnk5bJam2Um5mWl2rJZZqXoG%2BWo6Ru_wm6540098557318845671.jpeg',
+  )
+  // await loadMap("http://taruo-mask-cn.oss-cn-hangzhou.aliyuncs.com/rms_test/upload/202311/66a23baca750412f9d3c4dd505910e33/BZMJf4jwJX.jpeg")
+  addRect(1290, 1080, 1198, 185)
+  addRect(1960, 1080, 185, 830)
+  addMarker(2582, 1015, marker)
+  addMarker(1106, 692, marker)
+  addMarker(784, 1383, marker)
+}
+
+watch(
+  () => props.data,
+  () => {
+    draw(canvas.value)
+  },
+)
+
+const onResize = debounce(() => {
+  draw(canvas.value)
+  // console.log('触发resize')
+}, 100)
+
+onMounted(() => {
+  draw(canvas.value)
+  window.addEventListener('resize', onResize)
+  // console.log('侦听resize')
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', onResize)
+  // console.log('取消侦听resize')
+})
+</script>
