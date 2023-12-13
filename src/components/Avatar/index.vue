@@ -30,6 +30,7 @@ const name = toRef(store.getters, 'name')
     cursor: pointer;
     width: 40px;
     height: 40px;
+    background: #eaeaea;
   }
 
   .el-icon-caret-bottom {

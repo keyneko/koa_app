@@ -73,7 +73,7 @@
 import { ref, toRef, reactive, computed, watch } from 'vue'
 import { Toast } from 'vant'
 import { useRouter, useRoute } from '@/router'
-import { encrypt, decrypt } from '@/utils/jsencrypt'
+import { encrypt } from '@/utils/jsencrypt'
 import Cookies from 'js-cookie'
 import store from '@/store'
 import i18n from '@/lang'
@@ -96,7 +96,7 @@ const formData = reactive({
 })
 
 const captcha = toRef(store.state.user, 'captcha')
-watch(captcha, value => {
+watch(captcha, (value) => {
   formData.captchaId = value.captchaId
 })
 
@@ -116,17 +116,23 @@ function getCaptcha() {
 function onSubmit() {
   Toast.loading()
   buttonLoading.value = true
-  return API.register(formData).then(res => {
-    Toast.success( i18n.t('registered') )
-    router.replace( toLogin.value )
+  return API.register({
+    ...formData,
+    password: encrypt(formData.password),
+    password2: undefined,
   })
-  .catch(e => {
-    getCaptcha()
-  })
-  .finally(() => {
-    Toast.clear()
-    buttonLoading.value = false
-  })
+    .then((res) => {
+      Toast.success(i18n.t('registered'))
+      Cookies.set('username', formData.username)
+      router.replace(toLogin.value)
+    })
+    .catch((e) => {
+      getCaptcha()
+    })
+    .finally(() => {
+      Toast.clear()
+      buttonLoading.value = false
+    })
 }
 
 getCaptcha()

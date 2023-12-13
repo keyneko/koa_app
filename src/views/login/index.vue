@@ -68,7 +68,7 @@
 import { ref, toRef, reactive, computed, watch } from 'vue'
 import { Toast } from 'vant'
 import { useRouter, useRoute } from '@/router'
-import { encrypt, decrypt } from '@/utils/jsencrypt'
+import { encrypt } from '@/utils/jsencrypt'
 import Cookies from 'js-cookie'
 import store from '@/store'
 import i18n from '@/lang'
@@ -83,14 +83,14 @@ const showPwd = ref(false)
 const buttonLoading = ref(false)
 
 const formData = reactive({
-  username: '',
+  username: Cookies.get('username') || '',
   password: '',
   captcha: '',
   captchaId: '',
 })
 
 const captcha = toRef(store.state.user, 'captcha')
-watch(captcha, value => {
+watch(captcha, (value) => {
   formData.captchaId = value.captchaId
 })
 
@@ -119,22 +119,28 @@ function resetToken() {
 }
 
 function onForgetPwd() {
-  Toast( i18n.t('login.callAdmin') )
+  Toast(i18n.t('login.callAdmin'))
 }
 
 function onSubmit() {
   Toast.loading()
   buttonLoading.value = true
-  return store.dispatch('user/login', formData).then(res => {
-    router.replace( toDashboard.value )
-  })
-  .catch(e => {
-    getCaptcha()
-  })
-  .finally(() => {
-    Toast.clear()
-    buttonLoading.value = false
-  })
+  return store
+    .dispatch('user/login', {
+      ...formData,
+      password: encrypt(formData.password),
+    })
+    .then((res) => {
+      Cookies.set('username', formData.username)
+      router.replace(toDashboard.value)
+    })
+    .catch((e) => {
+      getCaptcha()
+    })
+    .finally(() => {
+      Toast.clear()
+      buttonLoading.value = false
+    })
 }
 
 getCaptcha()

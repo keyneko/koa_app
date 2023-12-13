@@ -5,7 +5,8 @@ div(ref="container")
 <script setup>
 import { ref, computed, defineProps, watch, onMounted, onBeforeUnmount } from 'vue'
 import * as echarts from 'echarts'
-import { merge, isEmpty, debounce } from 'lodash'
+import dayjs from 'dayjs'
+import { map, merge, isEmpty, debounce } from 'lodash'
 
 const props = defineProps({
   width: {
@@ -16,41 +17,8 @@ const props = defineProps({
     default: 320,
   },
   data: {
-    type: Object,
-    default: () => {
-      return {
-        // xAxis: {
-        //   data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        // },
-        // series: [
-        //   {
-        //     name: 'Email',
-        //     type: 'line',
-        //     data: [120, 132, 101, 134, 90, 230, 210]
-        //   },
-        //   {
-        //     name: 'Union Ads',
-        //     type: 'line',
-        //     data: [220, 182, 191, 234, 290, 330, 310]
-        //   },
-        //   {
-        //     name: 'Video Ads',
-        //     type: 'line',
-        //     data: [150, 232, 201, 154, 190, 330, 410]
-        //   },
-        //   {
-        //     name: 'Direct',
-        //     type: 'line',
-        //     data: [320, 332, 301, 334, 390, 330, 320]
-        //   },
-        //   {
-        //     name: 'Search Engine',
-        //     type: 'line',
-        //     data: [820, 932, 901, 934, 1290, 1330, 1320]
-        //   }
-        // ]
-      }
-    },
+    type: Array,
+    default: () => [],
   },
 })
 
@@ -62,8 +30,20 @@ let chart = null
 
 // 基础Options
 const initOption = {
+  // Make gradient line here
+  visualMap: [
+    {
+      show: false,
+      type: 'continuous',
+      seriesIndex: 0,
+      min: -5,
+      max: 35,
+      color: ['#ff2e2e', '#485ff0'],
+    },
+  ],
   tooltip: {
     trigger: 'axis',
+    valueFormatter: (value) => `${value} °C`,
   },
   legend: {
     left: '0%',
@@ -82,6 +62,9 @@ const initOption = {
   },
   yAxis: {
     type: 'value',
+    axisLabel: {
+      formatter: '{value} °C',
+    },
   },
   series: [],
 }
@@ -114,32 +97,45 @@ function draw(container) {
       }
     }
     else {
-      option = merge({}, initOption, props.data, { graphic: { invisible: true } })
+      const mappedData = {
+        xAxis: {
+          type: 'category',
+          data: map(props.data, (d) => dayjs(d.createdAt).format('HH:mm')),
+        },
+        yAxis: {
+          type: 'value',
+        },
+        series: [
+          {
+            data: map(props.data, (d) => d.value),
+            type: 'line',
+          },
+        ],
+      }
+
+      option = merge({}, initOption, mappedData, { graphic: { invisible: true } })
     }
-    chart.setOption(option/*, true*/)
+    chart.setOption(option /*, true*/)
   }, 0)
 }
 
 watch(
   () => props.data,
-  () => {
+  (value) => {
     draw(container.value)
   }
 )
 
 const onResize = debounce(() => {
   chart && chart.resize()
-  // console.log('触发resize')
 }, 100)
 
 onMounted(() => {
   draw(container.value)
   window.addEventListener('resize', onResize)
-  // console.log('侦听resize')
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', onResize)
-  // console.log('取消侦听resize')
 })
 </script>

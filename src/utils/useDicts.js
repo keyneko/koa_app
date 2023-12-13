@@ -6,8 +6,8 @@ const getDictDebounced = debounce(
   (key) => {
     store.dispatch('dicts/getDictionaries', key)
   },
-  1000,
-  { leading: true },
+  2000,
+  { leading: true }
 )
 
 export default function useDicts() {
