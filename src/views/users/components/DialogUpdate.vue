@@ -64,7 +64,7 @@ const props = defineProps({
   },
   data: {
     type: Object,
-    default: {},
+    default: () => ({})
   },
 })
 
@@ -84,14 +84,14 @@ const statusColumns = computed(() =>
   map(options.value('status'), (d) => ({
     text: d.name,
     value: d,
-  })),
+  }))
 )
 
 watch(
   () => props.value,
   (value) => {
     show.value = value
-  },
+  }
 )
 
 watch(show, (value) => {
@@ -105,7 +105,7 @@ watch(
     formData.name = value.name
     formData.status = value.status
     formData.roles = value.roles
-  },
+  }
 )
 
 function onStatusPicked({ value }) {
@@ -120,10 +120,12 @@ async function beforeClose(action, done) {
       await onSubmit()
       done()
       resetForm()
-    } catch (e) {
+    }
+    catch (e) {
       done(false)
     }
-  } else {
+  }
+  else {
     done()
     resetForm()
   }
@@ -144,11 +146,3 @@ function onSubmit() {
   })
 }
 </script>
-
-<style lang="scss" scoped>
-:deep(.van-field) {
-  .van-field__label {
-    margin-right: 0;
-  }
-}
-</style>

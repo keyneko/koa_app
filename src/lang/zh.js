@@ -7,8 +7,11 @@ export default {
   register: '注册',
   registered: '注册成功',
   submit: '提交',
+  create: '新建',
+  filter: '筛选',
   delete: '删除',
   update: '更新',
+  actions: '操作',
   view: '查看',
   viewAll: '查看全部',
   created: '创建成功',
@@ -56,6 +59,7 @@ export default {
     positionGen: '库位码生成',
     positionQuery: '库位码查询',
     positions: '库位码列表',
+    sensors: '传感器',
   },
 
   login: {
@@ -83,6 +87,7 @@ export default {
     barcodeQuery: '条码查询',
     positionGenerate: '库位码生成',
     positionQuery: '库位码查询',
+    sensors: '传感器',
   },
 
   roles: {
@@ -164,4 +169,19 @@ export default {
     deleteCfm: '确认删除',
     deleteCfmMsg: '确认<b class=red>删除</b>该库位码吗？',
   },
+
+  sensors: {
+    create: '新建传感器',
+    update: '更新传感器',
+    filter: '筛选传感器',
+    deleteCfm: '确认删除',
+    deleteCfmMsg: '确认<b class=red>删除</b>该传感器吗？',
+    type: '类型',
+    plhrType: '请选择类型',
+    requireType: '类型不能为空',
+    number: '序列号',
+    plhrNumber: '请输入序列号',
+    manufacturer: '制造商',
+    plhrManufacturer: '请输入制造商',
+  }
 }

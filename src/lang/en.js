@@ -7,8 +7,11 @@ export default {
   register: 'Register',
   registered: 'Registered',
   submit: 'Submit',
+  create: 'Create',
+  filter: 'Filter',
   delete: 'Delete',
   update: 'Update',
+  actions: 'Actions',
   view: 'View',
   viewAll: 'View All',
   created: 'Created',
@@ -56,6 +59,7 @@ export default {
     positionGen: 'Position Generate',
     positionQuery: 'Position Query',
     positions: 'Positions',
+    sensors: 'Sensors',
   },
 
   login: {
@@ -83,6 +87,7 @@ export default {
     barcodeQuery: 'Barcode Query',
     positionGenerate: 'Position Generate',
     positionQuery: 'Position Query',
+    sensors: 'Sensors',
   },
 
   roles: {
@@ -164,4 +169,19 @@ export default {
     deleteCfm: 'Delete Confirm',
     deleteCfmMsg: 'Are you sure to <b class=red>delete</b> this position?',
   },
+
+  sensors: {
+    create: 'Create Sensor',
+    update: 'Update Sensor',
+    filter: 'Filter Sensor',
+    deleteCfm: 'Delete Confirm',
+    deleteCfmMsg: 'Are you sure to <b class=red>delete</b> this sensor?',
+    type: 'Type',
+    plhrType: 'Please select type',
+    requireType: 'Type cannot be empty',
+    number: 'Serial Number',
+    plhrNumber: 'Please type serial number',
+    manufacturer: 'Manufacturer',
+    plhrManufacturer: 'Please type manufacturer',
+  }
 }

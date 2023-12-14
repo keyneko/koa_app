@@ -1,9 +1,10 @@
 <template lang="pug">
-div(ref="container")
+.relative.z-10(ref="container")
 </template>
 
 <script setup>
-import { ref, computed, defineProps, watch, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
+import i18n from '@/lang'
 import * as echarts from 'echarts'
 import dayjs from 'dayjs'
 import { map, merge, isEmpty, debounce } from 'lodash'
@@ -90,7 +91,7 @@ function draw(container) {
           invisible: false,
           style: {
             fill: '#aaa',
-            text: '暂无数据',
+            text: i18n.t('noData'),
             fontSize: '14px',
           },
         },

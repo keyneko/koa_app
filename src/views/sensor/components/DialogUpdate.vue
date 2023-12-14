@@ -1,7 +1,7 @@
 <template lang="pug">
 van-dialog(
   v-model='show'
-  :title="$t('barcodes.update')"
+  :title="$t('sensors.update')"
   :show-cancel-button='true'
   :closeOnClickOverlay='false'
   :beforeClose="beforeClose")
@@ -9,53 +9,56 @@ van-dialog(
     validate-first
     ref='form')
     van-cell-group.title-basis
-      //- 条码
-      van-cell(:title="$t('barcode')")
-        b.black {{ formData.value }}
       //- 名称
       van-field.bg-gray-50.mb-2(
         v-model='formData.name'
         required
         :label="$t('name')"
         :placeholder="$t('plhrName')"
-        :rules="[{ required: true, message: $t('requireName') }]")
-      //- 数量
+        :rules="[ \
+          { required: true, message: $t('requireName') }, \
+        ]")
+      //- 传感器类型
       van-field.bg-gray-50.mb-2(
-        v-model='formData.quantity'
-        required
-        type="number"
-        :label="$t('qty')"
-        :placeholder="$t('plhrQty')"
-        :rules="[{ required: true, message: $t('requireQty') }]")
-      //- 基础单位
-      van-field.bg-gray-50.mb-2(
-        v-model='formData.basicUnit'
-        required
-        :label="$t('basicUnit')"
-        :placeholder="$t('plhrBasicUnit')"
-        :rules="[{ required: true, message: $t('requireBasicUnit') }]")
-      //- 状态
-      van-field.bg-gray-50(
         readonly
         clickable
         is-link
         required
         arrow-direction="down"
+        :label="$t('sensors.type')"
+        :placeholder="$t('sensors.plhrType')"
+        :value='lut("sensor_type", formData.type)'
+        @click='showTypePicker = true'
+        :rules="[ \
+          { required: true, message: $t('sensors.requireType') }, \
+        ]")
+      //- 序列号
+      van-field.bg-gray-50.mb-2(
+        v-model='formData.number'
+        :label="$t('sensors.number')"
+        :placeholder="$t('sensors.plhrNumber')")
+      //- 制造商
+      van-field.bg-gray-50.mb-2(
+        v-model='formData.manufacturer'
+        :label="$t('sensors.manufacturer')"
+        :placeholder="$t('sensors.plhrManufacturer')")
+      //- 状态
+      van-field.bg-gray-50(
+        readonly
+        clickable
+        is-link
+        arrow-direction="down"
         :label="$t('status')"
         :placeholder="$t('plhrStatus')"
-        :value='lut("barcode_status", formData.status)'
+        :value='lut("status", formData.status)'
         @click='showStatusPicker = true')
-      //- 拍照
-      van-field(
-        _required
-        :label="$t('pictures')"
-        _rules="[{ required: true, message: $t('requirePictures') }]")
-        template(#input)
-          van-uploader(
-            v-model="formData.files"
-            multiple
-            :preview-size="44"
-            :before-read="fileUpload")
+
+  van-popup(v-model='showTypePicker' position='bottom')
+    van-picker(
+      show-toolbar
+      :columns='typeColumns'
+      @confirm='onTypePicked'
+      @cancel='showTypePicker = false')
 
   van-popup(v-model='showStatusPicker' position='bottom')
     van-picker(
@@ -72,7 +75,7 @@ import useDicts from '@/utils/useDicts'
 import { upload } from '@/utils/fileUpload'
 import i18n from '@/lang'
 import { map } from 'lodash'
-import * as API from '@/api/barcode'
+import * as API from '@/api/sensor'
 
 const emits = defineEmits(['input'])
 const { lut, options } = useDicts()
@@ -90,19 +93,26 @@ const props = defineProps({
 
 const form = ref(null)
 const show = ref(false)
+const showTypePicker = ref(false)
 const showStatusPicker = ref(false)
 
 const formData = reactive({
-  value: '',
-  name: '',
-  quantity: '',
-  basicUnit: '',
-  status: '',
-  files: [],
+  _id: undefined,
+  name: undefined,
+  type: undefined,
+  number: undefined,
+  manufacturer: undefined,
+  status: undefined,
 })
 
+const typeColumns = computed(() =>
+  map(options.value('sensor_type'), (d) => ({
+    text: d.name,
+    value: d,
+  }))
+)
 const statusColumns = computed(() =>
-  map(options.value('barcode_status'), (d) => ({
+  map(options.value('status'), (d) => ({
     text: d.name,
     value: d,
   }))
@@ -122,20 +132,18 @@ watch(show, (value) => {
 watch(
   () => props.data,
   (value) => {
-    formData.value = value.value
+    formData._id = value._id
     formData.name = value.name
-    formData.quantity = value.quantity
-    formData.basicUnit = value.basicUnit
+    formData.type = value.type
+    formData.number = value.number
+    formData.manufacturer = value.manufacturer
     formData.status = value.status
-    formData.files = map(value.files, (f) => ({ url: f }))
   }
 )
 
-function fileUpload(file) {
-  upload(file).then((res) => {
-    formData.files.push({ url: res.data })
-  })
-  return false
+function onTypePicked({ value }) {
+  formData.type = value.value
+  showTypePicker.value = false
 }
 
 function onStatusPicked({ value }) {
@@ -156,12 +164,22 @@ async function beforeClose(action, done) {
   }
   else {
     done()
+    resetForm()
   }
+}
+
+function resetForm() {
+  formData._id = undefined
+  formData.name = undefined
+  formData.type = undefined
+  formData.number = undefined
+  formData.manufacturer = undefined
+  formData.status = undefined
 }
 
 function onSubmit() {
   Toast.loading()
-  return API.updateBarcode({ ...formData, files: map(formData.files, (f) => f.url) }).then((res) => {
+  return API.updateSensor(formData).then((res) => {
     Toast.success(i18n.t('updated'))
     emits('updated')
   })

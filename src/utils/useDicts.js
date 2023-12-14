@@ -27,7 +27,7 @@ export default function useDicts() {
     }
 
     const obj = find(dicts.value[key], (d) => value !== '' && d.value == value) || {}
-    return obj.name || '-'
+    return obj.name
   })
 
   /**

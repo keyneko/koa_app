@@ -17,14 +17,30 @@ export function getSensors(params) {
 /**
  * 新建传感器
  * @param  {String} data.name   [description]
- * @param  {String} data.number   [description]
  * @param  {Number} data.type [description]
+ * @param  {String} data.number   [description]
  * @param  {Number} data.manufacturer [description]
  */
 export function createSensor(data) {
   return request({
     url: `/sensor`,
     method: 'post',
+    data,
+  })
+}
+
+/**
+ * 更新传感器
+ * @param  {String} data.name   [description]
+ * @param  {Number} data.type [description]
+ * @param  {String} data.number   [description]
+ * @param  {Number} data.manufacturer [description]
+ * @param  {Number} data.status [description]
+ */
+export function updateSensor(data) {
+  return request({
+    url: `/sensor`,
+    method: 'put',
     data,
   })
 }

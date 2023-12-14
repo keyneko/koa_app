@@ -31,6 +31,13 @@
               svg-icon(:name='sopIcon(sop)')
             template(#text)
               .label.van-ellipsis {{ lut('sops', sop) }}
+          van-grid-item(
+            key="Sensors"
+            :to="{ path: '/sensor/index' }")
+            template(#icon)
+              svg-icon(name='cog')
+            template(#text)
+              .label.van-ellipsis {{ $t('dashboard.sensors') }}
           //- entrance for test
           include ./fragments/testItems
 </template>

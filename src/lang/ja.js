@@ -7,11 +7,14 @@ export default {
   register: '登録',
   registered: '登録完了',
   submit: 'サブミット',
+  create: '作成',
+  filter: 'フィルタ',
   delete: '削除',
   update: '更新',
+  actions: 'アクション',
   view: 'ビュー',
   viewAll: 'リストをビュー',
-  created: '作成した',
+  created: '作成完了',
   updated: '更新完了',
   deleted: '削除完了',
   barcode: 'バーコード',
@@ -56,6 +59,7 @@ export default {
     positionGen: 'ポジションコード生成',
     positionQuery: 'ポジションコードクエリ',
     positions: 'ポジションコードリスト',
+    sensors: 'センサー',
   },
 
   login: {
@@ -83,6 +87,7 @@ export default {
     barcodeQuery: 'バーコードクエリ',
     positionGenerate: 'ポジションコード生成',
     positionQuery: 'ポジションコードクエリ',
+    sensors: 'センサー',
   },
 
   roles: {
@@ -164,4 +169,19 @@ export default {
     deleteCfm: '削除確認',
     deleteCfmMsg: 'このポジションコードを<b class=red>削除</b>してもよろしいですか?',
   },
+
+  sensors: {
+    create: 'センサーの作成',
+    update: 'センサーの更新',
+    filter: 'フィルタセンサー',
+    deleteCfm: '削除確認',
+    deleteCfmMsg: 'このセンサーを<b class=red>削除</b>してもよろしいですか?',
+    type: 'タイプ',
+    plhrType: 'タイプを選択してください',
+    requireType: 'タイプは空にできません',
+    number: 'シリアルナンバー',
+    plhrNumber: 'シリアルナンバーをご入力ください',
+    manufacturer: 'メーカー名',
+    plhrManufacturer: 'メーカー名をご入力ください',
+  }
 }

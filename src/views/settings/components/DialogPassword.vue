@@ -35,6 +35,7 @@ van-dialog(
 <script setup>
 import { ref, reactive, computed, watch } from 'vue'
 import { Toast } from 'vant'
+import { encrypt } from '@/utils/jsencrypt'
 import * as API from '@/api/user'
 import i18n from '@/lang'
 
@@ -60,7 +61,7 @@ watch(
   () => props.value,
   (value) => {
     show.value = value
-  },
+  }
 )
 
 watch(show, (value) => {
@@ -81,10 +82,12 @@ async function beforeClose(action, done) {
       await onSubmit()
       done()
       resetForm()
-    } catch (e) {
+    }
+    catch (e) {
       done(false)
     }
-  } else {
+  }
+  else {
     done()
     resetForm()
   }
@@ -92,10 +95,12 @@ async function beforeClose(action, done) {
 
 function onSubmit() {
   Toast.loading()
-  return API.updateUser(formData)
-    .then((res) => {
-      Toast.success( i18n.t('updated') )
-      emit('update')
-    })
+  return API.updateUser({
+    password: encrypt(formData.password),
+    newPassword: encrypt(formData.newPassword),
+  }).then((res) => {
+    Toast.success(i18n.t('updated'))
+    emit('update')
+  })
 }
 </script>

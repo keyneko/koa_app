@@ -77,7 +77,7 @@ const props = defineProps({
   },
   data: {
     type: Object,
-    default: {},
+    default: () => ({}),
   },
 })
 
@@ -97,14 +97,14 @@ const statusColumns = computed(() =>
   map(options.value('status'), (d) => ({
     text: d.name,
     value: d,
-  })),
+  }))
 )
 
 watch(
   () => props.value,
   (value) => {
     show.value = value
-  },
+  }
 )
 
 watch(show, (value) => {
@@ -119,7 +119,7 @@ watch(
     formData.isStackable = value.isStackable
     formData.status = value.status
     formData.files = map(value.files, (f) => ({ url: f }))
-  },
+  }
 )
 
 function fileUpload(file) {
@@ -140,10 +140,12 @@ async function beforeClose(action, done) {
       await form.value.validate()
       await onSubmit()
       done()
-    } catch (e) {
+    }
+    catch (e) {
       done(false)
     }
-  } else {
+  }
+  else {
     done()
   }
 }
@@ -156,11 +158,3 @@ function onSubmit() {
   })
 }
 </script>
-
-<style lang="scss" scoped>
-:deep(.van-field) {
-  .van-field__label {
-    margin-right: 0;
-  }
-}
-</style>

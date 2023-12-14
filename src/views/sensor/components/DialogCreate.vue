@@ -1,7 +1,7 @@
 <template lang="pug">
 van-dialog(
   v-model='show'
-  :title="$t('sensor.create')"
+  :title="$t('sensors.create')"
   :show-cancel-button='true'
   :closeOnClickOverlay='false'
   :beforeClose="beforeClose")
@@ -18,28 +18,30 @@ van-dialog(
         :rules="[ \
           { required: true, message: $t('requireName') }, \
         ]")
-      //- 序列号
-      van-field.bg-gray-50.mb-2(
-        v-model='formData.number'
-        :label="$t('sensor.number')")
-      //- 制造商
-      van-field.bg-gray-50.mb-2(
-        v-model='formData.manufacturer'
-        :label="$t('sensor.manufacturer')")
-      //- 传感器类型 TODO: required校验
+      //- 传感器类型
       van-field.bg-gray-50.mb-2(
         readonly
         clickable
         is-link
         required
         arrow-direction="down"
-        :label="$t('sensor.type')"
-        :placeholder="$t('sensor.plhrType')"
+        :label="$t('sensors.type')"
+        :placeholder="$t('sensors.plhrType')"
         :value='lut("sensor_type", formData.type)'
         @click='showTypePicker = true'
         :rules="[ \
-          { required: true, message: $t('sensor.requireType') }, \
+          { required: true, message: $t('sensors.requireType') }, \
         ]")
+      //- 序列号
+      van-field.bg-gray-50.mb-2(
+        v-model='formData.number'
+        :label="$t('sensors.number')"
+        :placeholder="$t('sensors.plhrNumber')")
+      //- 制造商
+      van-field.bg-gray-50.mb-2(
+        v-model='formData.manufacturer'
+        :label="$t('sensors.manufacturer')"
+        :placeholder="$t('sensors.plhrManufacturer')")
 
   van-popup(v-model='showTypePicker' position='bottom')
     van-picker(
@@ -137,11 +139,3 @@ function onSubmit() {
   })
 }
 </script>
-
-<style lang="scss" scoped>
-:deep(.van-field) {
-  .van-field__label {
-    margin-right: 0;
-  }
-}
-</style>

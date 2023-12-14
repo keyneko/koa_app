@@ -133,11 +133,12 @@ export const constantRoutes = [
     name: 'PositionGenerate',
     component: () => import('@/views/position/generate'),
   },
-  // SensorDht11
+
+  // 传感器
   {
-    path: '/sensor/dht11',
-    name: 'SensorDht11',
-    component: () => import('@/views/sensor/dht11'),
+    path: '/sensor/index',
+    name: 'Sensors',
+    component: () => import('@/views/sensor/index'),
   },
 ] // end of constantRoutes
 
