@@ -94,7 +94,7 @@ export function updateUser(data) {
 
 /**
  * 删除用户
- * @param  {[type]} params.id       [description]
+ * @param  {[type]} params._id       [description]
  */
 export function deleteUser(params) {
   return request({

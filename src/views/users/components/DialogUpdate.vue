@@ -35,6 +35,12 @@ van-dialog(
         template(#input)
           van-checkbox-group(v-model='formData.roles')
             van-checkbox.mb-1(v-for="d in options('roles')" :key="d.value" shape="square" :name='d.value') {{ d.name }}
+      //- 权限
+      van-field.bg-gray-50.mb-2(
+        :label="$t('permissions')")
+        template(#input)
+          van-checkbox-group(v-model='formData.permissions')
+            van-checkbox.mb-1(v-for="d in data.permissions" :key="d" shape="square" :name='d') {{ d }}
 
   van-popup(v-model='showStatusPicker' position='bottom')
     van-picker(
@@ -50,7 +56,7 @@ import { Toast } from 'vant'
 import useDicts from '@/utils/useDicts'
 import { upload } from '@/utils/fileUpload'
 import i18n from '@/lang'
-import { map } from 'lodash'
+import { map, difference } from 'lodash'
 import * as roleApi from '@/api/role'
 import * as API from '@/api/user'
 
@@ -64,7 +70,7 @@ const props = defineProps({
   },
   data: {
     type: Object,
-    default: () => ({})
+    default: () => ({}),
   },
 })
 
@@ -78,20 +84,21 @@ const formData = reactive({
   name: '',
   status: '',
   roles: [],
+  permissions: [],
 })
 
 const statusColumns = computed(() =>
   map(options.value('status'), (d) => ({
     text: d.name,
     value: d,
-  }))
+  })),
 )
 
 watch(
   () => props.value,
   (value) => {
     show.value = value
-  }
+  },
 )
 
 watch(show, (value) => {
@@ -105,7 +112,8 @@ watch(
     formData.name = value.name
     formData.status = value.status
     formData.roles = value.roles
-  }
+    formData.permissions = difference(value.permissions, value.denyPermissions)
+  },
 )
 
 function onStatusPicked({ value }) {
@@ -120,12 +128,10 @@ async function beforeClose(action, done) {
       await onSubmit()
       done()
       resetForm()
-    }
-    catch (e) {
+    } catch (e) {
       done(false)
     }
-  }
-  else {
+  } else {
     done()
     resetForm()
   }
@@ -136,11 +142,16 @@ function resetForm() {
   formData.name = ''
   formData.status = ''
   formData.roles = []
+  formData.permissions = []
 }
 
 function onSubmit() {
   Toast.loading()
-  return API.updateUser(formData).then((res) => {
+  return API.updateUser({
+    ...formData,
+    denyPermissions: difference(props.data.permissions, formData.permissions),
+    permissions: undefined,
+  }).then((res) => {
     Toast.success(i18n.t('updated'))
     emits('updated')
   })

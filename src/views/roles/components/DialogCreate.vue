@@ -18,18 +18,18 @@ van-dialog(
         :rules="[ \
           { required: true, message: $t('requireName') }, \
         ]")
-      //- SOPs
-      van-field.bg-gray-50.mb-2(
-        :label="$t('sops')")
-        template(#input)
-          van-checkbox-group(v-model='formData.sops')
-            van-checkbox.mb-1(v-for="d in options('sops')" :key="d.value" shape="square" :name='d.value') {{ d.name }}
       //- 权限
       van-field.bg-gray-50.mb-2(
         :label="$t('permissions')")
         template(#input)
           van-checkbox-group(v-model='formData.permissions')
             van-checkbox.mb-1(v-for="d in options('permissions')" :key="d.value" shape="square" :name='d.value') {{ d.name }}（{{ d.value }}）
+      //- SOPs
+      van-field.bg-gray-50.mb-2(
+        :label="$t('sops')")
+        template(#input)
+          van-checkbox-group(v-model='formData.sops')
+            van-checkbox.mb-1(v-for="d in options('sops')" :key="d.value" shape="square" :name='d.value') {{ d.name }}
 </template>
 
 <script setup>

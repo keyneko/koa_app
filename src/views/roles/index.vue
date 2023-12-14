@@ -27,7 +27,7 @@
                 .van-ellipsis {{ $t('name') }}: {{ d.name }}
                 .van-ellipsis {{ $t('status') }}: {{ lut('status', d.status) }}
                 ._van-ellipsis {{ $t('permissions') }}: {{ d.permissions.join('、') }}
-                ._van-ellipsis {{ $t('sops') }}: {{ map(d.sops, v => lut('sops', v)).join('、') }}
+                //- ._van-ellipsis {{ $t('sops') }}: {{ map(d.sops, v => lut('sops', v)).join('、') }}
             van-cell(value)
               template(#extra)
                 van-button.ml-2(
