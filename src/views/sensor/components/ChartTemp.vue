@@ -96,6 +96,7 @@ function draw(container) {
           },
         },
       }
+      chart.setOption(option, true)
     }
     else {
       const mappedData = {
@@ -115,8 +116,9 @@ function draw(container) {
       }
 
       option = merge({}, initOption, mappedData, { graphic: { invisible: true } })
+
+      chart.setOption(option /*, true*/)
     }
-    chart.setOption(option /*, true*/)
   }, 0)
 }
 

@@ -20,9 +20,7 @@
         :key="d._id"
         :type="d._id === queryParams.sensorId?'primary':'default'"
         size="medium"
-        @click="onTagClicked(d)"
-        closeable
-        @close="onDelete(d)") {{ d.name }}
+        @click="onTagClicked(d)") {{ d.name || '-' }}
 
     Chart.mx-4(:data="ds" :height="400")
 
@@ -39,7 +37,7 @@ import { useRouter, useRoute } from '@/router'
 import i18n from '@/lang'
 import Chart from './components/ChartTemp'
 import * as API from '@/api/sensor'
-import { find, without } from 'lodash'
+import { map, find, without } from 'lodash'
 import DialogCreate from './components/DialogCreate'
 import DialogUpdate from './components/DialogUpdate'
 import DialogFilter from './components/DialogFilter'
@@ -66,9 +64,10 @@ const actions = ref([])
 
 watchEffect(() => {
   actions.value = [
+    { id: 'filter', name: i18n.t('filter') },
     { id: 'create', name: i18n.t('create') },
     { id: 'update', name: i18n.t('update'), disabled: !queryParams.sensorId },
-    { id: 'filter', name: i18n.t('filter') },
+    { id: 'delete', name: i18n.t('delete'), disabled: !queryParams.sensorId },
   ]
 })
 
@@ -77,6 +76,11 @@ function getSensors(filters = {}) {
   return API.getSensors(filters)
     .then((res) => {
       list.value = res.data
+
+      if (!map(res.data, (d) => d._id).includes(queryParams.sensorId)) {
+        ds.value = []
+        queryParams.sensorId = undefined
+      }
     })
     .finally(() => {
       Toast.clear()
@@ -119,6 +123,11 @@ function onAction({ id }) {
   }
   else if (id == 'filter') {
     showDialogFilter.value = true
+  }
+  else if (id == 'delete') {
+    const d = find(list.value, d => d._id == queryParams.sensorId)
+    console.log(111, d)
+    onDelete(d)
   }
 }
 
