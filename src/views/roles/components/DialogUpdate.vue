@@ -10,7 +10,7 @@ van-dialog(
     ref='form')
     van-cell-group.title-basis
       //- 名称
-      van-field(
+      van-field.bg-gray-50.mb-2(
         v-model='formData.name'
         required
         :label="$t('name')"
@@ -35,6 +35,12 @@ van-dialog(
         template(#input)
           van-checkbox-group(v-model='formData.sops')
             van-checkbox.mb-1(v-for="d in options('sops')" :key="d.value" shape="square" :name='d.value') {{ d.name }}
+      //- 权限
+      van-field.bg-gray-50.mb-2(
+        :label="$t('permissions')")
+        template(#input)
+          van-checkbox-group(v-model='formData.permissions')
+            van-checkbox.mb-1(v-for="d in options('permissions')" :key="d.value" shape="square" :name='d.value') {{ d.name }}（{{ d.value }}）
 
   van-popup(v-model='showStatusPicker' position='bottom')
     van-picker(
@@ -74,8 +80,9 @@ const showStatusPicker = ref(false)
 const formData = reactive({
   value: '',
   name: '',
-  sops: [],
   status: '',
+  sops: [],
+  permissions: [],
 })
 
 const statusColumns = computed(() =>
@@ -101,8 +108,9 @@ watch(
   (value) => {
     formData.value = value.value
     formData.name = value.name
-    formData.sops = value.sops
     formData.status = value.status
+    formData.sops = value.sops
+    formData.permissions = value.permissions
   }
 )
 
@@ -132,8 +140,9 @@ async function beforeClose(action, done) {
 function resetForm() {
   formData.value = ''
   formData.name = ''
-  formData.sops = []
   formData.status = ''
+  formData.sops = []
+  formData.permissions = []
 }
 
 function onSubmit() {

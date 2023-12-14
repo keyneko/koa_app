@@ -47,7 +47,7 @@ export function updateSensor(data) {
 
 /**
  * 删除传感器
- * @param  {String} params.id   [description]
+ * @param  {String} params._id   [description]
  */
 export function deleteSensor(params) {
   return request({

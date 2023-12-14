@@ -67,7 +67,12 @@ watchEffect(() => {
     { id: 'filter', name: i18n.t('filter') },
     { id: 'create', name: i18n.t('create') },
     { id: 'update', name: i18n.t('update'), disabled: !queryParams.sensorId },
-    { id: 'delete', name: i18n.t('delete'), disabled: !queryParams.sensorId },
+    {
+      id: 'delete',
+      name: i18n.t('delete'),
+      disabled: !queryParams.sensorId,
+      color: queryParams.sensorId ? '#ee0a24' : '',
+    },
   ]
 })
 
@@ -125,8 +130,7 @@ function onAction({ id }) {
     showDialogFilter.value = true
   }
   else if (id == 'delete') {
-    const d = find(list.value, d => d._id == queryParams.sensorId)
-    console.log(111, d)
+    const d = find(list.value, (d) => d._id == queryParams.sensorId)
     onDelete(d)
   }
 }

@@ -45,6 +45,7 @@ export default {
   roles_: 'ロール',
   username: 'ユーザー名',
   sops: 'SOP',
+  permissions: '権限',
 
   routes: {
     login: 'ログイン',

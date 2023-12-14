@@ -45,6 +45,7 @@ export default {
   roles_: '角色',
   username: '用户名',
   sops: 'SOP',
+  permissions: '权限',
 
   routes: {
     login: '登录',

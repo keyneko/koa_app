@@ -20,12 +20,13 @@
         tag="div"
         enter-active-class='fadeInRight'
         leave-active-class='fadeOutLeft')
-        .animated.faster(v-for="d in list" :key="d._id")
+        .animated.faster(v-for="d in list" :key="d.value")
           van-cell-group.title-basis.mb-4(inset)
             van-cell(center)
               template
                 .van-ellipsis {{ $t('name') }}: {{ d.name }}
                 .van-ellipsis {{ $t('status') }}: {{ lut('status', d.status) }}
+                ._van-ellipsis {{ $t('permissions') }}: {{ d.permissions.join('、') }}
                 ._van-ellipsis {{ $t('sops') }}: {{ map(d.sops, v => lut('sops', v)).join('、') }}
             van-cell(value)
               template(#extra)
@@ -51,6 +52,7 @@ import { useRouter, useRoute } from '@/router'
 import useDicts from '@/utils/useDicts'
 import i18n from '@/lang'
 import * as API from '@/api/role'
+import { getPermissions } from '@/api/permission'
 import store from '@/store'
 import { map, without } from 'lodash'
 import DialogCreate from './components/DialogCreate'
@@ -68,6 +70,21 @@ const showDialogCreate = ref(false)
 function getRoles() {
   return API.getRoles().then((res) => {
     list.value = res.data
+  })
+}
+
+function getPermissionDicts() {
+  const { dicts } = store.state.dicts
+  if (dicts['permissions']) return
+
+  return getPermissions().then((res) => {
+    store.commit('dicts/SET_DICT', {
+      key: 'permissions',
+      list: map(res.data, (d) => ({
+        value: d.pattern,
+        name: d.name,
+      })),
+    })
   })
 }
 
@@ -99,4 +116,5 @@ function onCreate() {
 }
 
 getRoles()
+getPermissionDicts()
 </script>
