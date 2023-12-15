@@ -9,7 +9,7 @@ van-dialog(
       b.black(v-copy) {{ data.value }}
     van-cell(:title="$t('g.name')")
       | {{ data.name }}
-    van-cell(:title="$t('positionGen.isStackable')")
+    van-cell(:title="$t('positionGenerate.isStackable')")
       | {{ lut('position_stackable', data.isStackable) }}
     van-cell(:title="$t('g.status')")
       | {{ lut('status', data.status) }}

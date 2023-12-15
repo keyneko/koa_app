@@ -22,8 +22,8 @@ van-dialog(
       //- 是否可堆叠
       van-field.bg-gray-50.mb-2(
         required
-        :label="$t('positionGen.isStackable')"
-        :rules="[{ required: true, message: $t('positionGen.requireStackable') }]")
+        :label="$t('positionGenerate.isStackable')"
+        :rules="[{ required: true, message: $t('positionGenerate.requireStackable') }]")
         template(#input)
           van-radio-group(v-model='formData.isStackable' direction='horizontal')
             van-radio.mb-1(v-for="d in options('position_stackable')" :key="d._id" :name='d.value') {{ d.name }}

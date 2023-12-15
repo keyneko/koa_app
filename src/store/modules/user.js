@@ -15,6 +15,7 @@ const state = {
   avatar: '',
   roles: [],
   sops: [],
+  permissions: [],
 }
 
 const mutations = {
@@ -41,6 +42,9 @@ const mutations = {
   },
   SET_SOPS: (state, sops) => {
     state.sops = sops
+  },
+  SET_PERMISSIONS: (state, permissions) => {
+    state.permissions = permissions
   },
 }
 
@@ -78,6 +82,7 @@ const actions = {
         commit('SET_AVATAR', '')
         commit('SET_ROLES', [])
         commit('SET_SOPS', [])
+        commit('SET_PERMISSIONS', [])
         removeToken()
         resolve()
       }).catch(error => {
@@ -104,6 +109,7 @@ const actions = {
         commit('SET_AVATAR', user.avatar)
         commit('SET_ROLES', user.roles)
         commit('SET_SOPS', user.sops)
+        commit('SET_PERMISSIONS', user.permissions)
         resolve(user)
       }).catch(error => {
         reject(error)

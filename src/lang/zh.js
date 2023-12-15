@@ -62,10 +62,10 @@ export default {
     permissions: "权限词条",
     roles: "角色管理",
     users: "用户管理",
-    barcodeGen: '条码生成',
+    barcodeGenerate: '条码生成',
     barcodeQuery: '条码查询',
     barcodes: '条码列表',
-    positionGen: '库位码生成',
+    positionGenerate: '库位码生成',
     positionQuery: '库位码查询',
     positions: '库位码列表',
     sensors: '传感器',
@@ -139,7 +139,7 @@ export default {
     requireAvatar: '请上传头像图片',
   },
 
-  barcodeGen: {
+  barcodeGenerate: {
     category: '分类',
     plhrCategory: '请输入分类',
     requireCategory: '分类不能为空',
@@ -158,7 +158,7 @@ export default {
     deleteCfmMsg: '确认<b class=red>删除</b>该条码吗？',
   },
 
-  positionGen: {
+  positionGenerate: {
     areaCode: '地区编号',
     plhrAreaCode: '请输入地区编号',
     requireAreaCode: '地区编号不能为空',

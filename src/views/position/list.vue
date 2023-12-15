@@ -8,7 +8,7 @@
 
   .page__body
     .mb-2.mx-5
-      div {{ $t('positionGen.isStackable') }}
+      div {{ $t('positionGenerate.isStackable') }}
       van-tag.mr-3(
         v-for="d in options('position_stackable')"
         :key="d._id"

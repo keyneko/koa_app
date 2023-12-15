@@ -2,7 +2,7 @@
 .page--fixed
   .page__header
     van-nav-bar(
-      :title="$t('routes.positionGen')"
+      :title="$t('routes.positionGenerate')"
       left-arrow
       @click-left="$router.back()")
 
@@ -15,34 +15,34 @@
       van-cell-group.mb-4(inset)
         van-field(
           v-model='formData.areaCode'
-          :label="$t('positionGen.areaCode')"
-          :placeholder="$t('positionGen.plhrAreaCode')"
+          :label="$t('positionGenerate.areaCode')"
+          :placeholder="$t('positionGenerate.plhrAreaCode')"
           required
           :rules="[ \
-            { required: true, message: $t('positionGen.requireAreaCode') }, \
-            { validator: (v) => /^[A-Z0-9]{1,4}$/.test(v), message: $t('positionGen.formatErrAreaCode') }, \
+            { required: true, message: $t('positionGenerate.requireAreaCode') }, \
+            { validator: (v) => /^[A-Z0-9]{1,4}$/.test(v), message: $t('positionGenerate.formatErrAreaCode') }, \
           ]")
       //- 栋编号
       van-cell-group.mb-4(inset)
         van-field(
           v-model='formData.buildingCode'
-          :label="$t('positionGen.buildingCode')"
-          :placeholder="$t('positionGen.plhrBuildingCode')"
+          :label="$t('positionGenerate.buildingCode')"
+          :placeholder="$t('positionGenerate.plhrBuildingCode')"
           required
           :rules="[ \
-            { required: true, message: $t('positionGen.requireBuildingCode') }, \
-            { validator: (v) => /^[A-Z0-9]{1,2}$/.test(v), message: $t('positionGen.formatErrBuildingCode') }, \
+            { required: true, message: $t('positionGenerate.requireBuildingCode') }, \
+            { validator: (v) => /^[A-Z0-9]{1,2}$/.test(v), message: $t('positionGenerate.formatErrBuildingCode') }, \
           ]")
       //- 楼层编号
       van-cell-group.mb-4(inset)
         van-field(
           v-model='formData.floorCode'
-          :label="$t('positionGen.floorCode')"
-          :placeholder="$t('positionGen.plhrFloorCode')"
+          :label="$t('positionGenerate.floorCode')"
+          :placeholder="$t('positionGenerate.plhrFloorCode')"
           required
           :rules="[ \
-            { required: true, message: $t('positionGen.requireFloorCode') }, \
-            { validator: (v) => /^[A-Z0-9]{1,2}$/.test(v), message: $t('positionGen.formatErrFloorCode') }, \
+            { required: true, message: $t('positionGenerate.requireFloorCode') }, \
+            { validator: (v) => /^[A-Z0-9]{1,2}$/.test(v), message: $t('positionGenerate.formatErrFloorCode') }, \
           ]")
       //- 名称
       van-cell-group.mb-4(inset)
@@ -58,8 +58,8 @@
       van-cell-group.mb-4(inset)
         van-field(
           required
-          :label="$t('positionGen.isStackable')"
-          :rules="[{ required: true, message: $t('positionGen.requireStackable') }]")
+          :label="$t('positionGenerate.isStackable')"
+          :rules="[{ required: true, message: $t('positionGenerate.requireStackable') }]")
           template(#input)
             van-radio-group(v-model='formData.isStackable' direction='horizontal')
               van-radio.mb-1(v-for="d in options('position_stackable')" :key="d._id" :name='d.value') {{ d.name }}

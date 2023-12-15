@@ -2,7 +2,7 @@
 .page--fixed
   .page__header
     van-nav-bar(
-      :title="$t('routes.barcodeGen')"
+      :title="$t('routes.barcodeGenerate')"
       left-arrow
       @click-left="$router.back()")
 
@@ -15,12 +15,12 @@
       van-cell-group.mb-4(inset)
         van-field(
           v-model='formData.category'
-          :label="$t('barcodeGen.category')"
-          :placeholder="$t('barcodeGen.plhrCategory')"
+          :label="$t('barcodeGenerate.category')"
+          :placeholder="$t('barcodeGenerate.plhrCategory')"
           required
           :rules="[ \
-            { required: true, message: $t('barcodeGen.requireCategory') }, \
-            { validator: fn, message: $t('barcodeGen.formatErrCategory') }, \
+            { required: true, message: $t('barcodeGenerate.requireCategory') }, \
+            { validator: fn, message: $t('barcodeGenerate.formatErrCategory') }, \
           ]")
       //- 名称
       van-cell-group.mb-4(inset)

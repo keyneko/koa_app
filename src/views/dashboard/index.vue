@@ -16,39 +16,70 @@
   .page__body
     van-cell-group(inset)
       van-cell.head(:title="$t('dashboard.mySkills')")
-      van-empty(v-if='sops.length == 0' image-size="64" :description="$t('g.noData')")
-      template(v-else)
-        van-grid(
-          clickable
-          center
-          border
-          :column-num="3")
-          //- 权限词条
-          van-grid-item(
-            key="Permissions"
-            :to="{ path: '/permissions' }")
-            template(#icon)
-              svg-icon(name='application-cog-outline')
-            template(#text)
-              .label.van-ellipsis {{ $t('dashboard.permissions') }}
-          van-grid-item(
-            v-for="(sop, i) in sops"
-            :key="i"
-            :to="{path: getEntryPath(sop)}")
-            template(#icon)
-              svg-icon(:name='sopIcon(sop)')
-            template(#text)
-              .label.van-ellipsis {{ lut('sops', sop) }}
-          //- 传感器
-          van-grid-item(
-            key="Sensors"
-            :to="{ path: '/sensor/index' }")
-            template(#icon)
-              svg-icon(name='cog')
-            template(#text)
-              .label.van-ellipsis {{ $t('dashboard.sensors') }}
-          //- entrance for test
-          include ./fragments/testItems
+      van-grid(
+        clickable
+        center
+        border
+        :column-num="3")
+        //- 权限词条
+        van-grid-item(
+          key="permissions"
+          :to="{ path: '/permissions' }")
+          template(#icon)
+            svg-icon(name='database-cog-outline')
+          template(#text)
+            .label.van-ellipsis {{ $t('dashboard.permissions') }}
+        //- 角色管理
+        van-grid-item(
+          :to="{ path: '/roles' }")
+          template(#icon)
+            svg-icon(name='account-edit')
+          template(#text)
+            .label.van-ellipsis {{ $t('dashboard.roles') }}
+        //- 用户管理
+        van-grid-item(
+          :to="{ path: '/users' }")
+          template(#icon)
+            svg-icon(name='account-group')
+          template(#text)
+            .label.van-ellipsis {{ $t('dashboard.users') }}
+        //- 条码生成
+        van-grid-item(
+          :to="{ path: '/barcode/generate' }")
+          template(#icon)
+            svg-icon(name='barcode')
+          template(#text)
+            .label.van-ellipsis {{ $t('dashboard.barcodeGenerate') }}
+        //- 条码管理
+        van-grid-item(
+          :to="{ path: '/barcode/query' }")
+          template(#icon)
+            svg-icon(name='barcode-scan')
+          template(#text)
+            .label.van-ellipsis {{ $t('dashboard.barcodeQuery') }}
+        //- 库位码生成
+        van-grid-item(
+          :to="{ path: '/position/generate' }")
+          template(#icon)
+            svg-icon(name='qrcode')
+          template(#text)
+            .label.van-ellipsis {{ $t('dashboard.positionGenerate') }}
+        //- 库位码管理
+        van-grid-item(
+          :to="{ path: '/position/query' }")
+          template(#icon)
+            svg-icon(name='qrcode-scan')
+          template(#text)
+            .label.van-ellipsis {{ $t('dashboard.positionQuery') }}
+        //- 传感器
+        van-grid-item(
+          :to="{ path: '/sensor/index' }")
+          template(#icon)
+            svg-icon(name='wifi-cog')
+          template(#text)
+            .label.van-ellipsis {{ $t('dashboard.sensors') }}
+        //- entrance for test
+        include ./fragments/testItems
 </template>
 
 <script>
@@ -57,18 +88,20 @@ export default {
 }
 </script>
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, toRef } from 'vue'
 import { Toast } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import useDicts from '@/utils/useDicts'
 import useSops from '@/utils/useSops'
+import store from '@/store'
 import * as API from '@/api/user'
 import Avatar from '@/components/Avatar'
 
 const router = useRouter()
 const route = useRoute()
 const { lut, options } = useDicts()
-const { sops, sopIcon, getEntryPath } = useSops()
+
+const permissions = toRef(store.state.user, 'permissions')
 </script>
 
 <style lang="scss" scoped>
