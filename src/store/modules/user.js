@@ -1,10 +1,6 @@
-import {
-  captcha,
-  login,
-  logout,
-  getUser,
-} from '@/api/user'
+import { captcha, login, logout, getUser } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
+import { difference } from 'lodash'
 
 const state = {
   captcha: {},
@@ -51,48 +47,54 @@ const mutations = {
 const actions = {
   captcha({ commit }) {
     return new Promise((resolve, reject) => {
-      captcha().then(({ captcha, captchaId }) => {
-        commit('SET_CAPTCHA', { captcha, captchaId })
-        resolve({ captcha, captchaId })
-      }).catch(error => {
-        reject(error)
-      })
+      captcha()
+        .then(({ captcha, captchaId }) => {
+          commit('SET_CAPTCHA', { captcha, captchaId })
+          resolve({ captcha, captchaId })
+        })
+        .catch((error) => {
+          reject(error)
+        })
     })
   },
 
   login({ commit }, params) {
     return new Promise((resolve, reject) => {
-      login(params).then(res => {
-        commit('SET_TOKEN', res.token)
-        setToken(res.token)
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
+      login(params)
+        .then((res) => {
+          commit('SET_TOKEN', res.token)
+          setToken(res.token)
+          resolve()
+        })
+        .catch((error) => {
+          reject(error)
+        })
     })
   },
 
   logout({ commit }) {
     return new Promise((resolve, reject) => {
-      logout().then(() => {
-        commit('SET_TOKEN', '')
-        commit('SET_USER', {})
-        commit('SET_USERNAME', '')
-        commit('SET_NAME', '')
-        commit('SET_AVATAR', '')
-        commit('SET_ROLES', [])
-        commit('SET_SOPS', [])
-        commit('SET_PERMISSIONS', [])
-        removeToken()
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
+      logout()
+        .then(() => {
+          commit('SET_TOKEN', '')
+          commit('SET_USER', {})
+          commit('SET_USERNAME', '')
+          commit('SET_NAME', '')
+          commit('SET_AVATAR', '')
+          commit('SET_ROLES', [])
+          commit('SET_SOPS', [])
+          commit('SET_PERMISSIONS', [])
+          removeToken()
+          resolve()
+        })
+        .catch((error) => {
+          reject(error)
+        })
     })
   },
 
   resetToken({ commit }) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       commit('SET_TOKEN', '')
       removeToken()
       resolve()
@@ -101,27 +103,38 @@ const actions = {
 
   getUser({ commit }) {
     return new Promise((resolve, reject) => {
-      getUser().then(res => {
-        const user = res.data || {}
-        commit('SET_USER', user)
-        commit('SET_USERNAME', user.username)
-        commit('SET_NAME', user.name)
-        commit('SET_AVATAR', user.avatar)
-        commit('SET_ROLES', user.roles)
-        commit('SET_SOPS', user.sops)
-        commit('SET_PERMISSIONS', user.permissions)
-        resolve(user)
-      }).catch(error => {
-        reject(error)
-      })
+      getUser()
+        .then((res) => {
+          const user = res.data
+          const {
+            username,
+            name,
+            avatar,
+            roles,
+            sops,
+            permissions,
+            denyPermissions,
+          } = user
+
+          commit('SET_USER', user)
+          commit('SET_USERNAME', username)
+          commit('SET_NAME', name)
+          commit('SET_AVATAR', avatar)
+          commit('SET_ROLES', roles)
+          commit('SET_SOPS', sops)
+          commit('SET_PERMISSIONS', difference(permissions, denyPermissions))
+          resolve(user)
+        })
+        .catch((error) => {
+          reject(error)
+        })
     })
   },
-
 }
 
 export default {
   namespaced: true,
   state,
   mutations,
-  actions
+  actions,
 }

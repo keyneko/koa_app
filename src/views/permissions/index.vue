@@ -20,7 +20,7 @@
         van-collapse(v-model='activeName' accordion)
           van-collapse-item(v-for="d in list" :key="d._id" :name='d._id')
             template(#title)
-              b {{ d.pattern }}
+              b(v-copy.silent) {{ d.pattern }}
             template
               .van-ellipsis {{ $t('g.name') }}: {{ d.name }}
               .van-ellipsis {{ $t('g.description') }}: {{ d.description }}

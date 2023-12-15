@@ -4,6 +4,8 @@ import i18n from '@/lang'
 
 const Copy = {
   bind(el, binding) {
+    const { silent } = binding.modifiers
+
     el.addEventListener('click', (evt) => {
       const clipboard = new Clipboard(el, {
         text: () => {
@@ -12,12 +14,10 @@ const Copy = {
       })
 
       function clipboardSuccess(toast) {
-        Toast.success(toast || i18n.t('g.copied'))
+        if (!silent) Toast.success(toast || i18n.t('g.copied'))
       }
 
-      function clipboardError() {
-
-      }
+      function clipboardError() {}
 
       clipboard.on('success', () => {
         clipboardSuccess(binding.arg)

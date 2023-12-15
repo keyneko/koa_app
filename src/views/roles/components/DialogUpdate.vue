@@ -33,14 +33,14 @@ van-dialog(
       van-field.bg-gray-50.mb-2(
         :label="$t('g.permissions')")
         template(#input)
-          van-checkbox-group(v-model='formData.permissions')
+          van-checkbox-group.max-h-64.overflow-y-auto(v-model='formData.permissions')
             van-checkbox.mb-1(v-for="d in options('permissions')" :key="d.value" shape="square" :name='d.value') {{ d.value }}
-      //- SOPs
-      van-field.bg-gray-50.mb-2(
-        :label="$t('g.sops')")
-        template(#input)
-          van-checkbox-group(v-model='formData.sops')
-            van-checkbox.mb-1(v-for="d in options('sops')" :key="d.value" shape="square" :name='d.value') {{ d.name }}
+      //- //- SOPs
+      //- van-field.bg-gray-50.mb-2(
+      //-   :label="$t('g.sops')")
+      //-   template(#input)
+      //-     van-checkbox-group(v-model='formData.sops')
+      //-       van-checkbox.mb-1(v-for="d in options('sops')" :key="d.value" shape="square" :name='d.value') {{ d.name }}
 
   van-popup(v-model='showStatusPicker' position='bottom')
     van-picker(

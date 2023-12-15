@@ -12,6 +12,10 @@ const mutations = {
     }
   },
 
+  REMOVE_DICT: (state, key) => {
+    set(state.dicts, key, undefined)
+  },
+
   EMPTY_DICTS: (state) => {
     state.dicts = {}
   },

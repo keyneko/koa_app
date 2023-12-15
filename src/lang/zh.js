@@ -52,6 +52,9 @@ export default {
     pattern: '模式',
     plhrPattern: '请输入模式（*:*:*）',
     requirePattern: '模式不能为空',
+    identifier: '标识符',
+    plhrIdentifier: '请输入标识符',
+    requireIdentifier: '标识符不能为空',
   },
 
   routes: {

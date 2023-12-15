@@ -52,6 +52,9 @@ export default {
     pattern: 'パターン',
     plhrPattern: 'パターンを入力してください (*:*:*)',
     requirePattern: 'パターンは空できません',
+    identifier: '識別子',
+    plhrIdentifier: '識別子を入力してください',
+    requireIdentifier: '識別子は空できません',
   },
 
   routes: {

@@ -52,6 +52,9 @@ export default {
     pattern: 'Pattern',
     plhrPattern: 'Please type pattern (*:*:*)',
     requirePattern: 'Pattern cannot be empty',
+    identifier: 'Identifier',
+    plhrIdentifier: 'Please type identifier',
+    requireIdentifier: 'Identifier cannot be empty',
   },
 
   routes: {

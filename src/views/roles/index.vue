@@ -41,8 +41,8 @@
                   @click="onUpdate(d)"
                   ) {{ $t('g.update') }}
 
-  DialogCreate(v-model="showDialogCreate" @created="getRoles")
-  DialogUpdate(v-model="showDialogUpdate" :data="role" @updated="getRoles")
+  DialogCreate(v-model="showDialogCreate" @created="() => { getRoles(); resetRoleDicts() }")
+  DialogUpdate(v-model="showDialogUpdate" :data="role" @updated="() => { getRoles(); resetRoleDicts() }")
 </template>
 
 <script setup>
@@ -68,7 +68,7 @@ const showDialogCreate = ref(false)
 const showDialogUpdate = ref(false)
 
 function getRoles() {
-  return API.getRoles().then((res) => {
+  return API.getRoles({ sortOrder: 'desc' }).then((res) => {
     list.value = res.data
   })
 }
@@ -88,6 +88,10 @@ function getPermissionDicts() {
   })
 }
 
+function resetRoleDicts() {
+  store.commit('dicts/REMOVE_DICT', 'roles')
+}
+
 function onDelete(d) {
   Dialog.confirm({
     title: i18n.t('roles.deleteCfm'),
@@ -95,9 +99,10 @@ function onDelete(d) {
   })
     .then(() => {
       Toast.loading()
-      return API.deleteRole({ value: d.value }).then((res) => {
+      return API.deleteRole({ _id: d._id }).then((res) => {
         Toast.success(i18n.t('g.deleted'))
         list.value = without(list.value, d)
+        resetRoleDicts()
       })
     })
     .catch(() => {})

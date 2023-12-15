@@ -43,7 +43,7 @@ export function updateRole(data) {
 
 /**
  * 删除角色
- * @param  {[type]} params.value [description]
+ * @param  {[type]} params._id [description]
  */
 export function deleteRole(params) {
   return request({

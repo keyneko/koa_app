@@ -9,6 +9,15 @@ van-dialog(
     validate-first
     ref='form')
     van-cell-group.title-basis
+      //- 标识符
+      van-field.bg-gray-50.mb-2(
+        v-model='formData.value'
+        required
+        :label="$t('g.identifier')"
+        :placeholder="$t('g.plhrIdentifier')"
+        :rules="[ \
+          { required: true, message: $t('g.requireIdentifier') }, \
+        ]")
       //- 名称
       van-field.bg-gray-50.mb-2(
         v-model='formData.name'
@@ -22,14 +31,14 @@ van-dialog(
       van-field.bg-gray-50.mb-2(
         :label="$t('g.permissions')")
         template(#input)
-          van-checkbox-group(v-model='formData.permissions')
+          van-checkbox-group.max-h-64.overflow-y-auto(v-model='formData.permissions')
             van-checkbox.mb-1(v-for="d in options('permissions')" :key="d.value" shape="square" :name='d.value') {{ d.value }}
-      //- SOPs
-      van-field.bg-gray-50.mb-2(
-        :label="$t('g.sops')")
-        template(#input)
-          van-checkbox-group(v-model='formData.sops')
-            van-checkbox.mb-1(v-for="d in options('sops')" :key="d.value" shape="square" :name='d.value') {{ d.name }}
+      //- //- SOPs
+      //- van-field.bg-gray-50.mb-2(
+      //-   :label="$t('g.sops')")
+      //-   template(#input)
+      //-     van-checkbox-group(v-model='formData.sops')
+      //-       van-checkbox.mb-1(v-for="d in options('sops')" :key="d.value" shape="square" :name='d.value') {{ d.name }}
 </template>
 
 <script setup>
@@ -55,6 +64,7 @@ const form = ref(null)
 const show = ref(false)
 
 const formData = reactive({
+  value: '',
   name: '',
   sops: [],
   permissions: [],
@@ -90,6 +100,7 @@ async function beforeClose(action, done) {
 }
 
 function resetForm() {
+  formData.value = ''
   formData.name = ''
   formData.sops = []
   formData.permissions = []
@@ -97,7 +108,10 @@ function resetForm() {
 
 function onSubmit() {
   Toast.loading()
-  return API.createRole(formData).then((res) => {
+  return API.createRole({
+    ...formData,
+    value: formData.value.trim(),
+  }).then((res) => {
     Toast.success(i18n.t('g.created'))
     emits('created')
   })
