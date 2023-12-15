@@ -12,7 +12,7 @@ export default {
     filter: '筛选',
     delete: '删除',
     update: '更新',
-    actions: '操作',
+    actions: '操作列表',
     view: '查看',
     viewAll: '查看全部',
     created: '创建成功',
@@ -92,7 +92,7 @@ export default {
   },
 
   dashboard: {
-    mySkills: '我的技能',
+    applications: '我的应用',
     permissions: "权限词条",
     roles: '角色管理',
     users: '用户管理',
@@ -194,6 +194,7 @@ export default {
     create: '新建传感器',
     update: '更新传感器',
     filter: '筛选传感器',
+    selectDate: '选择日期',
     deleteCfm: '确认删除',
     deleteCfmMsg: '确认<b class=red>删除</b>该传感器吗？',
     type: '类型',

@@ -92,7 +92,7 @@ export default {
   },
 
   dashboard: {
-    mySkills: 'My Skills',
+    applications: 'My Applications',
     permissions: "Permissions",
     roles: 'Roles Management',
     users: 'Users Management',
@@ -194,6 +194,7 @@ export default {
     create: 'Create Sensor',
     update: 'Update Sensor',
     filter: 'Filter Sensor',
+    selectDate: 'Select Date',
     deleteCfm: 'Delete Confirm',
     deleteCfmMsg: 'Are you sure to <b class=red>delete</b> this sensor?',
     type: 'Type',

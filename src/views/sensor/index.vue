@@ -24,7 +24,21 @@
 
     Chart.mx-4(:data="ds" :height="400")
 
-  van-action-sheet(v-model="showActions" close-on-click-action :actions="actions" @select="onAction")
+  van-action-sheet(
+    v-model="showActions"
+    close-on-click-action
+    :title="$t('g.actions')"
+    :actions="actions"
+    @select="onAction")
+
+  van-calendar(
+    v-model="showDatePicker"
+    :min-date='datepicker.minDate'
+    :max-date='datepicker.maxDate'
+    :current-date='new Date(queryParams.dateTime)'
+    :show-confirm="false"
+    @confirm="onDatePicked")
+
   DialogCreate(v-model="showDialogCreate" @created="getSensors")
   DialogUpdate(v-model="showDialogUpdate" :data="selSensor" @updated="getSensors")
   DialogFilter(v-model="showDialogFilter" @confirm="getSensors")
@@ -38,6 +52,7 @@ import i18n from '@/lang'
 import Chart from './components/ChartTemp'
 import * as API from '@/api/sensor'
 import { map, find, without } from 'lodash'
+import dayjs from 'dayjs'
 import DialogCreate from './components/DialogCreate'
 import DialogUpdate from './components/DialogUpdate'
 import DialogFilter from './components/DialogFilter'
@@ -47,6 +62,7 @@ const route = useRoute()
 
 const buttonLoading = ref(false)
 const showActions = ref(false)
+const showDatePicker = ref(false)
 const showDialogCreate = ref(false)
 const showDialogUpdate = ref(false)
 const showDialogFilter = ref(false)
@@ -55,15 +71,32 @@ const list = ref([])
 const ds = ref([])
 
 const queryParams = reactive({
-  sensorId: '',
+  sensorId: undefined,
+  dateTime: undefined,
 })
 
-const selSensor = computed(() => find(list.value, (d) => d._id == queryParams.sensorId) || {})
+const now = new Date()
+const threeYearsAgo = new Date(now)
+threeYearsAgo.setFullYear(threeYearsAgo.getFullYear() - 3)
+
+const datepicker = {
+  minDate: threeYearsAgo,
+  maxDate: now,
+}
+
+const selSensor = computed(
+  () => find(list.value, (d) => d._id == queryParams.sensorId) || {}
+)
 
 const actions = ref([])
 
 watchEffect(() => {
   actions.value = [
+    {
+      id: 'selectDate',
+      name: i18n.t('sensors.selectDate'),
+      disabled: !queryParams.sensorId,
+    },
     { id: 'filter', name: i18n.t('g.filter') },
     { id: 'create', name: i18n.t('g.create') },
     { id: 'update', name: i18n.t('g.update'), disabled: !queryParams.sensorId },
@@ -92,8 +125,7 @@ function getSensors(filters = {}) {
     })
 }
 
-function onTagClicked(d) {
-  queryParams.sensorId = d._id
+function getSensorRecords() {
   Toast.loading()
   return API.sensorRecords(queryParams)
     .then((res) => {
@@ -102,6 +134,17 @@ function onTagClicked(d) {
     .finally(() => {
       Toast.clear()
     })
+}
+
+function onTagClicked(d) {
+  queryParams.sensorId = d._id
+  getSensorRecords()
+}
+
+function onDatePicked(date) {
+  showDatePicker.value = false
+  queryParams.dateTime = dayjs(date).format('YYYY-MM-DD')
+  getSensorRecords()
 }
 
 function onDelete(d) {
@@ -132,6 +175,9 @@ function onAction({ id }) {
   else if (id == 'delete') {
     const d = find(list.value, (d) => d._id == queryParams.sensorId)
     onDelete(d)
+  }
+  else if (id == 'selectDate') {
+    showDatePicker.value = true
   }
 }
 

@@ -15,7 +15,7 @@
 
   .page__body
     van-cell-group(inset)
-      van-cell.head(:title="$t('dashboard.mySkills')")
+      van-cell.head(:title="$t('dashboard.applications')")
       van-grid(
         clickable
         center
@@ -91,7 +91,7 @@
           v-perm="['sensors:*:*']"
           :to="{ path: '/sensor/index' }")
           template(#icon)
-            svg-icon(name='wifi-cog')
+            svg-icon(name='wifi-cog' color="#07c160")
           template(#text)
             .label.van-ellipsis {{ $t('dashboard.sensors') }}
 

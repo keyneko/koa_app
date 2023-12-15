@@ -12,7 +12,7 @@ export default {
     filter: 'フィルタ',
     delete: '削除',
     update: '更新',
-    actions: 'アクション',
+    actions: 'アクションリスト',
     view: 'ビュー',
     viewAll: 'リストをビュー',
     created: '作成完了',
@@ -92,7 +92,7 @@ export default {
   },
 
   dashboard: {
-    mySkills: 'スキル',
+    applications: '私のアプリケーション',
     permissions: "パーミッション",
     roles: 'ロール管理',
     users: 'ユーザー管理',
@@ -194,6 +194,7 @@ export default {
     create: 'センサーの作成',
     update: 'センサーの更新',
     filter: 'フィルタセンサー',
+    selectDate: '日付の選択',
     deleteCfm: '削除確認',
     deleteCfmMsg: 'このセンサーを<b class=red>削除</b>してもよろしいですか?',
     type: 'タイプ',
