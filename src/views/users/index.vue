@@ -7,7 +7,7 @@
       @click-left="$router.back()")
 
   .page__body
-    van-empty(v-if='list.length == 0' :description="$t('noData')")
+    van-empty(v-if='list.length == 0' :description="$t('g.noData')")
     template(v-else)
       van-cell-group.title-basis.mb-4(inset v-for="d in list" :key="d._id")
         van-cell(center)
@@ -21,22 +21,22 @@
               :src="d.avatar"
               @click.native.stop="ImagePreview([d.avatar])")
           template
-            .van-ellipsis {{ $t('username') }}: {{ d.username }}
-            .van-ellipsis {{ $t('name') }}: {{ d.name }}
-            .van-ellipsis {{ $t('status') }}: {{ lut('status', d.status) }}
-            ._van-ellipsis {{ $t('roles_') }}: {{ map(d.roles, v => lut('roles', v, false)).join('、') }}
+            .van-ellipsis {{ $t('g.username') }}: {{ d.username }}
+            .van-ellipsis {{ $t('g.name') }}: {{ d.name }}
+            .van-ellipsis {{ $t('g.status') }}: {{ lut('status', d.status) }}
+            ._van-ellipsis {{ $t('g.roles') }}: {{ map(d.roles, v => lut('roles', v, false)).join('、') }}
         van-cell(value)
           template(#extra)
             van-button.ml-2(
               size="small"
               type="danger"
               @click="onDelete(d)"
-              ) {{ $t('delete') }}
+              ) {{ $t('g.delete') }}
             van-button.ml-2(
               size="small"
               type="general"
               @click="onUpdate(d)"
-              ) {{ $t('update') }}
+              ) {{ $t('g.update') }}
 
   DialogUpdate(v-model="showDialogUpdate" :data="user" @updated="getUsers")
 </template>
@@ -76,10 +76,7 @@ function getRoleDicts() {
   const { dicts } = store.state.dicts
   if (dicts['roles']) return
 
-  return getRoles({
-    sortBy: 'value',
-    sortOrder: 'asc',
-  }).then((res) => {
+  return getRoles().then((res) => {
     store.commit('dicts/SET_DICT', {
       key: 'roles',
       list: map(res.data, (d) => ({
@@ -98,7 +95,7 @@ function onDelete(d) {
     .then(() => {
       Toast.loading()
       return API.deleteUser({ _id: d._id }).then((res) => {
-        Toast.success(i18n.t('deleted'))
+        Toast.success(i18n.t('g.deleted'))
         list.value = without(list.value, d)
       })
     })

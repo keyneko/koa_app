@@ -13,10 +13,10 @@ van-dialog(
       van-field.bg-gray-50.mb-2(
         v-model='formData.name'
         required
-        :label="$t('name')"
-        :placeholder="$t('plhrName')"
+        :label="$t('g.name')"
+        :placeholder="$t('g.plhrName')"
         :rules="[ \
-          { required: true, message: $t('requireName') }, \
+          { required: true, message: $t('g.requireName') }, \
         ]")
       //- 状态
       van-field.bg-gray-50.mb-2(
@@ -25,19 +25,19 @@ van-dialog(
         is-link
         required
         arrow-direction="down"
-        :label="$t('status')"
-        :placeholder="$t('plhrStatus')"
+        :label="$t('g.status')"
+        :placeholder="$t('g.plhrStatus')"
         :value='lut("status", formData.status)'
         @click='showStatusPicker = true')
       //- 权限
       van-field.bg-gray-50.mb-2(
-        :label="$t('permissions')")
+        :label="$t('g.permissions')")
         template(#input)
           van-checkbox-group(v-model='formData.permissions')
-            van-checkbox.mb-1(v-for="d in options('permissions')" :key="d.value" shape="square" :name='d.value') {{ d.name }}（{{ d.value }}）
+            van-checkbox.mb-1(v-for="d in options('permissions')" :key="d.value" shape="square" :name='d.value') {{ d.value }}
       //- SOPs
       van-field.bg-gray-50.mb-2(
-        :label="$t('sops')")
+        :label="$t('g.sops')")
         template(#input)
           van-checkbox-group(v-model='formData.sops')
             van-checkbox.mb-1(v-for="d in options('sops')" :key="d.value" shape="square" :name='d.value') {{ d.name }}
@@ -148,7 +148,7 @@ function resetForm() {
 function onSubmit() {
   Toast.loading()
   return API.updateRole(formData).then((res) => {
-    Toast.success(i18n.t('updated'))
+    Toast.success(i18n.t('g.updated'))
     emits('updated')
   })
 }

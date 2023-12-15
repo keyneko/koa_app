@@ -26,29 +26,29 @@
       van-cell-group.mb-4(inset)
         van-field(
           v-model='formData.name'
-          :label="$t('name')"
-          :placeholder="$t('plhrName')"
+          :label="$t('g.name')"
+          :placeholder="$t('g.plhrName')"
           required
           :rules="[ \
-            { required: true, message: $t('requireName') }, \
+            { required: true, message: $t('g.requireName') }, \
           ]")
       //- 数量
       van-cell-group.mb-4(inset)
         van-field(
           v-model='formData.quantity'
-          :label="$t('qty')"
-          :placeholder="$t('plhrQty')"
+          :label="$t('g.qty')"
+          :placeholder="$t('g.plhrQty')"
           type="number"
           required
           :rules="[ \
-            { required: true, message: $t('requireQty') }, \
+            { required: true, message: $t('g.requireQty') }, \
           ]")
       //- 基础单位
       van-cell-group.mb-4(inset)
         van-field(
           v-model='formData.basicUnit'
-          :label="$t('basicUnit')"
-          :placeholder="$t('plhrBasicUnit')")
+          :label="$t('g.basicUnit')"
+          :placeholder="$t('g.plhrBasicUnit')")
       //- 状态
       van-cell-group.mb-4(inset)
         van-field(
@@ -57,16 +57,16 @@
           is-link
           required
           arrow-direction="down"
-          :label="$t('status')"
-          :placeholder="$t('plhrStatus')"
+          :label="$t('g.status')"
+          :placeholder="$t('g.plhrStatus')"
           :value='lut("barcode_status", formData.status)'
           @click='showStatusPicker = true')
       //- 拍照
       van-cell-group(inset)
         van-field(
           _required
-          :label="$t('pictures')"
-          _rules="[{ required: true, message: $t('requirePictures') }]")
+          :label="$t('g.pictures')"
+          _rules="[{ required: true, message: $t('g.requirePictures') }]")
           template(#input)
             van-uploader(
               v-model="formData.files"
@@ -80,7 +80,7 @@
       block
       :disabled="buttonLoading"
       @click='() => $refs.form.submit()'
-      ) {{ $t('submit') }}
+      ) {{ $t('g.submit') }}
 
   van-popup(v-model='showStatusPicker' position='bottom')
     van-picker(
@@ -124,7 +124,7 @@ const statusColumns = computed(() =>
   map(options.value('barcode_status'), (d) => ({
     text: d.name,
     value: d,
-  })),
+  }))
 )
 
 function fileUpload(file) {
@@ -150,7 +150,7 @@ function onSubmit() {
   buttonLoading.value = true
   return API.createBarcode({ ...formData, files: map(formData.files, (f) => f.url) })
     .then((res) => {
-      Toast.success( i18n.t('created') )
+      Toast.success(i18n.t('g.created'))
       resetForm()
     })
     .finally(() => {

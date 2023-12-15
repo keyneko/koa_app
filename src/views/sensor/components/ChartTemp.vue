@@ -91,7 +91,7 @@ function draw(container) {
           invisible: false,
           style: {
             fill: '#aaa',
-            text: i18n.t('noData'),
+            text: i18n.t('g.noData'),
             fontSize: '14px',
           },
         },

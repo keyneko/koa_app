@@ -1,6 +1,6 @@
 <template lang="pug">
 van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
-  van-empty(v-if='list.length == 0' :description="$t('noData')")
+  van-empty(v-if='list.length == 0' :description="$t('g.noData')")
   template(v-else)
     van-list(v-model='loading' :finished='finished' :immediate-check='false' :offset='10' @load='onLoad')
 
@@ -23,13 +23,13 @@ van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
                   @click.native.stop="ImagePreview(d.files)")
               template
                 .van-ellipsis
-                  span {{ $t('barcode') }}：
+                  span {{ $t('g.barcode') }}：
                   b.black(v-copy) {{ d.value }}
                 .van-ellipsis
-                  span {{ $t('name') }}：
+                  span {{ $t('g.name') }}：
                   | {{ d.name }}
                 .van-ellipsis
-                  span {{ $t('status') }}：
+                  span {{ $t('g.status') }}：
                   | {{ lut('barcode_status', d.status) }}
             van-cell(value)
               template(#extra)
@@ -37,17 +37,17 @@ van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
                   size="small"
                   type="danger"
                   @click="emits('delete', d)"
-                  ) {{ $t('delete') }}
+                  ) {{ $t('g.delete') }}
                 van-button.ml-2(
                   size="small"
                   type="general"
                   @click="emits('update', d)"
-                  ) {{ $t('update') }}
+                  ) {{ $t('g.update') }}
                 van-button.ml-2(
                   size="small"
                   type="general"
                   @click="emits('detail', d)"
-                  ) {{ $t('view') }}
+                  ) {{ $t('g.view') }}
 </template>
 
 <script setup>
@@ -88,7 +88,8 @@ function onLoad() {
   if (pageNum.value < props.total) {
     pageNum.value++
     emits('fetch', pageNum.value)
-  } else {
+  }
+  else {
     finished.value = true
   }
   loading.value = false

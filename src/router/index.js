@@ -66,6 +66,13 @@ export const constantRoutes = [
     component: () => import('@/views/settings/index'),
   },
 
+  // 权限词条
+  {
+    path: '/permissions',
+    name: 'Permissions',
+    component: () => import('@/views/permissions/index'),
+  },
+
   /**
    * 角色管理
    */

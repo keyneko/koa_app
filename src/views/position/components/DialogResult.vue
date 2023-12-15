@@ -5,15 +5,15 @@ van-dialog(
   :show-cancel-button='false'
   :closeOnClickOverlay='false')
   van-cell-group.title-basis.mt-4
-    van-cell(:title="$t('position')")
+    van-cell(:title="$t('g.position')")
       b.black(v-copy) {{ data.value }}
-    van-cell(:title="$t('name')")
+    van-cell(:title="$t('g.name')")
       | {{ data.name }}
     van-cell(:title="$t('positionGen.isStackable')")
       | {{ lut('position_stackable', data.isStackable) }}
-    van-cell(:title="$t('status')")
+    van-cell(:title="$t('g.status')")
       | {{ lut('status', data.status) }}
-    van-cell(:title="$t('pictures')")
+    van-cell(:title="$t('g.pictures')")
       van-row(gutter="10")
         van-col(span="6" v-for="(d, i) in data.files" :key="i")
           van-image(
@@ -43,7 +43,7 @@ const props = defineProps({
   },
   data: {
     type: Object,
-    default: {},
+    default: () => ({}),
   },
 })
 
@@ -53,7 +53,7 @@ watch(
   () => props.value,
   (value) => {
     show.value = value
-  },
+  }
 )
 
 watch(show, (value) => {

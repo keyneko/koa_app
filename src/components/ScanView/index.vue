@@ -3,7 +3,7 @@ ww
 .block.relative
   transition(name='fade' tag='div' enter-active-class='fadeInRight' leave-active-class='fadeOutRight')
     .absolute.w-full.h-full.animated.faster(v-if='showTip')
-      .tip {{ $t('pdaScanTip') }}
+      .tip {{ $t('g.pdaScanTip') }}
 
   svg-icon(name='扫码' :width="width" :height="height" viewBox="0 0 480 480")
   .text-center

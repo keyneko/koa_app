@@ -11,7 +11,7 @@
           type='info'
           icon-position='right'
           @click="showActions = true"
-          ) {{ $t('actions') }}
+          ) {{ $t('g.actions') }}
 
   .page__body
     .mb-4.mx-5
@@ -64,12 +64,12 @@ const actions = ref([])
 
 watchEffect(() => {
   actions.value = [
-    { id: 'filter', name: i18n.t('filter') },
-    { id: 'create', name: i18n.t('create') },
-    { id: 'update', name: i18n.t('update'), disabled: !queryParams.sensorId },
+    { id: 'filter', name: i18n.t('g.filter') },
+    { id: 'create', name: i18n.t('g.create') },
+    { id: 'update', name: i18n.t('g.update'), disabled: !queryParams.sensorId },
     {
       id: 'delete',
-      name: i18n.t('delete'),
+      name: i18n.t('g.delete'),
       disabled: !queryParams.sensorId,
       color: queryParams.sensorId ? '#ee0a24' : '',
     },
@@ -112,7 +112,7 @@ function onDelete(d) {
     .then(() => {
       Toast.loading()
       return API.deleteSensor({ _id: d._id }).then((res) => {
-        Toast.success(i18n.t('deleted'))
+        Toast.success(i18n.t('g.deleted'))
         list.value = without(list.value, d)
       })
     })

@@ -1,7 +1,7 @@
 <template lang="pug">
 van-dialog(
   v-model='show'
-  :title="$t('roles.create')"
+  :title="$t('permissions.create')"
   :show-cancel-button='true'
   :closeOnClickOverlay='false'
   :beforeClose="beforeClose")
@@ -9,6 +9,16 @@ van-dialog(
     validate-first
     ref='form')
     van-cell-group.title-basis
+      //- 模式
+      van-field.bg-gray-50.mb-2(
+        v-model='formData.pattern'
+        required
+        :label="$t('g.pattern')"
+        :placeholder="$t('g.plhrPattern')"
+        :rules="[ \
+          { required: true, message: $t('g.requirePattern') }, \
+          { validator: fn, message: $t('g.formatErrPattern') }, \
+        ]")
       //- 名称
       van-field.bg-gray-50.mb-2(
         v-model='formData.name'
@@ -18,18 +28,14 @@ van-dialog(
         :rules="[ \
           { required: true, message: $t('g.requireName') }, \
         ]")
-      //- 权限
+      //- 描述
       van-field.bg-gray-50.mb-2(
-        :label="$t('g.permissions')")
-        template(#input)
-          van-checkbox-group(v-model='formData.permissions')
-            van-checkbox.mb-1(v-for="d in options('permissions')" :key="d.value" shape="square" :name='d.value') {{ d.value }}
-      //- SOPs
-      van-field.bg-gray-50.mb-2(
-        :label="$t('g.sops')")
-        template(#input)
-          van-checkbox-group(v-model='formData.sops')
-            van-checkbox.mb-1(v-for="d in options('sops')" :key="d.value" shape="square" :name='d.value') {{ d.name }}
+        v-model='formData.description'
+        type="textarea"
+        rows="2"
+        autosize
+        :label="$t('g.description')"
+        :placeholder="$t('g.plhrDescription')")
 </template>
 
 <script setup>
@@ -39,7 +45,7 @@ import useDicts from '@/utils/useDicts'
 import { upload } from '@/utils/fileUpload'
 import i18n from '@/lang'
 import { map } from 'lodash'
-import * as API from '@/api/role'
+import * as API from '@/api/permission'
 
 const emits = defineEmits(['input'])
 const { lut, options } = useDicts()
@@ -49,15 +55,23 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  data: {
+    type: Object,
+    default: () => ({}),
+  },
 })
 
 const form = ref(null)
 const show = ref(false)
 
+const r = (v) => v.replace(/\s/g, '').replace(/：/g, ':')
+const fn = (v) => /^([A-Za-z]+|\*):([A-Za-z]+|\*):([A-Za-z]+|\*)$/.test(r(v))
+
 const formData = reactive({
-  name: '',
-  sops: [],
-  permissions: [],
+  _id: undefined,
+  name: undefined,
+  description: undefined,
+  pattern: undefined,
 })
 
 watch(
@@ -70,6 +84,16 @@ watch(
 watch(show, (value) => {
   emits('input', value)
 })
+
+watch(
+  () => props.data,
+  (value) => {
+    formData._id = value._id
+    formData.name = value.name
+    formData.description = value.description
+    formData.pattern = value.pattern
+  }
+)
 
 async function beforeClose(action, done) {
   if (action === 'confirm') {
@@ -90,16 +114,20 @@ async function beforeClose(action, done) {
 }
 
 function resetForm() {
-  formData.name = ''
-  formData.sops = []
-  formData.permissions = []
+  formData._id = undefined
+  formData.name = undefined
+  formData.description = undefined
+  formData.pattern = undefined
 }
 
 function onSubmit() {
   Toast.loading()
-  return API.createRole(formData).then((res) => {
+  return API.createPermission({
+    ...formData,
+    pattern: r(formData.pattern),
+  }).then((res) => {
     Toast.success(i18n.t('g.created'))
-    emits('created')
+    emits('created', res.data)
   })
 }
 </script>

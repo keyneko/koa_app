@@ -14,15 +14,15 @@
       validate-first
       @submit="onSubmit"
       ref='form')
-      van-cell-group(inset :title="$t('barcode')")
+      van-cell-group(inset :title="$t('g.barcode')")
         van-field(
           v-model='formData.value'
           data-testid='input'
-          :placeholder="$t('plhrBarcode')"
+          :placeholder="$t('g.plhrBarcode')"
           required
           :rules="[ \
-            { required: true, message: $t('requireBarcode') }, \
-            { validator: fn, message: $t('formatErrBarcode') }, \
+            { required: true, message: $t('g.requireBarcode') }, \
+            { validator: fn, message: $t('g.formatErrBarcode') }, \
           ]")
 
   .page__footer.p-4.flex.gap-4
@@ -32,12 +32,12 @@
       block
       :disabled="buttonLoading"
       @click='() => $refs.form.submit()'
-      ) {{ $t('submit') }}
+      ) {{ $t('g.submit') }}
     van-button.r8(
       type='default'
       block
       :to="toList"
-      ) {{ $t('viewAll') }}
+      ) {{ $t('g.viewAll') }}
 
   DialogResult(v-model="showDialog" :data="barcode")
 </template>
@@ -75,7 +75,8 @@ const toList = computed(() => ({
 jsBridge.register('barcode', (res) => {
   if (fn(res)) {
     formData.value = res
-  } else {
+  }
+  else {
     Toast(i18n.t('barcodeQuery.scanned') + res)
   }
 })

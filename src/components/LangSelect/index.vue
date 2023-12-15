@@ -53,7 +53,7 @@ function onItemClicked(d) {
   vantLocales(d.value)
   store.commit('app/SET_LANGUAGE', d.value)
   store.commit('dicts/EMPTY_DICTS')
-  Toast.success(i18n.t('langSwitched'))
+  Toast.success(i18n.t('g.langSwitched'))
 }
 </script>
 

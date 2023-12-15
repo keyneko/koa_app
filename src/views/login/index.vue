@@ -56,7 +56,7 @@
 
       van-cell-group(inset)
         van-button(:loading='buttonLoading' block type='info' native-type='submit' data-testid="submit")
-          | {{ $t('login_') }}
+          | {{ $t('g.login') }}
 
   .page__footer.h-auto
     .page-tip
@@ -83,7 +83,7 @@ const showPwd = ref(false)
 const buttonLoading = ref(false)
 
 const formData = reactive({
-  username: Cookies.get('username') || '',
+  username: Cookies.get('g.username') || '',
   password: '',
   captcha: '',
   captchaId: '',

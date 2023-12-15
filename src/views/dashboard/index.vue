@@ -16,13 +16,21 @@
   .page__body
     van-cell-group(inset)
       van-cell.head(:title="$t('dashboard.mySkills')")
-      van-empty(v-if='sops.length == 0' image-size="64" :description="$t('noData')")
+      van-empty(v-if='sops.length == 0' image-size="64" :description="$t('g.noData')")
       template(v-else)
         van-grid(
           clickable
           center
           border
           :column-num="3")
+          //- 权限词条
+          van-grid-item(
+            key="Permissions"
+            :to="{ path: '/permissions' }")
+            template(#icon)
+              svg-icon(name='application-cog-outline')
+            template(#text)
+              .label.van-ellipsis {{ $t('dashboard.permissions') }}
           van-grid-item(
             v-for="(sop, i) in sops"
             :key="i"
@@ -31,6 +39,7 @@
               svg-icon(:name='sopIcon(sop)')
             template(#text)
               .label.van-ellipsis {{ lut('sops', sop) }}
+          //- 传感器
           van-grid-item(
             key="Sensors"
             :to="{ path: '/sensor/index' }")

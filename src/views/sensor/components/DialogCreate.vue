@@ -13,10 +13,10 @@ van-dialog(
       van-field.bg-gray-50.mb-2(
         v-model='formData.name'
         required
-        :label="$t('name')"
-        :placeholder="$t('plhrName')"
+        :label="$t('g.name')"
+        :placeholder="$t('g.plhrName')"
         :rules="[ \
-          { required: true, message: $t('requireName') }, \
+          { required: true, message: $t('g.requireName') }, \
         ]")
       //- 传感器类型
       van-field.bg-gray-50.mb-2(
@@ -134,7 +134,7 @@ function resetForm() {
 function onSubmit() {
   Toast.loading()
   return API.createSensor(formData).then((res) => {
-    Toast.success(i18n.t('created'))
+    Toast.success(i18n.t('g.created'))
     emits('created')
   })
 }

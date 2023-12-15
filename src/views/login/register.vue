@@ -61,7 +61,7 @@
 
       van-cell-group(inset)
         van-button(:loading='buttonLoading' block type='info' native-type='submit' data-testid="submit")
-          | {{ $t('register') }}
+          | {{ $t('g.register') }}
 
   .page__footer.h-auto
     .page-tip
@@ -122,7 +122,7 @@ function onSubmit() {
     password2: undefined,
   })
     .then((res) => {
-      Toast.success(i18n.t('registered'))
+      Toast.success(i18n.t('g.registered'))
       Cookies.set('username', formData.username)
       router.replace(toLogin.value)
     })

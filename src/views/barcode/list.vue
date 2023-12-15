@@ -8,7 +8,7 @@
 
   .page__body
     .mb-4.mx-5
-      div {{ $t('status') }}
+      div {{ $t('g.status') }}
       van-tag.mr-3(
         v-for="d in options('barcode_status')"
         :key="d._id"
@@ -69,7 +69,8 @@ function getBarcodes(pageNum = 1) {
 
       if (pageNum == 1) {
         list.value = res.data || []
-      } else {
+      }
+      else {
         list.value = concat(list.value, res.data)
       }
     })
@@ -86,7 +87,7 @@ function onDelete(d) {
     .then(() => {
       Toast.loading()
       return API.deleteBarcode({ value: d.value }).then((res) => {
-        Toast.success(i18n.t('deleted'))
+        Toast.success(i18n.t('g.deleted'))
         list.value = without(list.value, d)
       })
     })
@@ -120,7 +121,8 @@ function onDetail({ value }) {
 function onTagClicked({ value }) {
   if (queryParams.status === value) {
     queryParams.status = ''
-  } else {
+  }
+  else {
     queryParams.status = value
   }
   listRef.value.onRefresh()

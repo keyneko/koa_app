@@ -10,15 +10,15 @@ van-dialog(
     ref='form')
     van-cell-group.title-basis
       //- 条码
-      van-cell(:title="$t('position')")
+      van-cell(:title="$t('g.position')")
         b.black {{ formData.value }}
       //- 名称
       van-field.bg-gray-50.mb-2(
         v-model='formData.name'
         required
-        :label="$t('name')"
-        :placeholder="$t('plhrName')"
-        :rules="[{ required: true, message: $t('requireName') }]")
+        :label="$t('g.name')"
+        :placeholder="$t('g.plhrName')"
+        :rules="[{ required: true, message: $t('g.requireName') }]")
       //- 是否可堆叠
       van-field.bg-gray-50.mb-2(
         required
@@ -34,15 +34,15 @@ van-dialog(
         is-link
         required
         arrow-direction="down"
-        :label="$t('status')"
-        :placeholder="$t('plhrStatus')"
+        :label="$t('g.status')"
+        :placeholder="$t('g.plhrStatus')"
         :value='lut("status", formData.status)'
         @click='showStatusPicker = true')
       //- 拍照
       van-field(
         _required
-        :label="$t('pictures')"
-        _rules="[{ required: true, message: $t('requirePictures') }]")
+        :label="$t('g.pictures')"
+        _rules="[{ required: true, message: $t('g.requirePictures') }]")
         template(#input)
           van-uploader(
             v-model="formData.files"
@@ -153,7 +153,7 @@ async function beforeClose(action, done) {
 function onSubmit() {
   Toast.loading()
   return API.updatePosition({ ...formData, files: map(formData.files, (f) => f.url) }).then((res) => {
-    Toast.success(i18n.t('updated'))
+    Toast.success(i18n.t('g.updated'))
     emits('updated')
   })
 }

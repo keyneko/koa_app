@@ -13,10 +13,10 @@ van-dialog(
       van-field.bg-gray-50.mb-2(
         v-model='formData.name'
         required
-        :label="$t('name')"
-        :placeholder="$t('plhrName')"
+        :label="$t('g.name')"
+        :placeholder="$t('g.plhrName')"
         :rules="[ \
-          { required: true, message: $t('requireName') }, \
+          { required: true, message: $t('g.requireName') }, \
         ]")
       //- 传感器类型
       van-field.bg-gray-50.mb-2(
@@ -48,8 +48,8 @@ van-dialog(
         clickable
         is-link
         arrow-direction="down"
-        :label="$t('status')"
-        :placeholder="$t('plhrStatus')"
+        :label="$t('g.status')"
+        :placeholder="$t('g.plhrStatus')"
         :value='lut("status", formData.status)'
         @click='showStatusPicker = true')
 
@@ -180,7 +180,7 @@ function resetForm() {
 function onSubmit() {
   Toast.loading()
   return API.updateSensor(formData).then((res) => {
-    Toast.success(i18n.t('updated'))
+    Toast.success(i18n.t('g.updated'))
     emits('updated')
   })
 }

@@ -12,8 +12,8 @@ van-dialog(
       //- 名称
       van-field.bg-gray-50.mb-2(
         v-model='formData.name'
-        :label="$t('name')"
-        :placeholder="$t('plhrName')")
+        :label="$t('g.name')"
+        :placeholder="$t('g.plhrName')")
       //- 传感器类型
       van-field.bg-gray-50.mb-2(
         readonly
@@ -40,8 +40,8 @@ van-dialog(
         clickable
         is-link
         arrow-direction="down"
-        :label="$t('status')"
-        :placeholder="$t('plhrStatus')"
+        :label="$t('g.status')"
+        :placeholder="$t('g.plhrStatus')"
         :value='lut("status", formData.status)'
         @click='showStatusPicker = true')
 

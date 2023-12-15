@@ -43,7 +43,7 @@ watch(
   () => props.value,
   (value) => {
     show.value = value
-  },
+  }
 )
 
 watch(show, (value) => {
@@ -59,14 +59,15 @@ function beforeClose(action, done) {
   if (action === 'confirm') {
     form.value
       .validate()
-      .then(async () => {
+      .then(async() => {
         await form.value.submit()
         done()
       })
       .catch(() => {
         done(false)
       })
-  } else {
+  }
+  else {
     resetForm()
     done()
   }
@@ -76,9 +77,9 @@ function onSubmit() {
   Toast.loading()
   return API.updateUser(formData)
     .then((res) => {
-      Toast.success( i18n.t('updated') )
+      Toast.success(i18n.t('g.updated'))
       resetForm()
-      emit('update')
+      emit('g.update')
     })
 }
 </script>

@@ -12,7 +12,7 @@ const Copy = {
       })
 
       function clipboardSuccess(toast) {
-        Toast.success(toast || i18n.t('copied'))
+        Toast.success(toast || i18n.t('g.copied'))
       }
 
       function clipboardError() {

@@ -10,11 +10,11 @@
           size='mini'
           type='info'
           icon-position='right'
-          @click="onCreate"
+          @click="showDialogCreate = true"
           ) {{ $t('roles.create') }}
 
   .page__body
-    van-empty(v-if='list.length == 0' :description="$t('noData')")
+    van-empty(v-if='list.length == 0' :description="$t('g.noData')")
     template(v-else)
       transition-group(
         tag="div"
@@ -24,22 +24,22 @@
           van-cell-group.title-basis.mb-4(inset)
             van-cell(center)
               template
-                .van-ellipsis {{ $t('name') }}: {{ d.name }}
-                .van-ellipsis {{ $t('status') }}: {{ lut('status', d.status) }}
-                ._van-ellipsis {{ $t('permissions') }}: {{ d.permissions.join('、') }}
-                //- ._van-ellipsis {{ $t('sops') }}: {{ map(d.sops, v => lut('sops', v)).join('、') }}
+                .van-ellipsis {{ $t('g.name') }}: {{ d.name }}
+                .van-ellipsis {{ $t('g.status') }}: {{ lut('status', d.status) }}
+                ._van-ellipsis {{ $t('g.permissions') }}: {{ d.permissions.join('、') }}
+                //- ._van-ellipsis {{ $t('g.sops') }}: {{ map(d.sops, v => lut('sops', v)).join('、') }}
             van-cell(value)
               template(#extra)
                 van-button.ml-2(
                   size="small"
                   type="danger"
                   @click="onDelete(d)"
-                  ) {{ $t('delete') }}
+                  ) {{ $t('g.delete') }}
                 van-button.ml-2(
                   size="small"
                   type="general"
                   @click="onUpdate(d)"
-                  ) {{ $t('update') }}
+                  ) {{ $t('g.update') }}
 
   DialogCreate(v-model="showDialogCreate" @created="getRoles")
   DialogUpdate(v-model="showDialogUpdate" :data="role" @updated="getRoles")
@@ -64,8 +64,8 @@ const { lut } = useDicts()
 
 const list = ref([])
 const role = ref({})
-const showDialogUpdate = ref(false)
 const showDialogCreate = ref(false)
+const showDialogUpdate = ref(false)
 
 function getRoles() {
   return API.getRoles().then((res) => {
@@ -96,7 +96,7 @@ function onDelete(d) {
     .then(() => {
       Toast.loading()
       return API.deleteRole({ value: d.value }).then((res) => {
-        Toast.success(i18n.t('deleted'))
+        Toast.success(i18n.t('g.deleted'))
         list.value = without(list.value, d)
       })
     })
@@ -109,10 +109,6 @@ function onUpdate(d) {
     role.value = d
   })
   showDialogUpdate.value = true
-}
-
-function onCreate() {
-  showDialogCreate.value = true
 }
 
 getRoles()

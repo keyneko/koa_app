@@ -13,10 +13,10 @@ van-dialog(
       van-field(
         v-model='formData.name'
         required
-        :label="$t('name')"
-        :placeholder="$t('plhrName')"
+        :label="$t('g.name')"
+        :placeholder="$t('g.plhrName')"
         :rules="[ \
-          { required: true, message: $t('requireName') }, \
+          { required: true, message: $t('g.requireName') }, \
         ]")
       //- 状态
       van-field.bg-gray-50.mb-2(
@@ -25,19 +25,19 @@ van-dialog(
         is-link
         required
         arrow-direction="down"
-        :label="$t('status')"
-        :placeholder="$t('plhrStatus')"
+        :label="$t('g.status')"
+        :placeholder="$t('g.plhrStatus')"
         :value='lut("status", formData.status)'
         @click='showStatusPicker = true')
       //- 角色
       van-field.bg-gray-50.mb-2(
-        :label="$t('roles_')")
+        :label="$t('g.roles')")
         template(#input)
           van-checkbox-group(v-model='formData.roles')
             van-checkbox.mb-1(v-for="d in options('roles')" :key="d.value" shape="square" :name='d.value') {{ d.name }}
       //- 权限
       van-field.bg-gray-50.mb-2(
-        :label="$t('permissions')")
+        :label="$t('g.permissions')")
         template(#input)
           van-checkbox-group(v-model='formData.permissions')
             van-checkbox.mb-1(v-for="d in data.permissions" :key="d" shape="square" :name='d') {{ d }}
@@ -91,14 +91,14 @@ const statusColumns = computed(() =>
   map(options.value('status'), (d) => ({
     text: d.name,
     value: d,
-  })),
+  }))
 )
 
 watch(
   () => props.value,
   (value) => {
     show.value = value
-  },
+  }
 )
 
 watch(show, (value) => {
@@ -113,7 +113,7 @@ watch(
     formData.status = value.status
     formData.roles = value.roles
     formData.permissions = difference(value.permissions, value.denyPermissions)
-  },
+  }
 )
 
 function onStatusPicked({ value }) {
@@ -128,10 +128,12 @@ async function beforeClose(action, done) {
       await onSubmit()
       done()
       resetForm()
-    } catch (e) {
+    }
+    catch (e) {
       done(false)
     }
-  } else {
+  }
+  else {
     done()
     resetForm()
   }
@@ -152,7 +154,7 @@ function onSubmit() {
     denyPermissions: difference(props.data.permissions, formData.permissions),
     permissions: undefined,
   }).then((res) => {
-    Toast.success(i18n.t('updated'))
+    Toast.success(i18n.t('g.updated'))
     emits('updated')
   })
 }
