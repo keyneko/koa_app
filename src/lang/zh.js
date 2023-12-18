@@ -55,6 +55,7 @@ export default {
     identifier: '标识符',
     plhrIdentifier: '请输入标识符',
     requireIdentifier: '标识符不能为空',
+    protected: '受到保护',
   },
 
   routes: {

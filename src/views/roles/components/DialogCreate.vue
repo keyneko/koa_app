@@ -27,6 +27,10 @@ van-dialog(
         :rules="[ \
           { required: true, message: $t('g.requireName') }, \
         ]")
+      //- 受保护
+      van-field(name='switch' :label="$t('g.protected')")
+        template(#input)
+          van-switch(v-model='formData.isProtected' size='20')
       //- 权限
       van-field.bg-gray-50.mb-2(
         :label="$t('g.permissions')")
@@ -64,8 +68,9 @@ const form = ref(null)
 const show = ref(false)
 
 const formData = reactive({
-  value: '',
-  name: '',
+  value: undefined,
+  name: undefined,
+  isProtected: undefined,
   sops: [],
   permissions: [],
 })
@@ -79,6 +84,9 @@ watch(
 
 watch(show, (value) => {
   emits('input', value)
+  if (!value) {
+    resetForm()
+  }
 })
 
 async function beforeClose(action, done) {
@@ -87,7 +95,6 @@ async function beforeClose(action, done) {
       await form.value.validate()
       await onSubmit()
       done()
-      resetForm()
     }
     catch (e) {
       done(false)
@@ -95,15 +102,17 @@ async function beforeClose(action, done) {
   }
   else {
     done()
-    resetForm()
   }
 }
 
 function resetForm() {
-  formData.value = ''
-  formData.name = ''
-  formData.sops = []
-  formData.permissions = []
+  setTimeout(() => {
+    formData.value = undefined
+    formData.name = undefined
+    formData.isProtected = undefined
+    formData.sops = []
+    formData.permissions = []
+  }, 200)
 }
 
 function onSubmit() {

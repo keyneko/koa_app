@@ -55,6 +55,7 @@ export default {
     identifier: 'Identifier',
     plhrIdentifier: 'Please type identifier',
     requireIdentifier: 'Identifier cannot be empty',
+    protected: 'Protected',
   },
 
   routes: {

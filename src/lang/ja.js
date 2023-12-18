@@ -55,6 +55,7 @@ export default {
     identifier: '識別子',
     plhrIdentifier: '識別子を入力してください',
     requireIdentifier: '識別子は空できません',
+    protected: '保護された',
   },
 
   routes: {

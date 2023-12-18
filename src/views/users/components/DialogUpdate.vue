@@ -29,6 +29,10 @@ van-dialog(
         :placeholder="$t('g.plhrStatus')"
         :value='lut("status", formData.status)'
         @click='showStatusPicker = true')
+      //- 受保护
+      van-field(name='switch' :label="$t('g.protected')")
+        template(#input)
+          van-switch(v-model='formData.isProtected' size='20')
       //- 角色
       van-field.bg-gray-50.mb-2(
         :label="$t('g.roles')")
@@ -80,9 +84,10 @@ const showStatusPicker = ref(false)
 
 const roles = ref([])
 const formData = reactive({
-  username: '',
-  name: '',
-  status: '',
+  username: undefined,
+  name: undefined,
+  status: undefined,
+  isProtected: undefined,
   roles: [],
   permissions: [],
 })
@@ -103,6 +108,9 @@ watch(
 
 watch(show, (value) => {
   emits('input', value)
+  if (!value) {
+    resetForm()
+  }
 })
 
 watch(
@@ -111,6 +119,7 @@ watch(
     formData.username = value.username
     formData.name = value.name
     formData.status = value.status
+    formData.isProtected = value.isProtected
     formData.roles = value.roles
     formData.permissions = difference(value.permissions, value.denyPermissions)
   }
@@ -127,7 +136,6 @@ async function beforeClose(action, done) {
       await form.value.validate()
       await onSubmit()
       done()
-      resetForm()
     }
     catch (e) {
       done(false)
@@ -135,16 +143,18 @@ async function beforeClose(action, done) {
   }
   else {
     done()
-    resetForm()
   }
 }
 
 function resetForm() {
-  formData.username = ''
-  formData.name = ''
-  formData.status = ''
-  formData.roles = []
-  formData.permissions = []
+  setTimeout(() => {
+    formData.username = undefined
+    formData.name = undefined
+    formData.status = undefined
+    formData.isProtected = undefined
+    formData.roles = []
+    formData.permissions = []
+  }, 200)
 }
 
 function onSubmit() {
