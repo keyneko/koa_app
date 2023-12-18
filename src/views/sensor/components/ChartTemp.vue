@@ -36,8 +36,8 @@ const initOption = {
       show: false,
       type: 'continuous',
       seriesIndex: 0,
-      min: -5,
-      max: 35,
+      min: 0,
+      max: 40,
       color: ['#ff2e2e', '#485ff0'],
     },
   ],
@@ -88,9 +88,16 @@ const initOption = {
       name: i18n.t('sensors.temperature'),
       type: 'line',
       showSymbol: false,
+      lineStyle: {
+        color: '#a4348a'
+      },
+      itemStyle: {
+        color: '#a4348a'
+      },
       tooltip: {
         valueFormatter: (value) => value + '°C',
       },
+      z: 9,
       // markPoint: {
       //   data: [
       //     { type: 'max', name: 'Max' },
@@ -111,6 +118,12 @@ const initOption = {
       type: 'line',
       yAxisIndex: 1,
       showSymbol: false,
+      lineStyle: {
+        color: '#81c462'
+      },
+      itemStyle: {
+        color: '#81c462'
+      },
       tooltip: {
         valueFormatter: (value) => value + '%rh',
       },
