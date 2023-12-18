@@ -72,10 +72,8 @@ export function sensorRecords(params) {
 
 /**
  * 上报传感器数据
- * @param  {String} data.dateTime   [description]
  * @param  {String} data.sensorId   [description]
- * @param  {String} data.sensorName [description]
- * @param  {String|Number} data.value [description]
+ * @param  {String|Number|Object} data.value [description]
  */
 export function sensorRecord(data) {
   return request({

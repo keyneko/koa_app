@@ -52,6 +52,7 @@ export default {
     pattern: 'Pattern',
     plhrPattern: 'Please type pattern (*:*:*)',
     requirePattern: 'Pattern cannot be empty',
+    formatErrPattern: 'Pattern format error',
     identifier: 'Identifier',
     plhrIdentifier: 'Please type identifier',
     requireIdentifier: 'Identifier cannot be empty',
@@ -205,5 +206,7 @@ export default {
     plhrNumber: 'Please type serial number',
     manufacturer: 'Manufacturer',
     plhrManufacturer: 'Please type manufacturer',
+    temperature: 'Temperature',
+    humidity: 'Humidity',
   }
 }

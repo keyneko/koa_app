@@ -23,13 +23,12 @@ const props = defineProps({
   },
 })
 
-// 图表容器
+// chart container
 const container = ref(null)
 
-// echarts图表对象
 let chart = null
 
-// 基础Options
+// Basic Options
 const initOption = {
   // Make gradient line here
   visualMap: [
@@ -44,30 +43,91 @@ const initOption = {
   ],
   tooltip: {
     trigger: 'axis',
-    valueFormatter: (value) => `${value} °C`,
   },
   legend: {
     left: '0%',
     top: '1%',
   },
   grid: {
-    left: '3%',
-    right: '4%',
+    left: 0,
+    right: 15,
     top: 80,
-    bottom: '3%',
+    bottom: 0,
     containLabel: true,
   },
   xAxis: {
     type: 'category',
     boundaryGap: false,
-  },
-  yAxis: {
-    type: 'value',
-    axisLabel: {
-      formatter: '{value} °C',
+    axisLine: {
+      show: false,
+    },
+    axisTick: {
+      show: false,
+    },
+    splitLine: {
+      show: true,
     },
   },
-  series: [],
+  yAxis: [
+    {
+      type: 'value',
+      axisLabel: {
+        formatter: '{value}°C',
+      },
+    },
+    {
+      type: 'value',
+      axisLabel: {
+        formatter: '{value}%rh',
+      },
+    },
+  ],
+  series: [
+    // 温度
+    {
+      name: i18n.t('sensors.temperature'),
+      type: 'line',
+      showSymbol: false,
+      tooltip: {
+        valueFormatter: (value) => value + '°C',
+      },
+      markPoint: {
+        data: [
+          { type: 'max', name: 'Max' },
+          { type: 'min', name: 'Min' },
+        ],
+      },
+      markLine: {
+        data: [{ type: 'average', name: 'Average' }],
+        label: {
+          position: 'insideMiddleBottom',
+        },
+      },
+    },
+
+    // 湿度
+    {
+      name: i18n.t('sensors.humidity'),
+      type: 'line',
+      yAxisIndex: 1,
+      showSymbol: false,
+      tooltip: {
+        valueFormatter: (value) => value + '%rh',
+      },
+      markPoint: {
+        data: [
+          { type: 'max', name: 'Max' },
+          { type: 'min', name: 'Min' },
+        ],
+      },
+      markLine: {
+        data: [{ type: 'average', name: 'Average' }],
+        label: {
+          position: 'insideMiddleBottom',
+        },
+      },
+    },
+  ],
 }
 
 function draw(container) {
@@ -101,21 +161,36 @@ function draw(container) {
     else {
       const mappedData = {
         xAxis: {
-          type: 'category',
-          data: map(props.data, (d) => dayjs(d.createdAt).format('HH:mm')),
-        },
-        yAxis: {
-          type: 'value',
+          type: 'time',
+          scale: true,
+          axisLabel: {
+            rotate: 45,
+            interval: 0,
+            formatter: '{HH}:{mm}',
+          },
         },
         series: [
+          // 温度
           {
-            data: map(props.data, (d) => d.value),
-            type: 'line',
+            data: map(props.data, (d) => [
+              +new Date(d.createdAt),
+              d.value.temperature || d.value,
+            ]),
+          },
+
+          // 湿度
+          {
+            data: map(props.data, (d) => [
+              +new Date(d.createdAt),
+              d.value.humidity || 0,
+            ]),
           },
         ],
       }
 
-      option = merge({}, initOption, mappedData, { graphic: { invisible: true } })
+      option = merge({}, initOption, mappedData, {
+        graphic: { invisible: true },
+      })
 
       chart.setOption(option /*, true*/)
     }

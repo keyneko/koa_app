@@ -52,6 +52,7 @@ export default {
     pattern: '模式',
     plhrPattern: '请输入模式（*:*:*）',
     requirePattern: '模式不能为空',
+    formatErrPattern: '模式格式错误',
     identifier: '标识符',
     plhrIdentifier: '请输入标识符',
     requireIdentifier: '标识符不能为空',
@@ -205,5 +206,7 @@ export default {
     plhrNumber: '请输入序列号',
     manufacturer: '制造商',
     plhrManufacturer: '请输入制造商',
+    temperature: '温度',
+    humidity: '湿度',
   }
 }

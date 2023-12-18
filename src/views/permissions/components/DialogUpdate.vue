@@ -88,7 +88,7 @@ const show = ref(false)
 const showStatusPicker = ref(false)
 
 const r = (v) => v.replace(/\s/g, '').replace(/：/g, ':')
-const fn = (v) => /^([A-Za-z]+|\*):([A-Za-z]+|\*):([A-Za-z]+|\*)$/.test(r(v))
+const fn = (v) => /^([A-Za-z0-9]+|\*):([A-Za-z0-9]+|\*):([A-Za-z0-9]+|\*)$/.test(r(v))
 
 const formData = reactive({
   _id: undefined,

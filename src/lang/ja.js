@@ -52,6 +52,7 @@ export default {
     pattern: 'パターン',
     plhrPattern: 'パターンを入力してください (*:*:*)',
     requirePattern: 'パターンは空できません',
+    formatErrPattern: 'パターンフォーマットエラー',
     identifier: '識別子',
     plhrIdentifier: '識別子を入力してください',
     requireIdentifier: '識別子は空できません',
@@ -205,5 +206,7 @@ export default {
     plhrNumber: 'シリアルナンバーをご入力ください',
     manufacturer: 'メーカー名',
     plhrManufacturer: 'メーカー名をご入力ください',
+    temperature: '温度',
+    humidity: '湿度',
   }
 }
