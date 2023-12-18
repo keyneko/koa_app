@@ -42,6 +42,10 @@ van-dialog(
         v-model='formData.manufacturer'
         :label="$t('sensors.manufacturer')"
         :placeholder="$t('sensors.plhrManufacturer')")
+      //- 受保护
+      van-field(name='switch' :label="$t('g.protected')")
+        template(#input)
+          van-switch(v-model='formData.isProtected' size='20')
 
   van-popup(v-model='showTypePicker' position='bottom')
     van-picker(
@@ -75,11 +79,11 @@ const show = ref(false)
 const showTypePicker = ref(false)
 
 const formData = reactive({
-  name: '',
-  number: '',
-  type: '',
-  manufacturer: '',
-  status: 1,
+  name: undefined,
+  number: undefined,
+  type: undefined,
+  manufacturer: undefined,
+  isProtected: undefined,
 })
 
 const typeColumns = computed(() =>
@@ -98,6 +102,9 @@ watch(
 
 watch(show, (value) => {
   emits('input', value)
+  if (!value) {
+    resetForm()
+  }
 })
 
 function onTypePicked({ value }) {
@@ -111,7 +118,6 @@ async function beforeClose(action, done) {
       await form.value.validate()
       await onSubmit()
       done()
-      resetForm()
     }
     catch (e) {
       done(false)
@@ -119,16 +125,17 @@ async function beforeClose(action, done) {
   }
   else {
     done()
-    resetForm()
   }
 }
 
 function resetForm() {
-  formData.name = ''
-  formData.number = ''
-  formData.type = ''
-  formData.manufacturer = ''
-  formData.status = 1
+  setTimeout(() => {
+    formData.name = undefined
+    formData.number = undefined
+    formData.type = undefined
+    formData.manufacturer = undefined
+    formData.isProtected = undefined
+  }, 200)
 }
 
 function onSubmit() {

@@ -40,12 +40,19 @@
     @confirm="onDatePicked")
 
   DialogCreate(v-model="showDialogCreate" @created="getSensors")
-  DialogUpdate(v-model="showDialogUpdate" :data="selSensor" @updated="getSensors")
+  DialogUpdate(v-model="showDialogUpdate" :data="sensor" @updated="getSensors")
   DialogFilter(v-model="showDialogFilter" @confirm="getSensors")
 </template>
 
 <script setup>
-import { ref, reactive, computed, watchEffect, onBeforeUnmount } from 'vue'
+import {
+  ref,
+  reactive,
+  computed,
+  watchEffect,
+  onBeforeUnmount,
+  nextTick,
+} from 'vue'
 import { Toast, Dialog } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import i18n from '@/lang'
@@ -69,6 +76,7 @@ const showDialogFilter = ref(false)
 
 const list = ref([])
 const ds = ref([])
+const sensor = ref({})
 
 const queryParams = reactive({
   sensorId: undefined,
@@ -83,10 +91,6 @@ const datepicker = {
   minDate: threeYearsAgo,
   maxDate: now,
 }
-
-const selSensor = computed(
-  () => find(list.value, (d) => d._id == queryParams.sensorId) || {}
-)
 
 const actions = ref([])
 
@@ -136,8 +140,13 @@ function getSensorRecords() {
     })
 }
 
+function __sensor() {
+  return find(list.value, (d) => d._id == queryParams.sensorId) || {}
+}
+
 function onTagClicked(d) {
   queryParams.sensorId = d._id
+  sensor.value = d
   getSensorRecords()
 }
 
@@ -162,12 +171,21 @@ function onDelete(d) {
     .catch(() => {})
 }
 
+function onUpdate(d) {
+  sensor.value = {}
+  nextTick(() => {
+    sensor.value = d
+  })
+  showDialogUpdate.value = true
+}
+
 function onAction({ id }) {
   if (id == 'create') {
     showDialogCreate.value = true
   }
   else if (id == 'update') {
-    showDialogUpdate.value = true
+    const d = __sensor()
+    onUpdate(d)
   }
   else if (id == 'filter') {
     showDialogFilter.value = true

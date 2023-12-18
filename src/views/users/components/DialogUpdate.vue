@@ -30,7 +30,7 @@ van-dialog(
         :value='lut("status", formData.status)'
         @click='showStatusPicker = true')
       //- 受保护
-      van-field(name='switch' :label="$t('g.protected')")
+      van-field.bg-gray-50.mb-2(name='switch' :label="$t('g.protected')")
         template(#input)
           van-switch(v-model='formData.isProtected' size='20')
       //- 角色

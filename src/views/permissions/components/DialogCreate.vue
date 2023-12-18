@@ -37,7 +37,7 @@ van-dialog(
         :label="$t('g.description')"
         :placeholder="$t('g.plhrDescription')")
       //- 受保护
-      van-field(name='switch' :label="$t('g.protected')")
+      van-field.bg-gray-50.mb-2(name='switch' :label="$t('g.protected')")
         template(#input)
           van-switch(v-model='formData.isProtected' size='20')
 </template>

@@ -91,18 +91,18 @@ const initOption = {
       tooltip: {
         valueFormatter: (value) => value + '°C',
       },
-      markPoint: {
-        data: [
-          { type: 'max', name: 'Max' },
-          { type: 'min', name: 'Min' },
-        ],
-      },
-      markLine: {
-        data: [{ type: 'average', name: 'Average' }],
-        label: {
-          position: 'insideMiddleBottom',
-        },
-      },
+      // markPoint: {
+      //   data: [
+      //     { type: 'max', name: 'Max' },
+      //     { type: 'min', name: 'Min' },
+      //   ],
+      // },
+      // markLine: {
+      //   data: [{ type: 'average', name: 'Average' }],
+      //   label: {
+      //     position: 'insideMiddleBottom',
+      //   },
+      // },
     },
 
     // 湿度
@@ -114,18 +114,18 @@ const initOption = {
       tooltip: {
         valueFormatter: (value) => value + '%rh',
       },
-      markPoint: {
-        data: [
-          { type: 'max', name: 'Max' },
-          { type: 'min', name: 'Min' },
-        ],
-      },
-      markLine: {
-        data: [{ type: 'average', name: 'Average' }],
-        label: {
-          position: 'insideMiddleBottom',
-        },
-      },
+      // markPoint: {
+      //   data: [
+      //     { type: 'max', name: 'Max' },
+      //     { type: 'min', name: 'Min' },
+      //   ],
+      // },
+      // markLine: {
+      //   data: [{ type: 'average', name: 'Average' }],
+      //   label: {
+      //     position: 'insideMiddleBottom',
+      //   },
+      // },
     },
   ],
 }

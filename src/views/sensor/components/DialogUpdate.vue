@@ -52,6 +52,10 @@ van-dialog(
         :placeholder="$t('g.plhrStatus')"
         :value='lut("status", formData.status)'
         @click='showStatusPicker = true')
+      //- 受保护
+      van-field.bg-gray-50.mb-2(name='switch' :label="$t('g.protected')")
+        template(#input)
+          van-switch(v-model='formData.isProtected' size='20')
 
   van-popup(v-model='showTypePicker' position='bottom')
     van-picker(
@@ -103,6 +107,7 @@ const formData = reactive({
   number: undefined,
   manufacturer: undefined,
   status: undefined,
+  isProtected: undefined,
 })
 
 const typeColumns = computed(() =>
@@ -127,6 +132,9 @@ watch(
 
 watch(show, (value) => {
   emits('input', value)
+  if (!value) {
+    resetForm()
+  }
 })
 
 watch(
@@ -138,6 +146,7 @@ watch(
     formData.number = value.number
     formData.manufacturer = value.manufacturer
     formData.status = value.status
+    formData.isProtected = value.isProtected
   }
 )
 
@@ -164,17 +173,19 @@ async function beforeClose(action, done) {
   }
   else {
     done()
-    resetForm()
   }
 }
 
 function resetForm() {
-  formData._id = undefined
-  formData.name = undefined
-  formData.type = undefined
-  formData.number = undefined
-  formData.manufacturer = undefined
-  formData.status = undefined
+  setTimeout(() => {
+    formData._id = undefined
+    formData.name = undefined
+    formData.type = undefined
+    formData.number = undefined
+    formData.manufacturer = undefined
+    formData.status = undefined
+    formData.isProtected = undefined
+  }, 200)
 }
 
 function onSubmit() {
