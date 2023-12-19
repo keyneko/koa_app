@@ -55,6 +55,14 @@ const initOption = {
     bottom: 0,
     containLabel: true,
   },
+  dataZoom: [
+    {
+      id: 'dataZoomX',
+      type: 'slider',
+      xAxisIndex: [0],
+      filterMode: 'none',
+    },
+  ],
   xAxis: {
     type: 'category',
     boundaryGap: false,
@@ -89,10 +97,10 @@ const initOption = {
       type: 'line',
       showSymbol: false,
       lineStyle: {
-        color: '#a4348a'
+        color: '#a4348a',
       },
       itemStyle: {
-        color: '#a4348a'
+        color: '#a4348a',
       },
       tooltip: {
         valueFormatter: (value) => value + '°C',
@@ -119,10 +127,10 @@ const initOption = {
       yAxisIndex: 1,
       showSymbol: false,
       lineStyle: {
-        color: '#81c462'
+        color: '#81c462',
       },
       itemStyle: {
-        color: '#81c462'
+        color: '#81c462',
       },
       tooltip: {
         valueFormatter: (value) => value + '%rh',
@@ -170,8 +178,7 @@ function draw(container) {
         },
       }
       chart.setOption(option, true)
-    }
-    else {
+    } else {
       const mappedData = {
         xAxis: {
           type: 'time',
@@ -214,7 +221,7 @@ watch(
   () => props.data,
   (value) => {
     draw(container.value)
-  }
+  },
 )
 
 const onResize = debounce(() => {
