@@ -141,11 +141,22 @@ export const constantRoutes = [
     component: () => import('@/views/position/generate'),
   },
 
-  // 传感器
+  /**
+   * 传感器
+   */
   {
     path: '/sensor/index',
     name: 'Sensors',
     component: () => import('@/views/sensor/index'),
+  },
+
+  /**
+   * 传感器图表
+   */
+  {
+    path: '/sensor/chart',
+    name: 'SensorChart',
+    component: () => import('@/views/sensor/chart'),
   },
 ] // end of constantRoutes
 

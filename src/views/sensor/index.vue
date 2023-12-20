@@ -1,5 +1,5 @@
 <template lang="pug">
-.page
+.page--fixed-header
   .page__header
     van-nav-bar(
       :title="$t('routes.sensors')"
@@ -10,150 +10,107 @@
           size='mini'
           type='info'
           icon-position='right'
-          @click="showActions = true"
-          ) {{ $t('g.actions') }}
+          @click="showDialogCreate = true"
+          ) {{ $t('g.create') }}
+        van-button.px-2(
+          size='mini'
+          type='info'
+          icon-position='right'
+          @click="showDialogFilter = true"
+          ) {{ $t('g.filter') }}
 
   .page__body
-    .mb-4.mx-5
-      van-tag.mr-3(
-        v-for="d in list"
-        :key="d._id"
-        :type="d._id === queryParams.sensorId?'primary':'default'"
-        size="medium"
-        @click="onTagClicked(d)") {{ d.name || '-' }}
+    van-empty(v-if='list.length == 0' :description="$t('g.noData')")
+    template(v-else)
+      van-cell-group(inset)
+        van-collapse(v-model='activeName' accordion)
+          van-collapse-item(v-for="d in list" :key="d._id" :name='d._id')
+            template(#title)
+              b(v-copy.silent) {{ d.name }}
+            template
+              table.table.mb-4
+                tr
+                  th {{ $t('sensors.type') }}
+                  td {{ lut("sensor_type", d.type) }}
+                tr
+                  th {{ $t('sensors.number') }}
+                  td {{ d.number }}
+                tr
+                  th {{ $t('sensors.manufacturer') }}
+                  td {{ d.manufacturer }}
+                tr
+                  th _id
+                  td(v-copy) {{ d._id }}
+                tr
+                  th apiKey
+                  td(v-copy) {{ d.apiKey }}
+                tr
+                  th {{ $t('g.status') }}
+                  td {{ lut('status', d.status) }}
+                tr
+                  th {{ $t('g.protected') }}
+                  td {{ d.isProtected }}
 
-    Chart.mx-4(:data="ds" :height="400")
-
-  van-action-sheet(
-    v-model="showActions"
-    close-on-click-action
-    :title="$t('g.actions')"
-    :actions="actions"
-    @select="onAction")
-
-  van-calendar(
-    v-model="showDatePicker"
-    :min-date='datepicker.minDate'
-    :max-date='datepicker.maxDate'
-    :current-date='new Date(queryParams.dateTime)'
-    :show-confirm="false"
-    @confirm="onDatePicked")
+              .flex
+                van-button.ml-2(
+                  size="small"
+                  type="primary"
+                  @click="onPublish(d)"
+                  ) {{ $t('sensors.publish') }}
+                van-button.ml-2(
+                  size="small"
+                  type="danger"
+                  @click="onDelete(d)"
+                  ) {{ $t('g.delete') }}
+                van-button.ml-2(
+                  size="small"
+                  type="general"
+                  @click="onUpdate(d)"
+                  ) {{ $t('g.update') }}
 
   DialogCreate(v-model="showDialogCreate" @created="getSensors")
   DialogUpdate(v-model="showDialogUpdate" :data="sensor" @updated="getSensors")
   DialogFilter(v-model="showDialogFilter" @confirm="getSensors")
+  DialogPublish(v-model="showDialogPublish" :data="sensor")
 </template>
 
 <script setup>
-import {
-  ref,
-  reactive,
-  computed,
-  watchEffect,
-  onBeforeUnmount,
-  nextTick,
-} from 'vue'
+import { ref, computed, nextTick } from 'vue'
 import { Toast, Dialog } from 'vant'
 import { useRouter, useRoute } from '@/router'
+import useDicts from '@/utils/useDicts'
 import i18n from '@/lang'
-import Chart from './components/ChartTemp'
 import * as API from '@/api/sensor'
 import { map, find, without } from 'lodash'
 import dayjs from 'dayjs'
 import DialogCreate from './components/DialogCreate'
 import DialogUpdate from './components/DialogUpdate'
 import DialogFilter from './components/DialogFilter'
+import DialogPublish from './components/DialogPublish'
 
 const router = useRouter()
 const route = useRoute()
+const { lut, options } = useDicts()
 
 const buttonLoading = ref(false)
-const showActions = ref(false)
-const showDatePicker = ref(false)
 const showDialogCreate = ref(false)
 const showDialogUpdate = ref(false)
 const showDialogFilter = ref(false)
+const showDialogPublish = ref(false)
 
 const list = ref([])
-const ds = ref([])
 const sensor = ref({})
-
-const queryParams = reactive({
-  sensorId: undefined,
-  dateTime: undefined,
-})
-
-const now = new Date()
-const threeYearsAgo = new Date(now)
-threeYearsAgo.setFullYear(threeYearsAgo.getFullYear() - 3)
-
-const datepicker = {
-  minDate: threeYearsAgo,
-  maxDate: now,
-}
-
-const actions = ref([])
-
-watchEffect(() => {
-  actions.value = [
-    {
-      id: 'selectDate',
-      name: i18n.t('sensors.selectDate'),
-      disabled: !queryParams.sensorId,
-    },
-    { id: 'filter', name: i18n.t('g.filter') },
-    { id: 'create', name: i18n.t('g.create') },
-    { id: 'update', name: i18n.t('g.update'), disabled: !queryParams.sensorId },
-    {
-      id: 'delete',
-      name: i18n.t('g.delete'),
-      disabled: !queryParams.sensorId,
-      color: queryParams.sensorId ? '#ee0a24' : '',
-    },
-  ]
-})
+const activeName = ref('')
 
 function getSensors(filters = {}) {
   Toast.loading()
   return API.getSensors(filters)
     .then((res) => {
       list.value = res.data
-
-      if (!map(res.data, (d) => d._id).includes(queryParams.sensorId)) {
-        ds.value = []
-        queryParams.sensorId = undefined
-      }
     })
     .finally(() => {
       Toast.clear()
     })
-}
-
-function getSensorRecords() {
-  Toast.loading()
-  return API.sensorRecords(queryParams)
-    .then((res) => {
-      ds.value = res.data || []
-    })
-    .finally(() => {
-      Toast.clear()
-    })
-}
-
-function __sensor() {
-  return find(list.value, (d) => d._id == queryParams.sensorId) || {}
-}
-
-function onTagClicked(d) {
-  queryParams.sensorId = d._id
-  sensor.value = d
-  getSensorRecords()
-}
-
-function onDatePicked(date) {
-  showDatePicker.value = false
-  queryParams.dateTime = dayjs(date).format('YYYY-MM-DD')
-  getSensorRecords()
 }
 
 function onDelete(d) {
@@ -179,25 +136,24 @@ function onUpdate(d) {
   showDialogUpdate.value = true
 }
 
-function onAction({ id }) {
-  if (id == 'create') {
-    showDialogCreate.value = true
-  }
-  else if (id == 'update') {
-    const d = __sensor()
-    onUpdate(d)
-  }
-  else if (id == 'filter') {
-    showDialogFilter.value = true
-  }
-  else if (id == 'delete') {
-    const d = find(list.value, (d) => d._id == queryParams.sensorId)
-    onDelete(d)
-  }
-  else if (id == 'selectDate') {
-    showDatePicker.value = true
-  }
+function onPublish(d) {
+  sensor.value = {}
+  nextTick(() => {
+    sensor.value = d
+  })
+  showDialogPublish.value = true
 }
 
 getSensors()
 </script>
+
+<style lang="scss" scoped>
+.table {
+  @apply border-collapse border border-gray-300;
+  th,
+  td {
+    @apply border border-gray-300;
+    @apply px-2 py-2 text-left leading-none;
+  }
+}
+</style>

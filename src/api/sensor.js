@@ -82,3 +82,17 @@ export function sensorRecord(data) {
     data,
   })
 }
+
+/**
+ * 推送消息
+ * @param  {String} data.sensorId   [description]
+ * @param  {String} data.topic   [description]
+ * @param  {String} data.message   [description]
+ */
+export function sensorPublish(data) {
+  return request({
+    url: `/sensor/publish`,
+    method: 'post',
+    data,
+  })
+}

@@ -43,7 +43,7 @@ van-dialog(
         :label="$t('sensors.manufacturer')"
         :placeholder="$t('sensors.plhrManufacturer')")
       //- 状态
-      van-field.bg-gray-50(
+      van-field.bg-gray-50.mb-2(
         readonly
         clickable
         is-link
