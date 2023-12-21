@@ -74,6 +74,7 @@ export default {
     positionQuery: '库位码查询',
     positions: '库位码列表',
     sensors: '传感器',
+    sensorChart: '传感器图表',
   },
 
   login: {
@@ -224,5 +225,8 @@ export default {
     payload: '消息载荷',
     plhrPayload: '请输入消息载荷',
     subscribed: '已订阅的主题',
+    dataZoom: '区域缩放',
+    dataZoomBack: '区域缩放还原',
+    saveAsImage: '保存为图片',
   }
 }

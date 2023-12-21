@@ -4,10 +4,14 @@
 
 <script setup>
 import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
+import { useRoute } from '@/router'
 import i18n from '@/lang'
 import * as echarts from 'echarts'
 import dayjs from 'dayjs'
 import { map, merge, isEmpty, debounce } from 'lodash'
+
+const route = useRoute()
+const { name: title } = route.query
 
 const props = defineProps({
   width: {
@@ -41,12 +45,34 @@ const initOption = {
       color: ['#ff2e2e', '#485ff0'],
     },
   ],
+  title: {
+    text: title,
+    textStyle: {
+      fontSize: 14,
+      fontWeight: 'normal',
+    },
+  },
   tooltip: {
     trigger: 'axis',
   },
   legend: {
-    left: '0%',
-    top: '1%',
+    right: 0,
+    top: 36,
+  },
+  toolbox: {
+    show: true,
+    feature: {
+      dataZoom: {
+        yAxisIndex: 'none',
+        title: {
+          zoom: i18n.t('sensors.dataZoom'),
+          back: i18n.t('sensors.dataZoomBack'),
+        },
+      },
+      saveAsImage: {
+        title: i18n.t('sensors.saveAsImage'),
+      },
+    },
   },
   grid: {
     left: 0,
@@ -106,18 +132,18 @@ const initOption = {
         valueFormatter: (value) => value + '°C',
       },
       z: 9,
-      // markPoint: {
-      //   data: [
-      //     { type: 'max', name: 'Max' },
-      //     { type: 'min', name: 'Min' },
-      //   ],
-      // },
-      // markLine: {
-      //   data: [{ type: 'average', name: 'Average' }],
-      //   label: {
-      //     position: 'insideMiddleBottom',
-      //   },
-      // },
+      markPoint: {
+        data: [
+          { type: 'max', name: 'Max' },
+          { type: 'min', name: 'Min' },
+        ],
+      },
+      markLine: {
+        data: [{ type: 'average', name: 'Average' }],
+        label: {
+          position: 'insideMiddleBottom',
+        },
+      },
     },
 
     // 湿度

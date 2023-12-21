@@ -74,6 +74,7 @@ export default {
     positionQuery: 'ポジションコードクエリ',
     positions: 'ポジションコードリスト',
     sensors: 'センサー',
+    sensorChart: 'センサーチャート',
   },
 
   login: {
@@ -220,9 +221,12 @@ export default {
     qos0: '多くても 1 回',
     qos1: '少なくとも 1 回',
     qos2: 'ちょうど 1 回',
-    retain: '留め置く',
+    retain: '保持',
     payload: 'ペイロード',
     plhrPayload: 'ペイロードをご入力ください',
     subscribed: 'トピック',
+    dataZoom: 'エリアズーム',
+    dataZoomBack: 'エリアズーム復元',
+    saveAsImage: '画像を保存',
   }
 }

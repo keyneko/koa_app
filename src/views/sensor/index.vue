@@ -55,22 +55,28 @@
                   th {{ $t('g.protected') }}
                   td {{ lut('yes_or_no', d.isProtected) }}
 
-              .flex
+              .flex.justify-between
                 van-button.ml-2(
                   size="small"
                   type="primary"
                   @click="onPublish(d)"
                   ) {{ $t('sensors.publish') }}
-                van-button.ml-2(
-                  size="small"
-                  type="danger"
-                  @click="onDelete(d)"
-                  ) {{ $t('g.delete') }}
-                van-button.ml-2(
-                  size="small"
-                  type="general"
-                  @click="onUpdate(d)"
-                  ) {{ $t('g.update') }}
+                div
+                  van-button.ml-2(
+                    size="small"
+                    type="general"
+                    :to="toChart(d)"
+                    ) {{ $t('g.view') }}
+                  van-button.ml-2(
+                    size="small"
+                    type="general"
+                    @click="onUpdate(d)"
+                    ) {{ $t('g.update') }}
+                  van-button.ml-2(
+                    size="small"
+                    type="danger"
+                    @click="onDelete(d)"
+                    ) {{ $t('g.delete') }}
 
   DialogCreate(v-model="showDialogCreate" @created="getSensors")
   DialogUpdate(v-model="showDialogUpdate" :data="sensor" @updated="getSensors")
@@ -105,6 +111,14 @@ const showDialogPublish = ref(false)
 const list = ref([])
 const sensor = ref({})
 const activeName = ref('')
+
+const toChart = computed(() => (d) => ({
+  path: '/sensor/chart',
+  query: {
+    _id: d._id,
+    name: d.name,
+  },
+}))
 
 function getSensors(filters = {}) {
   Toast.loading()

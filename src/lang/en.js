@@ -74,6 +74,7 @@ export default {
     positionQuery: 'Position Query',
     positions: 'Positions',
     sensors: 'Sensors',
+    sensorChart: 'Sensor Chart',
   },
 
   login: {
@@ -224,5 +225,8 @@ export default {
     payload: 'Payload',
     plhrPayload: 'Please type payload',
     subscribed: 'Subscribed topics',
+    dataZoom: 'Data Zoom',
+    dataZoomBack: 'Data Zoom Back',
+    saveAsImage: 'Save As Image',
   }
 }
