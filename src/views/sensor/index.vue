@@ -48,8 +48,12 @@
                   th {{ $t('g.status') }}
                   td {{ lut('status', d.status) }}
                 tr
+                  th {{ $t('sensors.online') }}
+                  td
+                    span(:class="d.online? 'green b': ''") {{ lut('online', d.online) }}
+                tr
                   th {{ $t('g.protected') }}
-                  td {{ d.isProtected }}
+                  td {{ lut('yes_or_no', d.isProtected) }}
 
               .flex
                 van-button.ml-2(

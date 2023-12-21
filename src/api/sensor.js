@@ -73,7 +73,7 @@ export function sensorRecords(params) {
 /**
  * 上报传感器数据
  * @param  {String} data.sensorId   [description]
- * @param  {String|Number|Object} data.value [description]
+ * @param  {String|Number|Object} data.status [description]
  */
 export function sensorRecord(data) {
   return request({
@@ -85,9 +85,11 @@ export function sensorRecord(data) {
 
 /**
  * 推送消息
- * @param  {String} data.sensorId   [description]
+ * @param  {String} data._id   [description]
+ * @param  {String} data.qos   [description]
+ * @param  {String} data.retain   [description]
  * @param  {String} data.topic   [description]
- * @param  {String} data.message   [description]
+ * @param  {String} data.payload   [description]
  */
 export function sensorPublish(data) {
   return request({

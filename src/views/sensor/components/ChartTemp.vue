@@ -178,7 +178,8 @@ function draw(container) {
         },
       }
       chart.setOption(option, true)
-    } else {
+    }
+    else {
       const mappedData = {
         xAxis: {
           type: 'time',
@@ -194,7 +195,7 @@ function draw(container) {
           {
             data: map(props.data, (d) => [
               +new Date(d.createdAt),
-              d.value.temperature || d.value,
+              d.status.temperature || d.value,
             ]),
           },
 
@@ -202,7 +203,7 @@ function draw(container) {
           {
             data: map(props.data, (d) => [
               +new Date(d.createdAt),
-              d.value.humidity || 0,
+              d.status.humidity || 0,
             ]),
           },
         ],
@@ -221,7 +222,7 @@ watch(
   () => props.data,
   (value) => {
     draw(container.value)
-  },
+  }
 )
 
 const onResize = debounce(() => {

@@ -11,29 +11,54 @@ van-dialog(
     van-cell-group.title-basis
       //- _id
       van-field.mb-2(
-        v-model='formData.sensorId'
+        v-model='formData._id'
         readonly
         :label="$t('g.identifier')")
       //- 主题
       van-field.bg-gray-50.mb-2(
-        v-model='formData.topic'
+        readonly
+        clickable
+        is-link
         required
+        arrow-direction="down"
         :label="$t('sensors.topic')"
         :placeholder="$t('sensors.plhrTopic')"
+        :value='formData.topic'
+        @click='showSubscriptionPicker = true'
         :rules="[ \
           { required: true, message: $t('sensors.requireTopic') }, \
         ]")
       //- 消息
       van-field.bg-gray-50.mb-2(
-        v-model='formData.message'
-        required
+        v-model='formData.payload'
         rows="2"
         type="textarea"
-        :label="$t('sensors.message')"
-        :placeholder="$t('sensors.plhrMessage')"
+        :label="$t('sensors.payload')"
+        :placeholder="$t('sensors.plhrPayload')")
+      //- 服务质量
+      van-field.bg-gray-50.mb-2(
+        required
+        :label="$t('sensors.qos')"
         :rules="[ \
-          { required: true, message: $t('sensors.requireMessage') }, \
+          { required: true, message: $t('sensors.requireQos') }, \
         ]")
+        template(#input)
+          van-radio-group(v-model='formData.qos' direction='horizontal')
+            van-radio.mb-1(shape="square" :name='0') QoS 0: {{ $t('sensors.qos0') }}
+            van-radio.mb-1(shape="square" :name='1') QoS 1: {{ $t('sensors.qos1') }}
+            van-radio.mb-1(shape="square" :name='2') QoS 2: {{ $t('sensors.qos2') }}
+      //- 保留消息
+      van-field.bg-gray-50.mb-2(name='switch' :label="$t('sensors.retain')")
+        template(#input)
+          van-switch(v-model='formData.retain' size='20')
+
+  van-popup(v-model='showSubscriptionPicker' position='bottom')
+    van-picker(
+      show-toolbar
+      :title="$t('sensors.subscribed')"
+      :columns='subscriptionColumns'
+      @confirm='onSubscriptionPicked'
+      @cancel='showSubscriptionPicker = false')
 </template>
 
 <script setup>
@@ -61,12 +86,22 @@ const props = defineProps({
 
 const form = ref(null)
 const show = ref(false)
+const showSubscriptionPicker = ref(false)
 
 const formData = reactive({
-  sensorId: undefined,
+  _id: undefined,
+  qos: undefined,
+  retain: undefined,
   topic: undefined,
-  message: undefined,
+  payload: undefined,
 })
+
+const subscriptionColumns = computed(() =>
+  map(props.data.subscriptions, (d) => ({
+    text: d.topic,
+    value: d,
+  }))
+)
 
 watch(
   () => props.value,
@@ -85,11 +120,15 @@ watch(show, (value) => {
 watch(
   () => props.data,
   (value) => {
-    formData.sensorId = value._id
-    formData.topic = value.topic
-    formData.message = value.message
+    formData._id = value._id
   }
 )
+
+function onSubscriptionPicked({ value }) {
+  formData.qos = value.qos
+  formData.topic = value.topic
+  showSubscriptionPicker.value = false
+}
 
 async function beforeClose(action, done) {
   if (action === 'confirm') {
@@ -109,9 +148,11 @@ async function beforeClose(action, done) {
 
 function resetForm() {
   setTimeout(() => {
-    formData.sensorId = undefined
+    formData._id = undefined
+    formData.qos = undefined
+    formData.retain = undefined
     formData.topic = undefined
-    formData.message = undefined
+    formData.payload = undefined
   }, 200)
 }
 
@@ -123,3 +164,11 @@ function onSubmit() {
   })
 }
 </script>
+
+<style lang="scss" scoped>
+:deep(.van-field) {
+  .van-field__value input {
+    text-overflow: ellipsis;
+  }
+}
+</style>
