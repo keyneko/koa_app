@@ -138,12 +138,12 @@ const initOption = {
           { type: 'min', name: 'Min' },
         ],
       },
-      markLine: {
-        data: [{ type: 'average', name: 'Average' }],
-        label: {
-          position: 'insideMiddleBottom',
-        },
-      },
+      // markLine: {
+      //   data: [{ type: 'average', name: 'Average' }],
+      //   label: {
+      //     position: 'insideMiddleBottom',
+      //   },
+      // },
     },
 
     // 湿度

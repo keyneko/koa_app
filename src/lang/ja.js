@@ -209,7 +209,7 @@ export default {
     plhrManufacturer: 'メーカー名をご入力ください',
     temperature: '温度',
     humidity: '湿度',
-    online: 'オンライン',
+    isOnline: 'オンライン',
     publish: 'プッシュ',
     published: 'メッセージがプッシュされました',
     topic: 'トピック',

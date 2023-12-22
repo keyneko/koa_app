@@ -209,7 +209,7 @@ export default {
     plhrManufacturer: '请输入制造商',
     temperature: '温度',
     humidity: '湿度',
-    online: '在线状态',
+    isOnline: '在线状态',
     publish: '推送消息',
     published: '消息已推送',
     topic: '主题',

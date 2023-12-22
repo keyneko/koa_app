@@ -18,7 +18,7 @@
 
     van-cell-group.mb-4(inset)
       van-cell(:title="$t('settings.switchLang')" center)
-        LangSelect(:showText="true")
+        LangSelect(:showText="true" @switched="update")
       van-cell(:title="$t('settings.updateName')" is-link  @click="showDialogName = true")
       van-cell(:title="$t('settings.updatePswd')" is-link  @click="showDialogPassword = true")
       van-cell(:title="$t('settings.updateAvatar')" is-link  @click="showDialogAvatar = true")
@@ -60,13 +60,14 @@ function logoutCfm() {
   Dialog.confirm({
     title: i18n.t('settings.logoutCfm'),
     message: i18n.t('settings.logoutCfmMsg'),
-  }).then(async () => {
+  }).then(async() => {
     try {
       Toast.loading()
       await store.dispatch('user/logout')
       Toast.clear()
       router.push(`/login?redirect=${route.fullPath}`)
-    } catch (e) {}
+    }
+    catch (e) {}
   })
 }
 

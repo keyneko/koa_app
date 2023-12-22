@@ -30,7 +30,7 @@
             template
               table.table.mb-4
                 tr
-                  th {{ $t('sensors.type') }}
+                  th(width=100) {{ $t('sensors.type') }}
                   td {{ lut("sensor_type", d.type) }}
                 tr
                   th {{ $t('sensors.number') }}
@@ -48,9 +48,9 @@
                   th {{ $t('g.status') }}
                   td {{ lut('status', d.status) }}
                 tr
-                  th {{ $t('sensors.online') }}
+                  th {{ $t('sensors.isOnline') }}
                   td
-                    span(:class="d.online? 'green b': ''") {{ lut('online', d.online) }}
+                    span(:class="d.isOnline? 'green b': ''") {{ lut('online', d.isOnline) }}
                 tr
                   th {{ $t('g.protected') }}
                   td {{ lut('yes_or_no', d.isProtected) }}
@@ -170,8 +170,8 @@ getSensors()
   @apply border-collapse border border-gray-300;
   th,
   td {
-    @apply border border-gray-300;
-    @apply px-2 py-2 text-left leading-none;
+    @apply border border-gray-200;
+    @apply px-2 py-1 text-left leading-none break-all;
   }
 }
 </style>

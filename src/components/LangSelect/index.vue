@@ -28,6 +28,7 @@ import i18n from '@/lang'
 import store from '@/store'
 import { find } from 'lodash'
 
+const emits = defineEmits(['switched'])
 const props = defineProps({
   showText: {
     type: Boolean,
@@ -51,9 +52,12 @@ function onItemClicked(d) {
 
   i18n.locale = d.value
   vantLocales(d.value)
+
   store.commit('app/SET_LANGUAGE', d.value)
   store.commit('dicts/EMPTY_DICTS')
+
   Toast.success(i18n.t('g.langSwitched'))
+  emits('switched', d.value)
 }
 </script>
 

@@ -127,10 +127,10 @@ export default {
   },
 
   settings: {
-    switchLang: 'Switch Lang',
-    updateName: 'Update Name',
-    updatePswd: 'Update Pswd',
-    updateAvatar: 'Update Avatar',
+    switchLang: 'Switch language',
+    updateName: 'Update name',
+    updatePswd: 'Update password',
+    updateAvatar: 'Update avatar',
     logout: 'Logout',
     logoutCfm: 'Logout Confirm',
     logoutCfmMsg: 'Are you sure you want to logout?',
@@ -209,7 +209,7 @@ export default {
     plhrManufacturer: 'Please type manufacturer',
     temperature: 'Temperature',
     humidity: 'Humidity',
-    online: 'Online',
+    isOnline: 'Online',
     publish: 'Publish',
     published: 'Message has been pushed',
     topic: 'Topic',
