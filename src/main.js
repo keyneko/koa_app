@@ -18,7 +18,6 @@ import i18n, { vantLocales } from '@/lang'
 import VueTouch from 'vue-touch'
 import animate from 'animate.css'
 
-
 Toast.setDefaultOptions('loading', {
   forbidClick: true,
 })

@@ -128,9 +128,9 @@ export default {
 
   settings: {
     switchLang: '言語を切り替える',
-    updateName: 'ニックネーム更新',
-    updatePswd: 'パスワード更新',
-    updateAvatar: 'アバター更新',
+    updateName: '更新ニックネーム',
+    updatePswd: '更新パスワード',
+    updateAvatar: '更新アバター',
     logout: 'ログアウト',
     logoutCfm: 'ログアウト確認',
     logoutCfmMsg: 'システムからログアウトしますか?',

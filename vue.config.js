@@ -1,9 +1,9 @@
 const path = require('path')
-const CompressionPlugin = require("compression-webpack-plugin")
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const CompressionPlugin = require('compression-webpack-plugin')
+const BundleAnalyzerPlugin =
+  require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const apiMocker = require('mocker-api')
 const settings = require('./src/settings')
-
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -26,14 +26,18 @@ module.exports = {
       warnings: false,
       errors: true,
     },
-    before(app) {
-      apiMocker(app, path.resolve('./mock'))
-    },
+    // before(app) {
+    //   apiMocker(app, path.resolve('./mock'))
+    // },
     proxy: {
-      // detail: https://cli.vuejs.org/config/#devserver-proxy
+      '/socket.io': {
+        target: 'http://localhost:4000',
+        ws: true,
+        changeOrigin: true,
+      },
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://localhost:4000/`,
-        // target: `http://118.24.152.123/api/`,
+        target: 'http://localhost:4000',
+        // target: 'http://118.24.152.123/api',
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: '',
@@ -47,7 +51,7 @@ module.exports = {
     config.name = name
 
     config.externals = {
-      echarts: "echarts",
+      echarts: 'echarts',
     }
 
     Object.assign(config.resolve, {
@@ -57,23 +61,23 @@ module.exports = {
     })
 
     // If building a production package, enable gzip compression and bundle analyzer tool
-    if (process.env.NODE_ENV === "production") {
+    if (process.env.NODE_ENV === 'production') {
       config.plugins.push(
         new CompressionPlugin({
-          filename: "[path][base].gz",
-          algorithm: "gzip",
+          filename: '[path][base].gz',
+          algorithm: 'gzip',
           test: /\.js$/,
           threshold: 10240,
           minRatio: 0.8,
           deleteOriginalAssets: false,
-        })
+        }),
       )
 
       config.plugins.push(
         new BundleAnalyzerPlugin({
           analyzerMode: 'disabled',
           generateStatsFile: true,
-          statsOptions: { source: false }
+          statsOptions: { source: false },
         }),
       )
     }
@@ -85,7 +89,7 @@ module.exports = {
       less: {
         lessOptions: {
           modifyVars: {
-            hack: `true; @import "src/styles/vant-custom.less";`,
+            hack: 'true; @import "src/styles/vant-custom.less";',
           },
         },
       },
@@ -105,11 +109,7 @@ module.exports = {
       .end()
 
     // Exclude SVG from default SVG rule
-    config.module
-      .rule('svg')
-      .exclude
-      .add(resolve('src/icons'))
-      .end()
+    config.module.rule('svg').exclude.add(resolve('src/icons')).end()
 
     // Enable svg-sprite-loader
     config.module
@@ -123,6 +123,5 @@ module.exports = {
         symbolId: 'icon-[name]',
       })
       .end()
-
   },
 }

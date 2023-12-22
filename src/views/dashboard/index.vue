@@ -113,12 +113,18 @@ import useSops from '@/utils/useSops'
 import store from '@/store'
 import * as API from '@/api/user'
 import Avatar from '@/components/Avatar'
+import { socket, initSocket } from '@/utils/socket'
 
 const router = useRouter()
 const route = useRoute()
 const { lut, options } = useDicts()
+initSocket()
 
 const permissions = toRef(store.state.user, 'permissions')
+
+setTimeout(() => {
+  socket.emit('joinRoom', 'room1')
+}, 5000)
 </script>
 
 <style lang="scss" scoped>
