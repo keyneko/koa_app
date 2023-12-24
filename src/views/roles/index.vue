@@ -68,9 +68,14 @@ const showDialogCreate = ref(false)
 const showDialogUpdate = ref(false)
 
 function getRoles() {
-  return API.getRoles({ sortOrder: 'desc' }).then((res) => {
-    list.value = res.data
-  })
+  Toast.loading()
+  return API.getRoles({ sortOrder: 'desc' })
+    .then((res) => {
+      list.value = res.data
+    })
+    .finally(() => {
+      Toast.clear()
+    })
 }
 
 function getPermissionDicts() {

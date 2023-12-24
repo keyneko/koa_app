@@ -50,3 +50,12 @@ new Vue({
 })
 
 vantLocales(i18n.locale)
+
+// fix: 点击输入框时，弹出键盘遮挡输入框
+window.addEventListener('resize', function() {
+  if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') {
+    window.setTimeout(function() {
+      document.activeElement.scrollIntoView()
+    }, 0)
+  }
+})
