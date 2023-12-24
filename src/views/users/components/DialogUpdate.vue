@@ -10,7 +10,7 @@ van-dialog(
     ref='form')
     van-cell-group.title-basis
       //- 名称
-      van-field(
+      van-field.bg-gray-50.mb-2(
         v-model='formData.name'
         required
         :label="$t('g.name')"
@@ -34,13 +34,13 @@ van-dialog(
         template(#input)
           van-switch(v-model='formData.isProtected' size='20')
       //- 角色
-      van-field.bg-gray-50.mb-2(
+      van-field.bg-gray-50.mb-2.scrollable(
         :label="$t('g.roles')")
         template(#input)
           van-checkbox-group(v-model='formData.roles')
             van-checkbox.mb-1(v-for="d in options('roles')" :key="d.value" shape="square" :name='d.value') {{ d.name }}
       //- 权限
-      van-field.bg-gray-50.mb-2(
+      van-field.bg-gray-50.mb-2.scrollable(
         :label="$t('g.permissions')")
         template(#input)
           van-checkbox-group(v-model='formData.permissions')

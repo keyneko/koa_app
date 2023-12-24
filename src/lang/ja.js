@@ -67,11 +67,13 @@ export default {
     permissions: "パーミッション",
     roles: "ロール管理",
     users: "ユーザー管理",
-    barcodeGenerate: 'バーコード生成',
+    barcodeCreate: 'バーコード生成',
     barcodeQuery: 'バーコードクエリ',
     barcodes: 'バーコードリスト',
-    positionGenerate: 'ポジションコード生成',
+    barcodeManagement: 'バーコード管理',
+    positionCreate: 'ポジションコード生成',
     positionQuery: 'ポジションコードクエリ',
+    positionManagement: 'ポジションコード管理',
     positions: 'ポジションコードリスト',
     sensors: 'センサー',
     sensorChart: 'センサーチャート',
@@ -99,10 +101,12 @@ export default {
     permissions: "パーミッション",
     roles: 'ロール管理',
     users: 'ユーザー管理',
-    barcodeGenerate: 'バーコード生成',
+    barcodeCreate: 'バーコード生成',
     barcodeQuery: 'バーコードクエリ',
-    positionGenerate: 'ポジションコード生成',
+    barcodeManagement: 'バーコード管理',
+    positionCreate: 'ポジションコード生成',
     positionQuery: 'ポジションコードクエリ',
+    positionManagement: 'ポジションコード管理',
     sensors: 'センサー',
   },
 
@@ -145,7 +149,7 @@ export default {
     requireAvatar: 'アバターをアップロードしてください',
   },
 
-  barcodeGenerate: {
+  barcodeCreate: {
     category: 'カテゴリー',
     plhrCategory: 'カテゴリーをご入力ください',
     requireCategory: 'カテゴリーは空にできません',
@@ -164,7 +168,7 @@ export default {
     deleteCfmMsg: 'このバーコードを<b class=red>削除</b>してもよろしいですか?',
   },
 
-  positionGenerate: {
+  positionCreate: {
     areaCode: 'エリア番号',
     plhrAreaCode: 'エリア番号をご入力ください',
     requireAreaCode: 'エリア番号は空にできません',

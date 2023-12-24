@@ -13,17 +13,27 @@ function toRegExp(permission) {
 function checkPermission(el, binding) {
   const { value } = binding
   const all_permission = '*:*:*'
-  const permissions = store.getters && store.getters.permissions
+  const permissions = store.state.user.permissions
+  const denyPermissions = store.state.user.denyPermissions
 
   if (value && value instanceof Array && value.length > 0) {
-    const hasPermissions = permissions.some((permission) => {
+    const hasDenyPermission = denyPermissions.some((permission) => {
       const regExp = toRegExp(permission)
       return value.some((v) => regExp.test(v))
     })
 
-    if (!hasPermissions) {
-      el.parentNode && el.parentNode.removeChild(el)
+    if (!hasDenyPermission) {
+      const hasPermission = permissions.some((permission) => {
+        const regExp = toRegExp(permission)
+        return value.some((v) => regExp.test(v))
+      })
+
+      if (hasPermission) {
+        return
+      }
     }
+
+    el.parentNode && el.parentNode.removeChild(el)
   }
   else {
     throw new Error(`need permissions! Like v-permission="['*:*:*']"`)

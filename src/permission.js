@@ -9,19 +9,19 @@ NProgress.configure({ showSpinner: false })
 
 // prettier-ignore
 const whiteList = [
-  /*重定向*/
+  /* 重定向*/
   "^/redirect",
-  /*404*/
+  /* 404*/
   "^/404",
-  /*登录*/
+  /* 登录*/
   "^/login",
-  /*注册*/
+  /* 注册*/
   "^/register",
-  /*测试*/
+  /* 测试*/
   "^/test/*",
 ]
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async(to, from, next) => {
   // start progress bar
   NProgress.start()
 
@@ -29,7 +29,8 @@ router.beforeEach(async (to, from, next) => {
   if (!whiteList.every((d) => !new RegExp(d).test(to.path))) {
     // in the free login whitelist, go directly
     next()
-  } else {
+  }
+  else {
     try {
       // determine whether the user has logged in
       const hasToken = getToken()
@@ -44,11 +45,13 @@ router.beforeEach(async (to, from, next) => {
           // if is logged in, redirect to the home page
           next({ path: redirect || '/', query })
           NProgress.done()
-        } else {
+        }
+        else {
           const hasUser = store.getters.user && store.getters.username
           if (hasUser) {
             next()
-          } else {
+          }
+          else {
             await store.dispatch('user/getUser')
             next()
           }
@@ -65,8 +68,8 @@ router.beforeEach(async (to, from, next) => {
           //     const { roles } = await store.dispatch('user/getInfo')
 
           //     if (roles.length) {
-          //       // generate accessible routes map based on roles
-          //       const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
+          //       // create accessible routes map based on roles
+          //       const accessRoutes = await store.dispatch('permission/createRoutes', roles)
 
           //       // dynamically add accessible routes
           //       router.addRoutes(accessRoutes)
@@ -95,11 +98,13 @@ router.beforeEach(async (to, from, next) => {
           //   }
           // }
         }
-      } else {
+      }
+      else {
         /* has no token*/
         throw Error('no token')
       }
-    } catch (e) {
+    }
+    catch (e) {
       // other pages that do not have permission to access are redirected to the login page.
       next({ path: '/login', query: { ...to.query, redirect: to.path } })
       NProgress.done()

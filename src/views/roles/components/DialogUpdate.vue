@@ -34,10 +34,10 @@ van-dialog(
         template(#input)
           van-switch(v-model='formData.isProtected' size='20')
       //- 权限
-      van-field.bg-gray-50.mb-2(
+      van-field.bg-gray-50.mb-2.scrollable(
         :label="$t('g.permissions')")
         template(#input)
-          van-checkbox-group.max-h-64.overflow-y-auto(v-model='formData.permissions')
+          van-checkbox-group.max-h-64(v-model='formData.permissions')
             van-checkbox.mb-1(v-for="d in options('permissions')" :key="d.value" shape="square" :name='d.value') {{ d.value }}
       //- //- SOPs
       //- van-field.bg-gray-50.mb-2(

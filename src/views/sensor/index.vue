@@ -29,21 +29,21 @@
               b(v-copy.silent) {{ d.name }}
             template
               table.table.mb-4
+                tr(v-if="d._id")
+                  th _id
+                  td(v-copy) {{ d._id }}
+                tr(v-if="d.apiKey")
+                  th apiKey
+                  td(v-copy) {{ d.apiKey }}
                 tr
                   th(width=100) {{ $t('sensors.type') }}
                   td {{ lut("sensor_type", d.type) }}
                 tr
                   th {{ $t('sensors.number') }}
-                  td {{ d.number }}
+                  td {{ d.number || '-' }}
                 tr
                   th {{ $t('sensors.manufacturer') }}
-                  td {{ d.manufacturer }}
-                tr
-                  th _id
-                  td(v-copy) {{ d._id }}
-                tr
-                  th apiKey
-                  td(v-copy) {{ d.apiKey }}
+                  td {{ d.manufacturer || '-' }}
                 tr
                   th {{ $t('g.status') }}
                   td {{ lut('status', d.status) }}
@@ -167,6 +167,7 @@ getSensors()
 
 <style lang="scss" scoped>
 .table {
+  width: 100%;
   @apply border-collapse border border-gray-300;
   th,
   td {

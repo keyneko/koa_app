@@ -16,9 +16,9 @@ export default function useSops() {
       /* eslint-disable no-multi-spaces */
       case SOP.rolesManagement          : return '更多应用'
       case SOP.usersManagement          : return '更多应用'
-      case SOP.barcodeGenerate          : return '条码查询'
+      case SOP.barcodeQuery             : return '条码查询'
       case SOP.barcodeManagement        : return '条码查询'
-      case SOP.positionGenerate         : return '条码查询'
+      case SOP.positionQuery            : return '条码查询'
       case SOP.positionManagement       : return '条码查询'
       /* eslint-enable no-multi-spaces */
     }
@@ -33,9 +33,9 @@ export default function useSops() {
       /* eslint-disable no-multi-spaces */
       case SOP.rolesManagement          : return '/roles'
       case SOP.usersManagement          : return '/users'
-      case SOP.barcodeGenerate          : return '/barcode/generate'
+      case SOP.barcodeQuery             : return '/barcode/query'
       case SOP.barcodeManagement        : return '/barcode/query'
-      case SOP.positionGenerate         : return '/position/generate'
+      case SOP.positionQuery            : return '/position/query'
       case SOP.positionManagement       : return '/position/query'
       /* eslint-enable no-multi-spaces */
     }

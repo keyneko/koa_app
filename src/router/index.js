@@ -100,7 +100,7 @@ export const constantRoutes = [
     component: () => import('@/views/barcode/query'),
   },
   /**
-   * 条码列表
+   * 条码管理
    */
   {
     path: '/barcode/list',
@@ -111,9 +111,9 @@ export const constantRoutes = [
    * 条码生成
    */
   {
-    path: '/barcode/generate',
-    name: 'BarcodeGenerate',
-    component: () => import('@/views/barcode/generate'),
+    path: '/barcode/create',
+    name: 'BarcodeCreate',
+    component: () => import('@/views/barcode/create'),
   },
 
   /**
@@ -125,7 +125,7 @@ export const constantRoutes = [
     component: () => import('@/views/position/query'),
   },
   /**
-   * 库位码列表
+   * 库位码管理
    */
   {
     path: '/position/list',
@@ -136,9 +136,9 @@ export const constantRoutes = [
    * 库位码生成
    */
   {
-    path: '/position/generate',
-    name: 'PositionGenerate',
-    component: () => import('@/views/position/generate'),
+    path: '/position/create',
+    name: 'PositionCreate',
+    component: () => import('@/views/position/create'),
   },
 
   /**

@@ -34,11 +34,13 @@ van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
             van-cell(value)
               template(#extra)
                 van-button.ml-2(
+                  v-perm="['positions:management:delete']"
                   size="small"
                   type="danger"
                   @click="emits('delete', d)"
                   ) {{ $t('g.delete') }}
                 van-button.ml-2(
+                  v-perm="['positions:management:update']"
                   size="small"
                   type="general"
                   @click="emits('update', d)"

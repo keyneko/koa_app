@@ -50,41 +50,41 @@
           template(#text)
             .label.van-ellipsis {{ $t('dashboard.users') }}
 
-        //- 条码生成
+        //- 条码查询
         van-grid-item(
-          v-perm="['barcodes:create:*']"
-          :to="{ path: '/barcode/generate' }")
+          v-perm="['barcodes:query:*']"
+          :to="{ path: '/barcode/query' }")
           template(#icon)
             svg-icon(name='barcode')
           template(#text)
-            .label.van-ellipsis {{ $t('dashboard.barcodeGenerate') }}
+            .label.van-ellipsis {{ $t('dashboard.barcodeQuery') }}
 
         //- 条码管理
         van-grid-item(
           v-perm="['barcodes:management:*']"
-          :to="{ path: '/barcode/query' }")
+          :to="{ path: '/barcode/list' }")
           template(#icon)
             svg-icon(name='barcode-scan')
           template(#text)
-            .label.van-ellipsis {{ $t('dashboard.barcodeQuery') }}
+            .label.van-ellipsis {{ $t('dashboard.barcodeManagement') }}
 
-        //- 库位码生成
+        //- 库位码查询
         van-grid-item(
-          v-perm="['positions:create:*']"
-          :to="{ path: '/position/generate' }")
+          v-perm="['positions:query:*']"
+          :to="{ path: '/position/query' }")
           template(#icon)
             svg-icon(name='qrcode')
           template(#text)
-            .label.van-ellipsis {{ $t('dashboard.positionGenerate') }}
+            .label.van-ellipsis {{ $t('dashboard.positionQuery') }}
 
         //- 库位码管理
         van-grid-item(
           v-perm="['positions:management:*']"
-          :to="{ path: '/position/query' }")
+          :to="{ path: '/position/list' }")
           template(#icon)
             svg-icon(name='qrcode-scan')
           template(#text)
-            .label.van-ellipsis {{ $t('dashboard.positionQuery') }}
+            .label.van-ellipsis {{ $t('dashboard.positionManagement') }}
 
         //- 传感器
         van-grid-item(

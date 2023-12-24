@@ -33,11 +33,11 @@
       :disabled="buttonLoading"
       @click='() => $refs.form.submit()'
       ) {{ $t('g.submit') }}
-    van-button.r8(
-      type='default'
-      block
-      :to="toList"
-      ) {{ $t('g.viewAll') }}
+    //- van-button.r8(
+    //-   type='default'
+    //-   block
+    //-   :to="toList"
+    //-   ) {{ $t('g.viewAll') }}
 
   DialogResult(v-model="showDialog" :data="position")
 </template>
@@ -66,10 +66,10 @@ const formData = reactive({
 })
 const position = ref({})
 
-const toList = computed(() => ({
-  path: '/position/list',
-  query: {},
-}))
+// const toList = computed(() => ({
+//   path: '/position/list',
+//   query: {},
+// }))
 
 // 注册扫码回调
 jsBridge.register('barcode', (res) => {

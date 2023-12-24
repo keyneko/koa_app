@@ -45,6 +45,10 @@ van-dialog(
         :placeholder="$t('g.plhrStatus')"
         :value='lut("barcode_status", formData.status)'
         @click='showStatusPicker = true')
+      //- 受保护
+      van-field.bg-gray-50.mb-2(name='switch' :label="$t('g.protected')")
+        template(#input)
+          van-switch(v-model='formData.isProtected' size='20')
       //- 拍照
       van-field(
         _required
@@ -98,6 +102,7 @@ const formData = reactive({
   quantity: '',
   basicUnit: '',
   status: '',
+  isProtected: undefined,
   files: [],
 })
 
@@ -127,6 +132,7 @@ watch(
     formData.quantity = value.quantity
     formData.basicUnit = value.basicUnit
     formData.status = value.status
+    formData.isProtected = value.isProtected
     formData.files = map(value.files, (f) => ({ url: f }))
   }
 )

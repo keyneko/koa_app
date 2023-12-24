@@ -2,7 +2,7 @@
 .page--fixed
   .page__header
     van-nav-bar(
-      :title="$t('routes.barcodeGenerate')"
+      :title="$t('routes.positionCreate')"
       left-arrow
       @click-left="$router.back()")
 
@@ -11,16 +11,38 @@
       validate-first
       @submit="onSubmit"
       ref='form')
-      //- 分类
+      //- 地区编号
       van-cell-group.mb-4(inset)
         van-field(
-          v-model='formData.category'
-          :label="$t('barcodeGenerate.category')"
-          :placeholder="$t('barcodeGenerate.plhrCategory')"
+          v-model='formData.areaCode'
+          :label="$t('positionCreate.areaCode')"
+          :placeholder="$t('positionCreate.plhrAreaCode')"
           required
           :rules="[ \
-            { required: true, message: $t('barcodeGenerate.requireCategory') }, \
-            { validator: fn, message: $t('barcodeGenerate.formatErrCategory') }, \
+            { required: true, message: $t('positionCreate.requireAreaCode') }, \
+            { validator: (v) => /^[A-Z0-9]{1,4}$/.test(v), message: $t('positionCreate.formatErrAreaCode') }, \
+          ]")
+      //- 栋编号
+      van-cell-group.mb-4(inset)
+        van-field(
+          v-model='formData.buildingCode'
+          :label="$t('positionCreate.buildingCode')"
+          :placeholder="$t('positionCreate.plhrBuildingCode')"
+          required
+          :rules="[ \
+            { required: true, message: $t('positionCreate.requireBuildingCode') }, \
+            { validator: (v) => /^[A-Z0-9]{1,2}$/.test(v), message: $t('positionCreate.formatErrBuildingCode') }, \
+          ]")
+      //- 楼层编号
+      van-cell-group.mb-4(inset)
+        van-field(
+          v-model='formData.floorCode'
+          :label="$t('positionCreate.floorCode')"
+          :placeholder="$t('positionCreate.plhrFloorCode')"
+          required
+          :rules="[ \
+            { required: true, message: $t('positionCreate.requireFloorCode') }, \
+            { validator: (v) => /^[A-Z0-9]{1,2}$/.test(v), message: $t('positionCreate.formatErrFloorCode') }, \
           ]")
       //- 名称
       van-cell-group.mb-4(inset)
@@ -32,23 +54,15 @@
           :rules="[ \
             { required: true, message: $t('g.requireName') }, \
           ]")
-      //- 数量
+      //- 是否可堆叠
       van-cell-group.mb-4(inset)
         van-field(
-          v-model='formData.quantity'
-          :label="$t('g.qty')"
-          :placeholder="$t('g.plhrQty')"
-          type="number"
           required
-          :rules="[ \
-            { required: true, message: $t('g.requireQty') }, \
-          ]")
-      //- 基础单位
-      van-cell-group.mb-4(inset)
-        van-field(
-          v-model='formData.basicUnit'
-          :label="$t('g.basicUnit')"
-          :placeholder="$t('g.plhrBasicUnit')")
+          :label="$t('positionCreate.isStackable')"
+          :rules="[{ required: true, message: $t('positionCreate.requireStackable') }]")
+          template(#input)
+            van-radio-group(v-model='formData.isStackable' direction='horizontal')
+              van-radio.mb-1(v-for="d in options('position_stackable')" :key="d._id" :name='d.value') {{ d.name }}
       //- 状态
       van-cell-group.mb-4(inset)
         van-field(
@@ -59,7 +73,7 @@
           arrow-direction="down"
           :label="$t('g.status')"
           :placeholder="$t('g.plhrStatus')"
-          :value='lut("barcode_status", formData.status)'
+          :value='lut("status", formData.status)'
           @click='showStatusPicker = true')
       //- 拍照
       van-cell-group(inset)
@@ -96,8 +110,9 @@ import { Toast } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import useDicts from '@/utils/useDicts'
 import { upload } from '@/utils/fileUpload'
+import bus from '@/utils/bus'
 import i18n from '@/lang'
-import * as API from '@/api/barcode'
+import * as API from '@/api/position'
 import { map } from 'lodash'
 
 const router = useRouter()
@@ -109,19 +124,19 @@ const showDialog = ref(false)
 const showStatusPicker = ref(false)
 
 const form = ref(null)
-const fn = (v) => /^[A-Z]{2}$/.test(v)
 
 const formData = reactive({
-  category: '',
+  areaCode: '',
+  buildingCode: '',
+  floorCode: '',
   name: '',
-  quantity: '',
-  basicUnit: '',
+  isStackable: 0,
   status: 0,
   files: [],
 })
 
 const statusColumns = computed(() =>
-  map(options.value('barcode_status'), (d) => ({
+  map(options.value('status'), (d) => ({
     text: d.name,
     value: d,
   }))
@@ -135,7 +150,7 @@ function fileUpload(file) {
 }
 
 function resetForm() {
-  formData.name = ''
+  formData.isStackable = 0
   formData.status = 0
   formData.files = []
 }
@@ -148,10 +163,15 @@ function onStatusPicked({ value }) {
 function onSubmit() {
   Toast.loading()
   buttonLoading.value = true
-  return API.createBarcode({ ...formData, files: map(formData.files, (f) => f.url) })
+  return API.createPosition({
+    ...formData,
+    files: map(formData.files, (f) => f.url),
+  })
     .then((res) => {
       Toast.success(i18n.t('g.created'))
       resetForm()
+      router.back()
+      bus.$emit('position.created', res.data)
     })
     .finally(() => {
       buttonLoading.value = false

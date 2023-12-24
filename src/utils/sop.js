@@ -6,9 +6,9 @@
 export const SOP = {
   rolesManagement           : 0,  // 角色管理
   usersManagement           : 1,  // 用户管理
-  barcodeGenerate           : 2,  // 条码生成
+  barcodeQuery              : 2,  // 条码查询
   barcodeManagement         : 3,  // 条码管理
-  positionGenerate          : 4,  // 库位码生成
+  positionQuery             : 4,  // 库位码查询
   positionManagement        : 5,  // 库位码管理
 }
 

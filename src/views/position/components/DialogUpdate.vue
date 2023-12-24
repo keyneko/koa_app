@@ -22,8 +22,8 @@ van-dialog(
       //- 是否可堆叠
       van-field.bg-gray-50.mb-2(
         required
-        :label="$t('positionGenerate.isStackable')"
-        :rules="[{ required: true, message: $t('positionGenerate.requireStackable') }]")
+        :label="$t('positionCreate.isStackable')"
+        :rules="[{ required: true, message: $t('positionCreate.requireStackable') }]")
         template(#input)
           van-radio-group(v-model='formData.isStackable' direction='horizontal')
             van-radio.mb-1(v-for="d in options('position_stackable')" :key="d._id" :name='d.value') {{ d.name }}
@@ -38,6 +38,10 @@ van-dialog(
         :placeholder="$t('g.plhrStatus')"
         :value='lut("status", formData.status)'
         @click='showStatusPicker = true')
+      //- 受保护
+      van-field.bg-gray-50.mb-2(name='switch' :label="$t('g.protected')")
+        template(#input)
+          van-switch(v-model='formData.isProtected' size='20')
       //- 拍照
       van-field(
         _required
@@ -90,6 +94,7 @@ const formData = reactive({
   name: '',
   isStackable: '',
   status: '',
+  isProtected: undefined,
   files: [],
 })
 
@@ -118,6 +123,7 @@ watch(
     formData.name = value.name
     formData.isStackable = value.isStackable
     formData.status = value.status
+    formData.isProtected = value.isProtected
     formData.files = map(value.files, (f) => ({ url: f }))
   }
 )

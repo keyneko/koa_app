@@ -12,6 +12,7 @@ const state = {
   roles: [],
   sops: [],
   permissions: [],
+  denyPermissions: [],
 }
 
 const mutations = {
@@ -41,6 +42,9 @@ const mutations = {
   },
   SET_PERMISSIONS: (state, permissions) => {
     state.permissions = permissions
+  },
+  SET_DENY_PERMISSIONS: (state, permissions) => {
+    state.denyPermissions = permissions
   },
 }
 
@@ -84,6 +88,7 @@ const actions = {
           commit('SET_ROLES', [])
           commit('SET_SOPS', [])
           commit('SET_PERMISSIONS', [])
+          commit('SET_DENY_PERMISSIONS', [])
           removeToken()
           resolve()
         })
@@ -122,7 +127,8 @@ const actions = {
           commit('SET_AVATAR', avatar)
           commit('SET_ROLES', roles)
           commit('SET_SOPS', sops)
-          commit('SET_PERMISSIONS', difference(permissions, denyPermissions))
+          commit('SET_PERMISSIONS', permissions)
+          commit('SET_DENY_PERMISSIONS', denyPermissions)
           resolve(user)
         })
         .catch((error) => {

@@ -5,10 +5,18 @@
       :title="$t('routes.positions')"
       left-arrow
       @click-left="$router.back()")
+      template(#right)
+        van-button.px-2(
+          v-perm="['positions:management:create']"
+          size='mini'
+          type='info'
+          icon-position='right'
+          :to="toCreate"
+          ) {{ $t('g.create') }}
 
   .page__body
     .mb-2.mx-5
-      div {{ $t('positionGenerate.isStackable') }}
+      div {{ $t('positionCreate.isStackable') }}
       van-tag.mr-3(
         v-for="d in options('position_stackable')"
         :key="d._id"
@@ -45,6 +53,7 @@ import { ref, reactive, computed, onBeforeUnmount } from 'vue'
 import { Toast, Dialog } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import * as API from '@/api/position'
+import bus from '@/utils/bus'
 import i18n from '@/lang'
 import useDicts from '@/utils/useDicts'
 import { concat, without, range } from 'lodash'
@@ -71,6 +80,11 @@ const queryParams = reactive({
   isStackable: '',
   status: '',
 })
+
+const toCreate = computed(() => ({
+  path: '/position/create',
+  query: {},
+}))
 
 function getPositions(pageNum = 1) {
   Toast.loading()
@@ -164,4 +178,8 @@ async function reflashList() {
 }
 
 getPositions()
+
+bus.$on('position.created', (value) => {
+  console.log(value)
+})
 </script>

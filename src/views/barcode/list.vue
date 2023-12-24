@@ -5,6 +5,14 @@
       :title="$t('routes.barcodes')"
       left-arrow
       @click-left="$router.back()")
+      template(#right)
+        van-button.px-2(
+          v-perm="['barcodes:management:create']"
+          size='mini'
+          type='info'
+          icon-position='right'
+          :to="toCreate"
+          ) {{ $t('g.create') }}
 
   .page__body
     .mb-4.mx-5
@@ -35,6 +43,7 @@ import { ref, reactive, computed, onBeforeUnmount } from 'vue'
 import { Toast, Dialog } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import * as API from '@/api/barcode'
+import bus from '@/utils/bus'
 import i18n from '@/lang'
 import useDicts from '@/utils/useDicts'
 import { concat, without, range } from 'lodash'
@@ -60,6 +69,11 @@ const barcode = ref({})
 const queryParams = reactive({
   status: '',
 })
+
+const toCreate = computed(() => ({
+  path: '/barcode/create',
+  query: {},
+}))
 
 function getBarcodes(pageNum = 1) {
   Toast.loading()
@@ -143,4 +157,8 @@ async function reflashList() {
 }
 
 getBarcodes()
+
+bus.$on('barcode.created', (value) => {
+  console.log(value)
+})
 </script>

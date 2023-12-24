@@ -67,11 +67,13 @@ export default {
     permissions: "Permissions",
     roles: "Roles Management",
     users: "Users Management",
-    barcodeGenerate: 'Barcode Generate',
+    barcodeCreate: 'Barcode Create',
     barcodeQuery: 'Barcode Query',
+    barcodeManagement: 'Barcode Management',
     barcodes: 'Barcodes',
-    positionGenerate: 'Position Generate',
+    positionCreate: 'Position Create',
     positionQuery: 'Position Query',
+    positionManagement: 'Position Management',
     positions: 'Positions',
     sensors: 'Sensors',
     sensorChart: 'Sensor Chart',
@@ -99,10 +101,12 @@ export default {
     permissions: "Permissions",
     roles: 'Roles Management',
     users: 'Users Management',
-    barcodeGenerate: 'Barcode Generate',
+    barcodeCreate: 'Barcode Create',
     barcodeQuery: 'Barcode Query',
-    positionGenerate: 'Position Generate',
+    barcodeManagement: 'Barcode Management',
+    positionCreate: 'Position Create',
     positionQuery: 'Position Query',
+    positionManagement: 'Position Management',
     sensors: 'Sensors',
   },
 
@@ -145,7 +149,7 @@ export default {
     requireAvatar: 'Please upload avatar picture',
   },
 
-  barcodeGenerate: {
+  barcodeCreate: {
     category: 'Category',
     plhrCategory: 'Please type category',
     requireCategory: 'Category cannot be empty',
@@ -164,7 +168,7 @@ export default {
     deleteCfmMsg: 'Are you sure to <b class=red>delete</b> this barcode?',
   },
 
-  positionGenerate: {
+  positionCreate: {
     areaCode: 'Area code',
     plhrAreaCode: 'Please type area code',
     requireAreaCode: 'Area code cannot be empty',
