@@ -33,6 +33,7 @@ import i18n from '@/lang'
 import Chart from './components/ChartTemp'
 import * as API from '@/api/sensor'
 import dayjs from 'dayjs'
+import { socket } from '@/utils/socket'
 
 const router = useRouter()
 const route = useRoute()
@@ -73,6 +74,11 @@ function onDatePicked(date) {
   queryParams.dateTime = dayjs(date).format('YYYY-MM-DD')
   getRecords()
 }
+
+socket.on('newSensorDataArrived', () => {
+  console.log('new sensor data arrived')
+  getRecords()
+})
 
 getRecords()
 </script>

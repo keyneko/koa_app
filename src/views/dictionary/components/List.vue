@@ -16,7 +16,7 @@ van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
               span.gray &nbsp;[{{ d.name }}]
             template
               .van-ellipsis {{ $t('g.name') }}: {{ d.name }}
-              .van-ellipsis {{ $t('g.value') }}: {{ d.value }}
+              .van-ellipsis {{ $t('dictionary.value') }}: {{ d.value }}
               .van-ellipsis {{ $t('g.status') }}: {{ lut('status', d.status) }}
               .text-right
                 van-button.ml-2(
