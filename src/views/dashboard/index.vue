@@ -34,6 +34,16 @@
             template(#text)
               .label.van-ellipsis {{ $t('dashboard.permissions') }}
 
+          //- 字典词条
+          van-grid-item(
+            v-perm="['dictionaries:*:*']"
+            key="dictionaries"
+            :to="{ path: '/dictionaries' }")
+            template(#icon)
+              svg-icon(name='database-cog-outline' color="#ee0a24")
+            template(#text)
+              .label.van-ellipsis {{ $t('dashboard.dictionaries') }}
+
           //- 角色管理
           van-grid-item(
             v-perm="['roles:*:*']"

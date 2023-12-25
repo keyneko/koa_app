@@ -62,6 +62,8 @@ export default {
     password: 'パスワード',
     initialPassword: '初期パスワード',
     originalPassword: '旧パスワード',
+    search: '検索',
+    isPublic: '公立なの？',
   },
 
   routes: {
@@ -70,6 +72,7 @@ export default {
     dashboard: 'ダッシュボード',
     settings: '設定',
     permissions: "パーミッション",
+    dictionaries: '辞書エントリ',
     roles: "ロール管理",
     users: "ユーザー管理",
     barcodeCreate: 'バーコード生成',
@@ -104,6 +107,7 @@ export default {
   dashboard: {
     applications: 'アプリケーション',
     permissions: "パーミッション",
+    dictionaries: '辞書エントリ',
     roles: 'ロール管理',
     users: 'ユーザー管理',
     barcodeCreate: 'バーコード生成',
@@ -120,6 +124,21 @@ export default {
     update: 'パーミッション更新',
     deleteCfm: '削除確認',
     deleteCfmMsg: 'このパーミッションを<b class=red>削除</b>してもよろしいですか?',
+  },
+
+  dictionary: {
+    create: '辞書生成',
+    update: '辞書更新',
+    deleteCfm: '削除確認',
+    deleteCfmMsg: 'この辞書を<b class=red>削除</b>してもよろしいですか?',
+    plhrSearch: '辞書キーを入力してください（あいまい検索をサポートしています）',
+    key: '辞書キー',
+    plhrKey: '辞書キーを入力してください',
+    requireKey: '辞書キーは空にできません',
+    formatErrKey: '辞書キーフォーマットエラー (例: test_1、test_abc)',
+    value: '辞書値',
+    plhrValue: '辞書値を入力してください',
+    requireValue: '辞書値は空にできません',
   },
 
   roles: {

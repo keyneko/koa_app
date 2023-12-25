@@ -1,5 +1,5 @@
 import { set } from 'vue'
-import { getDictionaries } from '@/api/dicts'
+import { getDictionary } from '@/api/dicts'
 
 const state = {
   dicts: {},
@@ -22,9 +22,9 @@ const mutations = {
 }
 
 const actions = {
-  getDictionaries({ commit }, key) {
+  getDictionary({ commit }, key) {
     if (!state.dicts[key]) {
-      return getDictionaries({ key }).then((res) => {
+      return getDictionary({ key }).then((res) => {
         commit('SET_DICT', { key, list: res.data })
       })
     }

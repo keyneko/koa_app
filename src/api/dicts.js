@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
 /**
- * 查询字典
+ * 查询全部字典
  * @param  {String} params.key [description]
  */
 export function getDictionaries(params) {
@@ -13,25 +13,54 @@ export function getDictionaries(params) {
 }
 
 /**
+ * 查询字典
+ * @param  {String} params.key [description]
+ */
+export function getDictionary(params) {
+  return request({
+    url: `/dictionary`,
+    method: 'get',
+    params,
+  })
+}
+
+/**
  * 创建字典
  * @param  {String} data.key   [description]
- * @param  {String[]} data.names [description]
+ * @param  {String|Number} data.value [description]
+ * @param  {String} data.name [description]
+ * @param  {Boolean} data.isProtected [description]
  */
-export function createDictionaries(data) {
+export function createDictionary(data) {
   return request({
-    url: `/dictionaries`,
+    url: `/dictionary`,
     method: 'post',
     data,
   })
 }
 
 /**
- * 删除字典
- * @param  {String} params.key   [description]
+ * 更新字典
+ * @param  {String} data._id   [description]
+ * @param  {String|Number} data.value [description]
+ * @param  {String} data.name [description]
+ * @param  {Boolean} data.isProtected [description]
  */
-export function deleteDictionaries(params) {
+export function updateDictionary(data) {
   return request({
-    url: `/dictionaries`,
+    url: `/dictionary`,
+    method: 'put',
+    data,
+  })
+}
+
+/**
+ * 删除字典
+ * @param  {String} params._id   [description]
+ */
+export function deleteDictionary(params) {
+  return request({
+    url: `/dictionary`,
     method: 'delete',
     params,
   })

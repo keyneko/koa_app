@@ -7,6 +7,7 @@
       @click-left="$router.back()")
       template(#right)
         van-button.px-2(
+          v-perm="['sensors:management:create']"
           size='mini'
           type='info'
           icon-position='right'
@@ -57,6 +58,7 @@
 
               .flex.justify-between
                 van-button.ml-2(
+                  v-perm="['sensors:management:publish']"
                   size="small"
                   type="primary"
                   @click="onPublish(d)"
@@ -68,11 +70,13 @@
                     :to="toChart(d)"
                     ) {{ $t('g.view') }}
                   van-button.ml-2(
+                    v-perm="['sensors:management:update']"
                     size="small"
                     type="general"
                     @click="onUpdate(d)"
                     ) {{ $t('g.update') }}
                   van-button.ml-2(
+                    v-perm="['sensors:management:delete']"
                     size="small"
                     type="danger"
                     @click="onDelete(d)"

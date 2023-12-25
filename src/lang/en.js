@@ -62,6 +62,8 @@ export default {
     password: 'Password',
     initialPassword: 'Initial password',
     originalPassword: 'Original password',
+    search: 'Search',
+    isPublic: 'Is Public',
   },
 
   routes: {
@@ -70,6 +72,7 @@ export default {
     dashboard: 'Dashboard',
     settings: 'Settings',
     permissions: "Permissions",
+    dictionaries: 'Dictionaries',
     roles: "Roles Management",
     users: "Users Management",
     barcodeCreate: 'Barcode Create',
@@ -104,6 +107,7 @@ export default {
   dashboard: {
     applications: 'My Applications',
     permissions: "Permissions",
+    dictionaries: "Dictionaries",
     roles: 'Roles Management',
     users: 'Users Management',
     barcodeCreate: 'Barcode Create',
@@ -120,6 +124,21 @@ export default {
     update: 'Update Permission',
     deleteCfm: 'Delete Confirm',
     deleteCfmMsg: 'Are you sure to <b class=red>delete</b> this permission?',
+  },
+
+  dictionary: {
+    create: 'Create Dictionary',
+    update: 'Update Dictionary',
+    deleteCfm: 'Delete Confirm',
+    deleteCfmMsg: 'Are you sure to <b class=red>delete</b> this dictionary?',
+    plhrSearch: 'Please enter dictionary key (supports fuzzy search)',
+    key: 'Dictionary key',
+    plhrKey: 'Please type dictionary key',
+    requireKey: 'Dictionary key cannot be empty',
+    formatErrKey: 'Dictionary key format is incorrect (example: test_1, test_abc)',
+    value: 'Dictionary value',
+    plhrValue: 'Please type dictionary value',
+    requireValue: 'Dictionary value cannot be empty',
   },
 
   roles: {

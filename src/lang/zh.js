@@ -62,6 +62,8 @@ export default {
     password: '密码',
     initialPassword: '初始密码',
     originalPassword: '原密码',
+    search: '搜索',
+    isPublic: '是否公开',
   },
 
   routes: {
@@ -70,6 +72,7 @@ export default {
     dashboard: '仪表盘',
     settings: '设置',
     permissions: "权限词条",
+    dictionaries: '字典词条',
     roles: "角色管理",
     users: "用户管理",
     barcodeCreate: '条码生成',
@@ -104,6 +107,7 @@ export default {
   dashboard: {
     applications: '我的应用',
     permissions: "权限词条",
+    dictionaries: "字典词条",
     roles: '角色管理',
     users: '用户管理',
     barcodeCreate: '条码生成',
@@ -120,6 +124,21 @@ export default {
     update: '更新权限词条',
     deleteCfm: '确认删除',
     deleteCfmMsg: '确认<b class=red>删除</b>该权限词条吗？',
+  },
+
+  dictionary: {
+    create: '创建字典词条',
+    update: '更新字典词条',
+    deleteCfm: '确认删除',
+    deleteCfmMsg: '确认<b class=red>删除</b>该字典词条吗？',
+    plhrSearch: '请输入字典key（支持模糊搜索）',
+    key: '字典键',
+    plhrKey: '请输入字典键',
+    requireKey: '字典键不能为空',
+    formatErrKey: '字典键格式错误（示例: test_1、 test_abc）',
+    value: '字典值',
+    plhrValue: '请输入字典值',
+    requireValue: '字典值不能为空',
   },
 
   roles: {

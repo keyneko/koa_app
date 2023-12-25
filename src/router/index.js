@@ -66,11 +66,22 @@ export const constantRoutes = [
     component: () => import('@/views/settings/index'),
   },
 
-  // 权限词条
+  /**
+   * 权限词条
+   */
   {
     path: '/permissions',
     name: 'Permissions',
     component: () => import('@/views/permissions/index'),
+  },
+
+  /**
+   * 字典词条
+   */
+  {
+    path: '/dictionaries',
+    name: 'Dictionaries',
+    component: () => import('@/views/dictionary/index'),
   },
 
   /**
@@ -159,7 +170,9 @@ export const constantRoutes = [
     name: 'SensorChart',
     component: () => import('@/views/sensor/chart'),
   },
+
 ] // end of constantRoutes
+
 
 /**
  * asyncRoutes

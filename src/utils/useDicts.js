@@ -4,7 +4,7 @@ import { find, debounce } from 'lodash'
 
 const getDictDebounced = debounce(
   (key) => {
-    store.dispatch('dicts/getDictionaries', key)
+    store.dispatch('dicts/getDictionary', key)
   },
   2000,
   { leading: true }
