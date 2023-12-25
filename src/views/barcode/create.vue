@@ -49,18 +49,6 @@
           v-model='formData.basicUnit'
           :label="$t('g.basicUnit')"
           :placeholder="$t('g.plhrBasicUnit')")
-      //- 状态
-      van-cell-group.mb-4(inset)
-        van-field(
-          readonly
-          clickable
-          is-link
-          required
-          arrow-direction="down"
-          :label="$t('g.status')"
-          :placeholder="$t('g.plhrStatus')"
-          :value='lut("barcode_status", formData.status)'
-          @click='showStatusPicker = true')
       //- 拍照
       van-cell-group(inset)
         van-field(
@@ -81,13 +69,6 @@
       :disabled="buttonLoading"
       @click='() => $refs.form.submit()'
       ) {{ $t('g.submit') }}
-
-  van-popup(v-model='showStatusPicker' position='bottom')
-    van-picker(
-      show-toolbar
-      :columns='statusColumns'
-      @confirm='onStatusPicked'
-      @cancel='showStatusPicker = false')
 </template>
 
 <script setup>
@@ -107,7 +88,6 @@ const { lut, options } = useDicts()
 
 const buttonLoading = ref(false)
 const showDialog = ref(false)
-const showStatusPicker = ref(false)
 
 const form = ref(null)
 const fn = (v) => /^[A-Z]{2}$/.test(v)
@@ -117,16 +97,8 @@ const formData = reactive({
   name: '',
   quantity: '',
   basicUnit: '',
-  status: 0,
   files: [],
 })
-
-const statusColumns = computed(() =>
-  map(options.value('barcode_status'), (d) => ({
-    text: d.name,
-    value: d,
-  }))
-)
 
 function fileUpload(file) {
   upload(file).then((res) => {
@@ -137,13 +109,7 @@ function fileUpload(file) {
 
 function resetForm() {
   formData.name = ''
-  formData.status = 0
   formData.files = []
-}
-
-function onStatusPicked({ value }) {
-  formData.status = value.value
-  showStatusPicker.value = false
 }
 
 function onSubmit() {

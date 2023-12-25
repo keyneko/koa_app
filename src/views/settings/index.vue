@@ -14,7 +14,7 @@
           Avatar.mr-4(size="48px")
         template(#title)
           .b {{ username }}
-          .tel {{ name || '--' }}
+          .tel(v-if="name") {{ name }}
 
     van-cell-group.mb-4(inset)
       van-cell(:title="$t('settings.switchLang')" center)

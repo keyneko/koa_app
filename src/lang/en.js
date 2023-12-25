@@ -45,6 +45,8 @@ export default {
     requireTitle: 'Title cannot be empty',
     roles: 'Roles',
     username: 'Username',
+    plhrUsername: 'Please type username',
+    requireUsername: 'Username cannot be empty',
     sops: 'SOPs',
     permissions: 'Permissions',
     description: 'Description',
@@ -57,6 +59,9 @@ export default {
     plhrIdentifier: 'Please type identifier',
     requireIdentifier: 'Identifier cannot be empty',
     protected: 'Protected',
+    password: 'Password',
+    initialPassword: 'Initial password',
+    originalPassword: 'Original password',
   },
 
   routes: {
@@ -125,6 +130,7 @@ export default {
   },
 
   users: {
+    create: 'Create User',
     update: 'Update User',
     deleteCfm: 'Delete Confirm',
     deleteCfmMsg: 'Are you sure to <b class=red>delete</b> this user?',

@@ -1,7 +1,6 @@
 // socket.js
 import { io } from 'socket.io-client'
 import { getToken } from '@/utils/auth'
-import bus from './bus'
 
 let socket = null
 
@@ -30,9 +29,18 @@ function initSocket() {
   // Process messages sent from the server
   socket.on('message', (data) => {
     console.log('Received message:', data)
+  })
 
-    bus.$emit('getMessage', data)
+  socket.on('broadcastMessage', (data) => {
+    console.log('Received broadcast message:', data)
   })
 }
 
-export { socket, initSocket }
+function closeSocket() {
+  if (socket) {
+    socket.disconnect()
+    socket = null
+  }
+}
+
+export { socket, initSocket, closeSocket }

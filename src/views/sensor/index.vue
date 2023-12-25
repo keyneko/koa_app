@@ -84,11 +84,17 @@
   DialogPublish(v-model="showDialogPublish" :data="sensor")
 </template>
 
+<script>
+export default {
+  name: "Sensors",
+}
+</script>
 <script setup>
 import { ref, computed, nextTick } from 'vue'
 import { Toast, Dialog } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import useDicts from '@/utils/useDicts'
+import useScrollPage from '@/utils/useScrollPage'
 import i18n from '@/lang'
 import * as API from '@/api/sensor'
 import { map, find, without } from 'lodash'
@@ -101,6 +107,7 @@ import DialogPublish from './components/DialogPublish'
 const router = useRouter()
 const route = useRoute()
 const { lut, options } = useDicts()
+useScrollPage()
 
 const buttonLoading = ref(false)
 const showDialogCreate = ref(false)

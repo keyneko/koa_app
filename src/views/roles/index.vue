@@ -11,7 +11,7 @@
           type='info'
           icon-position='right'
           @click="showDialogCreate = true"
-          ) {{ $t('roles.create') }}
+          ) {{ $t('g.create') }}
 
   .page__body
     van-empty(v-if='list.length == 0' :description="$t('g.noData')")

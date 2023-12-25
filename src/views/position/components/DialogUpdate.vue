@@ -9,9 +9,12 @@ van-dialog(
     validate-first
     ref='form')
     van-cell-group.title-basis
-      //- 条码
-      van-cell(:title="$t('g.position')")
-        b.black {{ formData.value }}
+      //- 库位码
+      van-field.mb-2(
+        readonly
+        :value='formData.value'
+        :label="$t('g.position')"
+        :placeholder="$t('g.plhrPosition')")
       //- 名称
       van-field.bg-gray-50.mb-2(
         v-model='formData.name'
@@ -28,7 +31,7 @@ van-dialog(
           van-radio-group(v-model='formData.isStackable' direction='horizontal')
             van-radio.mb-1(v-for="d in options('position_stackable')" :key="d._id" :name='d.value') {{ d.name }}
       //- 状态
-      van-field.bg-gray-50(
+      van-field.bg-gray-50.mb-2(
         readonly
         clickable
         is-link

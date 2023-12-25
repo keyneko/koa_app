@@ -14,18 +14,12 @@ const state = {
    * 每次ARCHIVE时，就将当前rcount推入锚点栈
    */
   archive: [],
-  /**
-   * 页面栈
-   * @type {Array}
-   */
-  stack: [],
 }
 
 const mutations = {
   RESET: (state) => {
     state.rcount = 0
     state.archive = []
-    state.stack = []
   },
 
   ARCHIVE: (state) => {
@@ -56,24 +50,9 @@ const mutations = {
   PUSH: (state, r) => {
     // rcount+1
     state.rcount = state.rcount + 1
-
-    // 与页面栈的尾部页面不同时，新页面推入页面栈
-    const last = state.stack[state.stack.length - 1] || {}
-    if (last.name != r.name) {
-      state.stack.push(r)
-    }
-  },
-
-  REPLACE: (state, r) => {
-    // rcount不作处理
-    // 页面栈尾部页面作替换
-    state.stack.pop()
-    state.stack.push(r)
   },
 
   GO: (state, n) => {
-    // 页面栈推出
-    state.stack = dropRight(state.stack, -n)
     // 更新rcount
     state.rcount = state.rcount + n
     // 当尾部锚点值小于更新后的rcount值时，应移除该尾部锚点
@@ -84,8 +63,7 @@ const mutations = {
   },
 }
 
-const actions = {
-}
+const actions = {}
 
 export default {
   namespaced: true,

@@ -148,6 +148,7 @@ export const constantRoutes = [
     path: '/sensor/index',
     name: 'Sensors',
     component: () => import('@/views/sensor/index'),
+    meta: { cache: true },
   },
 
   /**
@@ -159,7 +160,6 @@ export const constantRoutes = [
     component: () => import('@/views/sensor/chart'),
   },
 ] // end of constantRoutes
-
 
 /**
  * asyncRoutes

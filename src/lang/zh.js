@@ -45,6 +45,8 @@ export default {
     requireTitle: '标题不能为空',
     roles: '角色',
     username: '用户名',
+    plhrUsername: '请输入用户名',
+    requireUsername: '用户名不能为空',
     sops: 'SOP',
     permissions: '权限',
     description: '描述',
@@ -57,6 +59,9 @@ export default {
     plhrIdentifier: '请输入标识符',
     requireIdentifier: '标识符不能为空',
     protected: '受到保护',
+    password: '密码',
+    initialPassword: '初始密码',
+    originalPassword: '原密码',
   },
 
   routes: {
@@ -125,6 +130,7 @@ export default {
   },
 
   users: {
+    create: '创建用户',
     update: '更新用户',
     deleteCfm: '确认删除',
     deleteCfmMsg: '确认<b class=red>删除</b>该用户吗？',

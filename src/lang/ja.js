@@ -2,7 +2,7 @@ export default {
   g: {
     copied: 'コピーしました！',
     langSwitched: '切替完了！',
-    pdaScanTip: 'PDA の側面にある赤いボタンを押してコードをスキャンします',
+    pdaScanTip: 'PDAの側面にある赤いボタンを押してコードをスキャンします',
     noData: 'データなし',
     login: 'ログイン',
     register: '登録',
@@ -45,6 +45,8 @@ export default {
     requireTitle: 'タイトルは空白にできません',
     roles: 'ロール',
     username: 'ユーザー名',
+    plhrUsername: 'ユーザー名を入力してください',
+    requireUsername: 'ユーザー名は空できません',
     sops: 'SOP',
     permissions: 'パーミッション',
     description: '説明',
@@ -57,6 +59,9 @@ export default {
     plhrIdentifier: '識別子を入力してください',
     requireIdentifier: '識別子は空できません',
     protected: '保護された',
+    password: 'パスワード',
+    initialPassword: '初期パスワード',
+    originalPassword: '旧パスワード',
   },
 
   routes: {
@@ -97,7 +102,7 @@ export default {
   },
 
   dashboard: {
-    applications: '私のアプリケーション',
+    applications: 'アプリケーション',
     permissions: "パーミッション",
     roles: 'ロール管理',
     users: 'ユーザー管理',
@@ -111,20 +116,21 @@ export default {
   },
 
   permissions: {
-    create: 'パーミッションの生成',
-    update: 'パーミッションの更新',
+    create: 'パーミッション生成',
+    update: 'パーミッション更新',
     deleteCfm: '削除確認',
     deleteCfmMsg: 'このパーミッションを<b class=red>削除</b>してもよろしいですか?',
   },
 
   roles: {
-    create: 'ロールの生成',
-    update: 'ロールの更新',
+    create: 'ロール生成',
+    update: 'ロール更新',
     deleteCfm: '削除確認',
     deleteCfmMsg: 'このロールを<b class=red>削除</b>してもよろしいですか?',
   },
 
   users: {
+    create: 'ユーザー生成',
     update: 'ユーザー更新',
     deleteCfm: '削除確認',
     deleteCfmMsg: 'このユーザーを<b class=red>削除</b>してもよろしいですか?',
@@ -159,12 +165,12 @@ export default {
   barcodeQuery: {
     scanTip: 'バーコードをスキャンしてください',
     scanned: '結果：',
-    results: 'バーコードの詳細',
+    results: 'バーコード詳細',
   },
 
   barcodes: {
     update: 'バーコード更新',
-    deleteCfm: '削除の確認',
+    deleteCfm: '削除確認',
     deleteCfmMsg: 'このバーコードを<b class=red>削除</b>してもよろしいですか?',
   },
 
@@ -188,7 +194,7 @@ export default {
   positionQuery: {
     scanTip: 'ポジションコードをスキャンしてください',
     scanned: '結果：',
-    results: 'ポジションコードの詳細',
+    results: 'ポジションコード詳細',
   },
 
   positions: {
@@ -198,10 +204,10 @@ export default {
   },
 
   sensors: {
-    create: 'センサーの作成',
-    update: 'センサーの更新',
+    create: 'センサー作成',
+    update: 'センサー更新',
     filter: 'フィルタセンサー',
-    selectDate: '日付の選択',
+    selectDate: '日付選択',
     deleteCfm: '削除確認',
     deleteCfmMsg: 'このセンサーを<b class=red>削除</b>してもよろしいですか?',
     type: 'タイプ',

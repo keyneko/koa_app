@@ -5,6 +5,14 @@
       :title="$t('routes.users')"
       left-arrow
       @click-left="$router.back()")
+      template(#right)
+        van-button.px-2(
+          v-perm="['barcodes:management:create']"
+          size='mini'
+          type='info'
+          icon-position='right'
+          @click="showDialogCreate = true"
+          ) {{ $t('g.create') }}
 
   .page__body
     van-empty(v-if='list.length == 0' :description="$t('g.noData')")
@@ -38,6 +46,7 @@
               @click="onUpdate(d)"
               ) {{ $t('g.update') }}
 
+  DialogCreate(v-model="showDialogCreate" @created="getUsers")
   DialogUpdate(v-model="showDialogUpdate" :data="user" @updated="getUsers")
 </template>
 
@@ -51,6 +60,7 @@ import { getRoles } from '@/api/role'
 import * as API from '@/api/user'
 import store from '@/store'
 import { map, without } from 'lodash'
+import DialogCreate from './components/DialogCreate'
 import DialogUpdate from './components/DialogUpdate'
 
 const router = useRouter()
@@ -59,6 +69,7 @@ const { lut, options } = useDicts()
 
 const list = ref([])
 const user = ref({})
+const showDialogCreate = ref(false)
 const showDialogUpdate = ref(false)
 
 function getUsers() {

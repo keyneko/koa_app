@@ -1,7 +1,7 @@
 <template lang="pug">
 van-dialog(
   v-model='show'
-  :title="$t('users.update')"
+  :title="$t('users.create')"
   :show-cancel-button='true'
   :closeOnClickOverlay='false'
   :beforeClose="beforeClose")
@@ -9,21 +9,27 @@ van-dialog(
     validate-first
     ref='form')
     van-cell-group.title-basis
+      //- 用户名
+      van-field.bg-gray-50.mb-2(
+        v-model='formData.username'
+        required
+        :label="$t('g.username')"
+        :placeholder="$t('g.plhrUsername')"
+        :rules="[ \
+          { required: true, message: $t('g.requireUsername') }, \
+        ]")
+      //- 初始密码
+      van-field.mb-2(
+        readonly
+        disabled
+        :value='formData.password'
+        :label="$t('g.initialPassword')"
+        )
       //- 名称
       van-field.bg-gray-50.mb-2(
         v-model='formData.name'
         :label="$t('g.name')"
         :placeholder="$t('g.plhrName')")
-      //- 状态
-      van-field.bg-gray-50.mb-2(
-        readonly
-        clickable
-        is-link
-        arrow-direction="down"
-        :label="$t('g.status')"
-        :placeholder="$t('g.plhrStatus')"
-        :value='lut("status", formData.status)'
-        @click='showStatusPicker = true')
       //- 受保护
       van-field.bg-gray-50.mb-2(name='switch' :label="$t('g.protected')")
         template(#input)
@@ -34,19 +40,6 @@ van-dialog(
         template(#input)
           van-checkbox-group(v-model='formData.roles')
             van-checkbox.mb-1(v-for="d in options('roles')" :key="d.value" shape="square" :name='d.value') {{ d.name }}
-      //- 权限
-      van-field.bg-gray-50.mb-2.scrollable(
-        :label="$t('g.permissions')")
-        template(#input)
-          van-checkbox-group(v-model='formData.permissions')
-            van-checkbox.mb-1(v-for="d in data.permissions" :key="d" shape="square" :name='d') {{ d }}
-
-  van-popup(v-model='showStatusPicker' position='bottom')
-    van-picker(
-      show-toolbar
-      :columns='statusColumns'
-      @confirm='onStatusPicked'
-      @cancel='showStatusPicker = false')
 </template>
 
 <script setup>
@@ -54,8 +47,9 @@ import { ref, reactive, computed, watch } from 'vue'
 import { Toast } from 'vant'
 import useDicts from '@/utils/useDicts'
 import { upload } from '@/utils/fileUpload'
+import { encrypt } from '@/utils/jsencrypt'
 import i18n from '@/lang'
-import { map, difference } from 'lodash'
+import { map } from 'lodash'
 import * as roleApi from '@/api/role'
 import * as API from '@/api/user'
 
@@ -67,32 +61,19 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  data: {
-    type: Object,
-    default: () => ({}),
-  },
 })
 
 const form = ref(null)
 const show = ref(false)
-const showStatusPicker = ref(false)
 
 const roles = ref([])
 const formData = reactive({
   username: undefined,
+  password: '123456',
   name: undefined,
-  status: undefined,
   isProtected: undefined,
   roles: [],
-  permissions: [],
 })
-
-const statusColumns = computed(() =>
-  map(options.value('status'), (d) => ({
-    text: d.name,
-    value: d,
-  }))
-)
 
 watch(
   () => props.value,
@@ -107,23 +88,6 @@ watch(show, (value) => {
     resetForm()
   }
 })
-
-watch(
-  () => props.data,
-  (value) => {
-    formData.username = value.username
-    formData.name = value.name
-    formData.status = value.status
-    formData.isProtected = value.isProtected
-    formData.roles = value.roles
-    formData.permissions = difference(value.permissions, value.denyPermissions)
-  }
-)
-
-function onStatusPicked({ value }) {
-  formData.status = value.value
-  showStatusPicker.value = false
-}
 
 async function beforeClose(action, done) {
   if (action === 'confirm') {
@@ -145,22 +109,19 @@ function resetForm() {
   setTimeout(() => {
     formData.username = undefined
     formData.name = undefined
-    formData.status = undefined
     formData.isProtected = undefined
     formData.roles = []
-    formData.permissions = []
   }, 200)
 }
 
 function onSubmit() {
   Toast.loading()
-  return API.updateUser({
+  return API.createUser({
     ...formData,
-    denyPermissions: difference(props.data.permissions, formData.permissions),
-    permissions: undefined,
+    password: encrypt(formData.password),
   }).then((res) => {
-    Toast.success(i18n.t('g.updated'))
-    emits('updated')
+    Toast.success(i18n.t('g.created'))
+    emits('created')
   })
 }
 </script>

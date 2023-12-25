@@ -10,8 +10,11 @@ van-dialog(
     ref='form')
     van-cell-group.title-basis
       //- 条码
-      van-cell(:title="$t('g.barcode')")
-        b.black {{ formData.value }}
+      van-field.mb-2(
+        readonly
+        :value='formData.value'
+        :label="$t('g.barcode')"
+        :placeholder="$t('g.plhrBarcode')")
       //- 名称
       van-field.bg-gray-50.mb-2(
         v-model='formData.name'
@@ -35,7 +38,7 @@ van-dialog(
         :placeholder="$t('g.plhrBasicUnit')"
         :rules="[{ required: true, message: $t('g.requireBasicUnit') }]")
       //- 状态
-      van-field.bg-gray-50(
+      van-field.bg-gray-50.mb-2(
         readonly
         clickable
         is-link

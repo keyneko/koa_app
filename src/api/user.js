@@ -77,6 +77,22 @@ export function getUser(params) {
 }
 
 /**
+ * 创建用户（仅限admin）
+ * @param  {[type]} data.username [description]
+ * @param  {[type]} data.password [description]
+ * @param  {[type]} data.name [description]
+ * @param  {[type]} data.isProtected [description]
+ * @param  {[type]} data.roles [description]
+ */
+export function createUser(data) {
+  return request({
+    url: `/user`,
+    method: 'post',
+    data,
+  })
+}
+
+/**
  * 修改用户信息
  * @param  {[type]} data.id       [description]
  * @param  {[type]} data.name [description]

@@ -63,18 +63,6 @@
           template(#input)
             van-radio-group(v-model='formData.isStackable' direction='horizontal')
               van-radio.mb-1(v-for="d in options('position_stackable')" :key="d._id" :name='d.value') {{ d.name }}
-      //- 状态
-      van-cell-group.mb-4(inset)
-        van-field(
-          readonly
-          clickable
-          is-link
-          required
-          arrow-direction="down"
-          :label="$t('g.status')"
-          :placeholder="$t('g.plhrStatus')"
-          :value='lut("status", formData.status)'
-          @click='showStatusPicker = true')
       //- 拍照
       van-cell-group(inset)
         van-field(
@@ -95,13 +83,6 @@
       :disabled="buttonLoading"
       @click='() => $refs.form.submit()'
       ) {{ $t('g.submit') }}
-
-  van-popup(v-model='showStatusPicker' position='bottom')
-    van-picker(
-      show-toolbar
-      :columns='statusColumns'
-      @confirm='onStatusPicked'
-      @cancel='showStatusPicker = false')
 </template>
 
 <script setup>
@@ -121,7 +102,6 @@ const { lut, options } = useDicts()
 
 const buttonLoading = ref(false)
 const showDialog = ref(false)
-const showStatusPicker = ref(false)
 
 const form = ref(null)
 
@@ -131,16 +111,8 @@ const formData = reactive({
   floorCode: '',
   name: '',
   isStackable: 0,
-  status: 0,
   files: [],
 })
-
-const statusColumns = computed(() =>
-  map(options.value('status'), (d) => ({
-    text: d.name,
-    value: d,
-  }))
-)
 
 function fileUpload(file) {
   upload(file).then((res) => {
@@ -151,13 +123,7 @@ function fileUpload(file) {
 
 function resetForm() {
   formData.isStackable = 0
-  formData.status = 0
   formData.files = []
-}
-
-function onStatusPicked({ value }) {
-  formData.status = value.value
-  showStatusPicker.value = false
 }
 
 function onSubmit() {
