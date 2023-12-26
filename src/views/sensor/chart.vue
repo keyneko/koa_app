@@ -14,7 +14,8 @@
           ) {{ $t('sensors.selectDate') }}
 
   .page__body
-    Chart.mx-4(:data="ds" :height="400")
+    Chart.mx-4(v-if="type == 0" :data="ds" :height="400")
+    ChartRgbLed.mx-4(v-if="type == 1" :data="ds" :height="400")
 
   van-calendar(
     v-model="showDatePicker"
@@ -31,13 +32,14 @@ import { Toast } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import i18n from '@/lang'
 import Chart from './components/ChartTemp'
+import ChartRgbLed from './components/ChartRgbLed'
 import * as API from '@/api/sensor'
 import dayjs from 'dayjs'
 import { socket } from '@/utils/socket'
 
 const router = useRouter()
 const route = useRoute()
-const { _id, name } = route.query
+const { _id, type, name } = route.query
 
 const buttonLoading = ref(false)
 const showDatePicker = ref(false)

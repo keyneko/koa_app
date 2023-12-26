@@ -127,6 +127,7 @@ const toChart = computed(() => (d) => ({
   path: '/sensor/chart',
   query: {
     _id: d._id,
+    type: d.type,
     name: d.name,
   },
 }))
