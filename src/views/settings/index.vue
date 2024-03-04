@@ -73,7 +73,7 @@ function logoutCfm() {
 }
 
 function update() {
-  Toast.loading
+  Toast.loading()
   return store.dispatch('user/getUser').finally(() => {
     Toast.clear()
   })

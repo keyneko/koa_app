@@ -100,7 +100,7 @@ function onSubmit() {
     newPassword: encrypt(formData.newPassword),
   }).then((res) => {
     Toast.success(i18n.t('g.updated'))
-    emit('g.update')
+    emit('update')
   })
 }
 </script>

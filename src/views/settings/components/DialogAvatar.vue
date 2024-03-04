@@ -123,7 +123,7 @@ function onSubmit() {
   Toast.loading()
   return API.updateUser(formData).then((res) => {
     Toast.success(i18n.t('g.updated'))
-    emit('g.update')
+    emit('update')
   })
 }
 </script>

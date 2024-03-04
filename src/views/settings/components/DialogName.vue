@@ -85,7 +85,7 @@ function onSubmit() {
     .then((res) => {
       Toast.success(i18n.t('g.updated'))
       resetForm()
-      emit('g.update')
+      emit('update')
     })
 }
 </script>
