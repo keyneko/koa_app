@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { ref, toRef, computed } from 'vue'
+import { ref, toRef, computed, provide } from 'vue'
 import { Toast, Dialog } from 'vant'
 import { useRouter, useRoute } from '@/router'
 import store from '@/store'
@@ -50,6 +50,7 @@ const route = useRoute()
 
 const name = toRef(store.getters, 'name')
 const username = toRef(store.getters, 'username')
+provide('name', name)
 
 const showDialogName = ref(false)
 const showDialogAvatar = ref(false)

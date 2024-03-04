@@ -18,7 +18,7 @@
     template(v-else)
       van-cell-group(inset)
         van-collapse(v-model='activeName' accordion)
-          van-collapse-item(v-for="d in list" :key="d._id" :name='d._id')
+          van-collapse-item(v-for="d in list" :key="d.id" :name='d.id')
             template(#title)
               b(v-copy.silent) {{ d.pattern }}
             template
@@ -82,7 +82,7 @@ function onDelete(d) {
   })
     .then(() => {
       Toast.loading()
-      return API.deletePermission({ _id: d._id }).then((res) => {
+      return API.deletePermission({ id: d.id }).then((res) => {
         Toast.success(i18n.t('g.deleted'))
         list.value = without(list.value, d)
       })

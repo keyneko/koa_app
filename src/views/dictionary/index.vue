@@ -87,7 +87,7 @@ function onDelete(d) {
   })
     .then(() => {
       Toast.loading()
-      return API.deleteDictionary({ _id: d._id }).then((res) => {
+      return API.deleteDictionary({ id: d.id }).then((res) => {
         Toast.success(i18n.t('g.deleted'))
         list.value = without(list.value, d)
       })

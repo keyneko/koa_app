@@ -17,7 +17,7 @@
   .page__body
     van-empty(v-if='list.length == 0' :description="$t('g.noData')")
     template(v-else)
-      van-cell-group.title-basis.mb-4(inset v-for="d in list" :key="d._id")
+      van-cell-group.title-basis.mb-4(inset v-for="d in list" :key="d.id")
         van-cell(center)
           template(#icon)
             van-image.mr-4(
@@ -91,7 +91,7 @@ function getRoleDicts() {
     store.commit('dicts/SET_DICT', {
       key: 'roles',
       list: map(res.data, (d) => ({
-        value: d.value,
+        value: d.id,
         name: d.name,
       })),
     })
@@ -105,7 +105,7 @@ function onDelete(d) {
   })
     .then(() => {
       Toast.loading()
-      return API.deleteUser({ _id: d._id }).then((res) => {
+      return API.deleteUser({ id: d.id }).then((res) => {
         Toast.success(i18n.t('g.deleted'))
         list.value = without(list.value, d)
       })

@@ -82,7 +82,7 @@ const show = ref(false)
 const showStatusPicker = ref(false)
 
 const formData = reactive({
-  value: undefined,
+  id: undefined,
   name: undefined,
   status: undefined,
   isProtected: undefined,
@@ -114,7 +114,7 @@ watch(show, (value) => {
 watch(
   () => props.data,
   (value) => {
-    formData.value = value.value
+    formData.id = value.id
     formData.name = value.name
     formData.status = value.status
     formData.isProtected = value.isProtected
@@ -146,7 +146,7 @@ async function beforeClose(action, done) {
 
 function resetForm() {
   setTimeout(() => {
-    formData.value = undefined
+    formData.id = undefined
     formData.name = undefined
     formData.status = undefined
     formData.isProtected = undefined

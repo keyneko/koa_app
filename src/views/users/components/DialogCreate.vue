@@ -17,6 +17,7 @@ van-dialog(
         :placeholder="$t('g.plhrUsername')"
         :rules="[ \
           { required: true, message: $t('g.requireUsername') }, \
+          { pattern: /^[a-z][a-z0-9_]*$/, message: $t('g.invalidUsername') }, \
         ]")
       //- 初始密码
       van-field.mb-2(
@@ -28,8 +29,12 @@ van-dialog(
       //- 名称
       van-field.bg-gray-50.mb-2(
         v-model='formData.name'
+        required
         :label="$t('g.name')"
-        :placeholder="$t('g.plhrName')")
+        :placeholder="$t('g.plhrName')"
+        :rules="[ \
+          { required: true, message: $t('g.requireName') }, \
+        ]")
       //- 受保护
       van-field.bg-gray-50.mb-2(name='switch' :label="$t('g.protected')")
         template(#input)

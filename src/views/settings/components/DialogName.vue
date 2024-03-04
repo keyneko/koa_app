@@ -18,7 +18,7 @@ van-dialog(
 </template>
 
 <script setup>
-import { ref, reactive, computed, watch } from 'vue'
+import { ref, reactive, computed, watch, inject } from 'vue'
 import { Toast } from 'vant'
 import * as API from '@/api/user'
 import i18n from '@/lang'
@@ -39,10 +39,16 @@ const props = defineProps({
   },
 })
 
+const name = inject('name')
+
 watch(
   () => props.value,
   (value) => {
     show.value = value
+
+    if (value) {
+      formData.name = name.value
+    }
   }
 )
 

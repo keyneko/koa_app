@@ -10,7 +10,7 @@ van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
       @load='onLoad')
       van-cell-group(inset)
         van-collapse(v-model='activeName' accordion)
-          van-collapse-item(v-for="d in list" :key="d._id" :name='d._id')
+          van-collapse-item(v-for="d in list" :key="d.id" :name='d.id')
             template(#title)
               b(v-copy.silent) {{ d.key }}
               span.gray &nbsp;[{{ d.name }}]

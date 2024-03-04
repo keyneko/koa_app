@@ -9,15 +9,6 @@ van-dialog(
     validate-first
     ref='form')
     van-cell-group.title-basis
-      //- 标识符
-      van-field.bg-gray-50.mb-2(
-        v-model='formData.value'
-        required
-        :label="$t('g.identifier')"
-        :placeholder="$t('g.plhrIdentifier')"
-        :rules="[ \
-          { required: true, message: $t('g.requireIdentifier') }, \
-        ]")
       //- 名称
       van-field.bg-gray-50.mb-2(
         v-model='formData.name'
@@ -68,7 +59,6 @@ const form = ref(null)
 const show = ref(false)
 
 const formData = reactive({
-  value: undefined,
   name: undefined,
   isProtected: undefined,
   sops: [],
@@ -107,7 +97,6 @@ async function beforeClose(action, done) {
 
 function resetForm() {
   setTimeout(() => {
-    formData.value = undefined
     formData.name = undefined
     formData.isProtected = undefined
     formData.sops = []
@@ -117,10 +106,7 @@ function resetForm() {
 
 function onSubmit() {
   Toast.loading()
-  return API.createRole({
-    ...formData,
-    value: formData.value.trim(),
-  }).then((res) => {
+  return API.createRole(formData).then((res) => {
     Toast.success(i18n.t('g.created'))
     emits('created')
   })

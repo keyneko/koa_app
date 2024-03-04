@@ -47,6 +47,7 @@ export default {
     username: '用户名',
     plhrUsername: '请输入用户名',
     requireUsername: '用户名不能为空',
+    invalidUsername: '用户名格式错误（小写英文、数字）',
     sops: 'SOP',
     permissions: '权限',
     description: '描述',

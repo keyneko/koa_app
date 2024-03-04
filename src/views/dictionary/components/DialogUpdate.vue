@@ -83,7 +83,7 @@ const showStatusPicker = ref(false)
 const fn = (v) => /^[a-z]+(_[0-9a-z]+)*$/.test(v)
 
 const formData = reactive({
-  _id: undefined,
+  id: undefined,
   key: undefined,
   value: undefined,
   name: undefined,
@@ -115,7 +115,7 @@ watch(show, (value) => {
 watch(
   () => props.data,
   (value) => {
-    formData._id = value._id
+    formData.id = value.id
     formData.key = value.key
     formData.value = value.value
     formData.name = value.name
@@ -147,7 +147,7 @@ async function beforeClose(action, done) {
 
 function resetForm() {
   setTimeout(() => {
-    formData._id = undefined
+    formData.id = undefined
     formData.key = undefined
     formData.value = undefined
     formData.name = undefined

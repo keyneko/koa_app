@@ -19,20 +19,20 @@ const rcount = toRef(store.state.route, 'rcount')
 const archive = toRef(store.state.route, 'archive')
 const token = toRef(store.state.user, 'token')
 
-watch(
-  token,
-  (value) => {
-    if (value) {
-      initSocket()
+// watch(
+//   token,
+//   (value) => {
+//     if (value) {
+//       initSocket()
 
-      setTimeout(() => {
-        socket.emit('joinRoom', 'room1')
-      }, 5000)
-    }
-    else {
-      closeSocket()
-    }
-  },
-  { immediate: true }
-)
+//       setTimeout(() => {
+//         socket.emit('joinRoom', 'room1')
+//       }, 5000)
+//     }
+//     else {
+//       closeSocket()
+//     }
+//   },
+//   { immediate: true }
+// )
 </script>

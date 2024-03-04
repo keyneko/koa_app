@@ -20,7 +20,7 @@
         tag="div"
         enter-active-class='fadeInRight'
         leave-active-class='fadeOutLeft')
-        .animated.faster(v-for="d in list" :key="d.value")
+        .animated.faster(v-for="d in list" :key="d.id")
           van-cell-group.title-basis.mb-4(inset)
             van-cell(center)
               template
@@ -104,7 +104,7 @@ function onDelete(d) {
   })
     .then(() => {
       Toast.loading()
-      return API.deleteRole({ _id: d._id }).then((res) => {
+      return API.deleteRole({ id: d.id }).then((res) => {
         Toast.success(i18n.t('g.deleted'))
         list.value = without(list.value, d)
         resetRoleDicts()

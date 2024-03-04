@@ -12,8 +12,12 @@ van-dialog(
       //- 名称
       van-field.bg-gray-50.mb-2(
         v-model='formData.name'
+        required
         :label="$t('g.name')"
-        :placeholder="$t('g.plhrName')")
+        :placeholder="$t('g.plhrName')"
+        :rules="[ \
+          { required: true, message: $t('g.requireName') }, \
+        ]")
       //- 状态
       van-field.bg-gray-50.mb-2(
         readonly
@@ -79,6 +83,7 @@ const showStatusPicker = ref(false)
 
 const roles = ref([])
 const formData = reactive({
+  id: undefined,
   username: undefined,
   name: undefined,
   status: undefined,
@@ -111,6 +116,7 @@ watch(show, (value) => {
 watch(
   () => props.data,
   (value) => {
+    formData.id = value.id
     formData.username = value.username
     formData.name = value.name
     formData.status = value.status
@@ -143,6 +149,7 @@ async function beforeClose(action, done) {
 
 function resetForm() {
   setTimeout(() => {
+    formData.id = undefined
     formData.username = undefined
     formData.name = undefined
     formData.status = undefined

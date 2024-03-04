@@ -72,7 +72,6 @@ const r = (v) => v.replace(/\s/g, '').replace(/：/g, ':')
 const fn = (v) => /^([A-Za-z0-9]+|\*):([A-Za-z0-9]+|\*):([A-Za-z0-9]+|\*)$/.test(r(v))
 
 const formData = reactive({
-  _id: undefined,
   name: undefined,
   description: undefined,
   pattern: undefined,
@@ -96,7 +95,6 @@ watch(show, (value) => {
 watch(
   () => props.data,
   (value) => {
-    formData._id = value._id
     formData.name = value.name
     formData.description = value.description
     formData.pattern = value.pattern
@@ -122,7 +120,6 @@ async function beforeClose(action, done) {
 
 function resetForm() {
   setTimeout(() => {
-    formData._id = undefined
     formData.name = undefined
     formData.description = undefined
     formData.pattern = undefined
