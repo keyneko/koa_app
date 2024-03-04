@@ -24,8 +24,8 @@ van-dialog(
           ref='cropper'
           :img='(files[0]||{}).url'
           :autoCrop="true"
-          :autoCropWidth="100"
-          :autoCropHeight="100"
+          :autoCropWidth="200"
+          :autoCropHeight="200"
           :canScale="true"
           :canMove="false"
           :canMoveBox="true"
@@ -39,7 +39,7 @@ van-dialog(
 </template>
 
 <script setup>
-import { ref, reactive, computed, watch } from 'vue'
+import { ref, reactive, computed, watch, inject } from 'vue'
 import { Toast } from 'vant'
 import * as API from '@/api/user'
 import i18n from '@/lang'
@@ -64,10 +64,16 @@ const props = defineProps({
   },
 })
 
+const avatar = inject('avatar')
+
 watch(
   () => props.value,
   (value) => {
     show.value = value
+
+    if (value) {
+      files.value = [{ url: avatar.value }]
+    }
   }
 )
 

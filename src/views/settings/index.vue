@@ -49,8 +49,10 @@ const router = useRouter()
 const route = useRoute()
 
 const name = toRef(store.getters, 'name')
+const avatar = toRef(store.getters, 'avatar')
 const username = toRef(store.getters, 'username')
 provide('name', name)
+provide('avatar', avatar)
 
 const showDialogName = ref(false)
 const showDialogAvatar = ref(false)
