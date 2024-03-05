@@ -19,8 +19,8 @@ van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
                   radius="5"
                   lazy-load
                   fit="cover"
-                  :src="d.files[0]"
-                  @click.native.stop="ImagePreview(d.files)")
+                  :src="d.files?.[0]"
+                  @click.native.stop="d.files && d.files.length && ImagePreview(d.files)")
               template
                 .van-ellipsis
                   span {{ $t('g.position') }}：
