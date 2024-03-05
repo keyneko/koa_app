@@ -9,7 +9,7 @@ van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
         enter-active-class='fadeInRight'
         leave-active-class='fadeOutLeft'
         )
-        .animated.faster(v-for="d in list" :key="d._id")
+        .animated.faster(v-for="d in list" :key="d.id")
           van-cell-group.title-basis.mb-4(inset)
             van-cell(center)
               template(#icon)

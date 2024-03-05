@@ -19,7 +19,7 @@
       div {{ $t('g.status') }}
       van-tag.mr-3(
         v-for="d in options('barcode_status')"
-        :key="d._id"
+        :key="d.id"
         :type="d.value === queryParams.status?'primary':'default'"
         :mark="true"
         size="medium"

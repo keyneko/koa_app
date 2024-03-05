@@ -25,14 +25,14 @@
     template(v-else)
       van-cell-group(inset)
         van-collapse(v-model='activeName' accordion)
-          van-collapse-item(v-for="d in list" :key="d._id" :name='d._id')
+          van-collapse-item(v-for="d in list" :key="d.id" :name='d.id')
             template(#title)
               b(v-copy.silent) {{ d.name }}
             template
               table.table.mb-4
-                tr(v-if="d._id")
-                  th _id
-                  td(v-copy) {{ d._id }}
+                tr(v-if="d.id")
+                  th id
+                  td(v-copy) {{ d.id }}
                 tr(v-if="d.apiKey")
                   th apiKey
                   td(v-copy) {{ d.apiKey }}
@@ -126,7 +126,7 @@ const activeName = ref('')
 const toChart = computed(() => (d) => ({
   path: '/sensor/chart',
   query: {
-    _id: d._id,
+    id: d.id,
     type: d.type,
     name: d.name,
   },
@@ -150,7 +150,7 @@ function onDelete(d) {
   })
     .then(() => {
       Toast.loading()
-      return API.deleteSensor({ _id: d._id }).then((res) => {
+      return API.deleteSensor({ id: d.id }).then((res) => {
         Toast.success(i18n.t('g.deleted'))
         list.value = without(list.value, d)
       })

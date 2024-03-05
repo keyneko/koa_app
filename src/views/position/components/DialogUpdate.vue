@@ -23,24 +23,31 @@ van-dialog(
         :placeholder="$t('g.plhrName')"
         :rules="[{ required: true, message: $t('g.requireName') }]")
       //- 是否可堆叠
-      van-field.bg-gray-50.mb-2(
-        required
-        :label="$t('positionCreate.isStackable')"
-        :rules="[{ required: true, message: $t('positionCreate.requireStackable') }]")
+      van-field.bg-gray-50.mb-2(name='switch' :label="$t('positionCreate.isStackable')")
         template(#input)
-          van-radio-group(v-model='formData.isStackable' direction='horizontal')
-            van-radio.mb-1(v-for="d in options('position_stackable')" :key="d._id" :name='d.value') {{ d.name }}
+          van-switch(v-model='formData.isStackable' size='20')
+
       //- 状态
       van-field.bg-gray-50.mb-2(
-        readonly
-        clickable
-        is-link
         required
-        arrow-direction="down"
         :label="$t('g.status')"
-        :placeholder="$t('g.plhrStatus')"
-        :value='lut("status", formData.status)'
-        @click='showStatusPicker = true')
+        :rules="[{ required: true, message: $t('g.requireStatus') }]")
+        template(#input)
+          van-radio-group(v-model='formData.status' direction='horizontal')
+            van-radio.mb-1(v-for="d in options('status')" :key="d.value" :name='+d.value') {{ d.name }}
+
+      //- //- 状态
+      //- van-field.bg-gray-50.mb-2(
+      //-   readonly
+      //-   clickable
+      //-   is-link
+      //-   required
+      //-   arrow-direction="down"
+      //-   :label="$t('g.status')"
+      //-   :placeholder="$t('g.plhrStatus')"
+      //-   :value='lut("status", formData.status)'
+      //-   @click='showStatusPicker = true')
+
       //- 受保护
       van-field.bg-gray-50.mb-2(name='switch' :label="$t('g.protected')")
         template(#input)

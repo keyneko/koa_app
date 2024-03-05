@@ -34,16 +34,24 @@ van-dialog(
         v-model='formData.manufacturer'
         :label="$t('sensors.manufacturer')"
         :placeholder="$t('sensors.plhrManufacturer')")
+      //- //- 状态
+      //- van-field.bg-gray-50(
+      //-   readonly
+      //-   clickable
+      //-   is-link
+      //-   arrow-direction="down"
+      //-   :label="$t('g.status')"
+      //-   :placeholder="$t('g.plhrStatus')"
+      //-   :value='lut("status", formData.status)'
+      //-   @click='showStatusPicker = true')
       //- 状态
-      van-field.bg-gray-50(
-        readonly
-        clickable
-        is-link
-        arrow-direction="down"
+      van-field.bg-gray-50.mb-2(
+        required
         :label="$t('g.status')"
-        :placeholder="$t('g.plhrStatus')"
-        :value='lut("status", formData.status)'
-        @click='showStatusPicker = true')
+        :rules="[{ required: true, message: $t('g.requireStatus') }]")
+        template(#input)
+          van-radio-group(v-model='formData.status' direction='horizontal')
+            van-radio.mb-1(v-for="d in options('status')" :key="d.value" :name='+d.value') {{ d.name }}
 
   van-popup(v-model='showTypePicker' position='bottom')
     van-picker(

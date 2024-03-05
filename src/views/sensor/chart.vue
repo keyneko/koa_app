@@ -39,7 +39,7 @@ import { socket } from '@/utils/socket'
 
 const router = useRouter()
 const route = useRoute()
-const { _id, type, name } = route.query
+const { id, type, name } = route.query
 
 const buttonLoading = ref(false)
 const showDatePicker = ref(false)
@@ -47,7 +47,7 @@ const showDatePicker = ref(false)
 const ds = ref([])
 
 const queryParams = reactive({
-  sensorId: _id,
+  sensorId: id,
   dateTime: undefined,
 })
 
@@ -77,10 +77,15 @@ function onDatePicked(date) {
   getRecords()
 }
 
-socket.on('newSensorDataArrived', () => {
-  console.log('new sensor data arrived')
-  getRecords()
-})
+try {
+  socket.on('newSensorDataArrived', () => {
+    console.log('new sensor data arrived')
+    getRecords()
+  })
+}
+catch (e) {
+  console.error(e)
+}
 
 getRecords()
 </script>

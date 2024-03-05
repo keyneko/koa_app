@@ -56,13 +56,18 @@
           ]")
       //- 是否可堆叠
       van-cell-group.mb-4(inset)
-        van-field(
-          required
-          :label="$t('positionCreate.isStackable')"
-          :rules="[{ required: true, message: $t('positionCreate.requireStackable') }]")
+        van-field(name='switch' :label="$t('positionCreate.isStackable')")
           template(#input)
-            van-radio-group(v-model='formData.isStackable' direction='horizontal')
-              van-radio.mb-1(v-for="d in options('position_stackable')" :key="d._id" :name='d.value') {{ d.name }}
+            van-switch(v-model='formData.isStackable' size='20')
+      //- //- 是否可堆叠
+      //- van-cell-group.mb-4(inset)
+      //-   van-field(
+      //-     required
+      //-     :label="$t('positionCreate.isStackable')"
+      //-     :rules="[{ required: true, message: $t('positionCreate.requireStackable') }]")
+      //-     template(#input)
+      //-       van-radio-group(v-model='formData.isStackable' direction='horizontal')
+      //-         van-radio.mb-1(v-for="d in options('position_stackable')" :key="d._id" :name='d.value') {{ d.name }}
       //- 拍照
       van-cell-group(inset)
         van-field(

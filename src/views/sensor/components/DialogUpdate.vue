@@ -42,16 +42,25 @@ van-dialog(
         v-model='formData.manufacturer'
         :label="$t('sensors.manufacturer')"
         :placeholder="$t('sensors.plhrManufacturer')")
+      //- //- 状态
+      //- van-field.bg-gray-50.mb-2(
+      //-   readonly
+      //-   clickable
+      //-   is-link
+      //-   arrow-direction="down"
+      //-   :label="$t('g.status')"
+      //-   :placeholder="$t('g.plhrStatus')"
+      //-   :value='lut("status", formData.status)'
+      //-   @click='showStatusPicker = true')
       //- 状态
       van-field.bg-gray-50.mb-2(
-        readonly
-        clickable
-        is-link
-        arrow-direction="down"
+        required
         :label="$t('g.status')"
-        :placeholder="$t('g.plhrStatus')"
-        :value='lut("status", formData.status)'
-        @click='showStatusPicker = true')
+        :rules="[{ required: true, message: $t('g.requireStatus') }]")
+        template(#input)
+          van-radio-group(v-model='formData.status' direction='horizontal')
+            van-radio.mb-1(v-for="d in options('status')" :key="d.value" :name='+d.value') {{ d.name }}
+
       //- 受保护
       van-field.bg-gray-50.mb-2(name='switch' :label="$t('g.protected')")
         template(#input)
@@ -105,7 +114,7 @@ const showTypePicker = ref(false)
 const showStatusPicker = ref(false)
 
 const formData = reactive({
-  _id: undefined,
+  id: undefined,
   name: undefined,
   type: undefined,
   number: undefined,
@@ -145,7 +154,7 @@ watch(show, (value) => {
 watch(
   () => props.data,
   (value) => {
-    formData._id = value._id
+    formData.id = value.id
     formData.name = value.name
     formData.type = value.type
     formData.number = value.number
@@ -184,7 +193,7 @@ async function beforeClose(action, done) {
 
 function resetForm() {
   setTimeout(() => {
-    formData._id = undefined
+    formData.id = undefined
     formData.name = undefined
     formData.type = undefined
     formData.number = undefined

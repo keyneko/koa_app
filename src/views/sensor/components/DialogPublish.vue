@@ -9,9 +9,9 @@ van-dialog(
     validate-first
     ref='form')
     van-cell-group.title-basis
-      //- _id
+      //- id
       van-field.mb-2(
-        v-model='formData._id'
+        v-model='formData.id'
         readonly
         :label="$t('g.identifier')")
       //- 主题
@@ -89,7 +89,7 @@ const show = ref(false)
 const showSubscriptionPicker = ref(false)
 
 const formData = reactive({
-  _id: undefined,
+  id: undefined,
   qos: undefined,
   retain: undefined,
   topic: undefined,
@@ -120,7 +120,7 @@ watch(show, (value) => {
 watch(
   () => props.data,
   (value) => {
-    formData._id = value._id
+    formData.id = value.id
   }
 )
 
@@ -148,7 +148,7 @@ async function beforeClose(action, done) {
 
 function resetForm() {
   setTimeout(() => {
-    formData._id = undefined
+    formData.id = undefined
     formData.qos = undefined
     formData.retain = undefined
     formData.topic = undefined
