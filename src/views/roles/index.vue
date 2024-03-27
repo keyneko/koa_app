@@ -26,7 +26,7 @@
               template
                 .van-ellipsis {{ $t('g.name') }}: {{ d.name }}
                 .van-ellipsis {{ $t('g.status') }}: {{ lut('status', d.status) }}
-                ._van-ellipsis {{ $t('g.permissions') }}: {{ d.permissions.join('、') }}
+                ._van-ellipsis.ignore {{ $t('g.permissions') }}: {{ d.permissions.join('、') }}
                 //- ._van-ellipsis {{ $t('g.sops') }}: {{ map(d.sops, v => lut('sops', v)).join('、') }}
             van-cell(value)
               template(#extra)

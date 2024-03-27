@@ -1,9 +1,11 @@
+import axios from 'axios'
 import Cookies from 'js-cookie'
 import { getLanguage } from '@/lang/index'
 import { without, dropRight, findIndex } from 'lodash'
 
 const state = {
-  language: getLanguage(),
+  language: Cookies.get('language') || 'chinese_simplified',
+  languages: [],
   cached: [],
 }
 
@@ -11,6 +13,10 @@ const mutations = {
   SET_LANGUAGE: (state, language) => {
     state.language = language
     Cookies.set('language', language)
+  },
+
+  SET_LANGUAGES: (state, languages) => {
+    state.languages = languages
   },
 
   SET_CACHED: (state, r) => {
@@ -36,6 +42,13 @@ const mutations = {
 const actions = {
   setLanguage({ commit }, language) {
     commit('SET_LANGUAGE', language)
+  },
+
+  getLanguages({ commit }, params) {
+    return axios.get('/js/languages.json').then((res) => {
+      commit('SET_LANGUAGES', res.data)
+      return res.data
+    })
   },
 }
 

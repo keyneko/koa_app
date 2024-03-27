@@ -25,57 +25,36 @@ const messages = {
   ja: {
     ...vantJaLocale,
     ...jaLocale,
-  }
-}
-
-const dateTimeFormats = {
-  'en': {
-    short: { year: 'numeric', month: 'short', day: 'numeric' },
-    medium: { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' },
-    long: { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long', hour: 'numeric', minute: 'numeric' }
   },
-  'zh': {
-    short: { year: 'numeric', month: 'short', day: 'numeric' },
-    medium: { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' },
-    long: { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long', hour: 'numeric', minute: 'numeric', hour12: true }
-  },
-  'ja': {
-    short: { year: 'numeric', month: 'short', day: 'numeric' },
-    medium: { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' },
-    long: { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long', hour: 'numeric', minute: 'numeric', hour12: true }
-  }
 }
 
 export function getLanguage() {
   const chooseLanguage = Cookies.get('language')
-  if (chooseLanguage) return chooseLanguage
 
-  // if has not choose language
-  const language = (navigator.language || navigator.browserLanguage).toLowerCase()
-  const locales = Object.keys(messages)
-  for (const locale of locales) {
-    if (language.indexOf(locale) > -1) {
-      return locale
-    }
-  }
-  return 'en'
+  return chooseLanguage === 'english'
+    ? 'en'
+    : chooseLanguage === 'chinese_traditional'
+      ? 'hk'
+      : chooseLanguage === 'japanese'
+        ? 'ja'
+        : 'zh'
 }
 
 export function vantLocales(lang) {
-  if (lang === 'en') {
-    Locale.use(lang, vantEnLocale)
+  if (lang === 'en' || lang === 'english') {
+    Locale.use('en', vantEnLocale)
   }
-  else if (lang === 'zh') {
-    Locale.use(lang, vantZhLocale)
+  else if (lang === 'zh' || lang === 'chinese_simplified') {
+    Locale.use('zh', vantZhLocale)
   }
-  else if (lang === 'ja') {
-    Locale.use(lang, vantJaLocale)
+  else if (lang === 'ja' || lang === 'japanese') {
+    Locale.use('ja', vantJaLocale)
   }
 }
 
 const i18n = new VueI18n({
-  dateTimeFormats,
   locale: getLanguage(),
+  fallbackLocale: 'zh',
   messages,
   silentTranslationWarn: true,
 })

@@ -12,7 +12,7 @@ van-pull-refresh.flex-1(v-model='refreshing' @refresh='onRefresh')
         van-collapse(v-model='activeName' accordion)
           van-collapse-item(v-for="d in list" :key="d.id" :name='d.id')
             template(#title)
-              b(v-copy.silent) {{ d.key }}
+              b.ignore(v-copy.silent) {{ d.key }}
               span.gray &nbsp;[{{ d.name }}]
             template
               .van-ellipsis {{ $t('g.name') }}: {{ d.name }}

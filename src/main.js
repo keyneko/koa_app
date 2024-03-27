@@ -17,6 +17,7 @@ import { Toast, Lazyload } from 'vant'
 import i18n, { vantLocales } from '@/lang'
 import VueTouch from 'vue-touch'
 import animate from 'animate.css'
+import { initTranslate } from '@/lang/nomenclature'
 
 Toast.setDefaultOptions('loading', {
   forbidClick: true,
@@ -50,6 +51,7 @@ new Vue({
 })
 
 vantLocales(i18n.locale)
+initTranslate()
 
 // fix: 点击输入框时，弹出键盘遮挡输入框
 window.addEventListener('resize', function() {

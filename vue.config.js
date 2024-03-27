@@ -61,6 +61,10 @@ module.exports = {
       },
     })
 
+    config.externals = {
+      translate: 'translate',
+    }
+
     // If building a production package, enable gzip compression and bundle analyzer tool
     if (process.env.NODE_ENV === 'production') {
       config.plugins.push(

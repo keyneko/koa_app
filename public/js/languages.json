@@ -1,0 +1,17 @@
+[
+  {
+    "flag": "us",
+    "id": "english",
+    "name": "English"
+  },
+  {
+    "flag": "cn",
+    "id": "chinese_simplified",
+    "name": "简体中文"
+  },
+  {
+    "flag": "jp",
+    "id": "japanese",
+    "name": "日本語"
+  }
+]

@@ -7,6 +7,11 @@ module.exports = {
     sourceType: 'module',
   },
 
+  globals: {
+    Modernizr: 'readonly',
+    translate: 'readonly',
+  },
+
   env: {
     browser: true,
     node: true,
