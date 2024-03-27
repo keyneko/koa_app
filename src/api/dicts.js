@@ -41,7 +41,7 @@ export function createDictionary(data) {
 
 /**
  * 更新字典
- * @param  {String} data._id   [description]
+ * @param  {String} data.id   [description]
  * @param  {String|Number} data.value [description]
  * @param  {String} data.name [description]
  * @param  {Boolean} data.isProtected [description]
@@ -56,7 +56,7 @@ export function updateDictionary(data) {
 
 /**
  * 删除字典
- * @param  {String} params._id   [description]
+ * @param  {String} params.id   [description]
  */
 export function deleteDictionary(params) {
   return request({

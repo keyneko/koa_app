@@ -61,8 +61,8 @@ const show = ref(false)
 const formData = reactive({
   name: undefined,
   isProtected: undefined,
-  sops: [],
   permissions: [],
+  // sops: [],
 })
 
 watch(
@@ -99,8 +99,8 @@ function resetForm() {
   setTimeout(() => {
     formData.name = undefined
     formData.isProtected = undefined
-    formData.sops = []
     formData.permissions = []
+    // formData.sops = []
   }, 200)
 }
 

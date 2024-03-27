@@ -3,7 +3,7 @@ import { Toast, Notify } from 'vant'
 import store from '@/store'
 import { getToken, removeToken } from '@/utils/auth'
 
-axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
+// axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 
 // create an axios instance
 const service = axios.create({
@@ -24,7 +24,7 @@ service.interceptors.request.use(
   },
   (error) => {
     Promise.reject(error)
-  },
+  }
 )
 
 // response interceptor
@@ -40,7 +40,8 @@ service.interceptors.response.use(
 
     if (code == 200) {
       return res
-    } else {
+    }
+    else {
       if (message) {
         Notify({ type: 'danger', message })
       }
@@ -62,7 +63,7 @@ service.interceptors.response.use(
     }
 
     return Promise.reject(error)
-  },
+  }
 )
 
 export default service

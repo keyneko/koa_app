@@ -24,7 +24,7 @@
           template(#action)
             div(@click='onSearch') {{ $t('g.search') }}
 
-    List(
+    List.mb-4(
       :list='list'
       :total='total'
       @fetch="getList"

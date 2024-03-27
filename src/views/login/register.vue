@@ -57,10 +57,11 @@
           :placeholder="$t('login.plhrCaptcha')"
           :rules="[{ required: true, message: $t('login.requireCaptcha') }]")
           template(#extra)
-            .captcha(v-html="captcha.captcha" @click='getCaptcha')
+            //- .captcha(v-html="captcha.captcha" @click='getCaptcha')
+            img.captcha(v-if="captcha.captcha" :src="`data:image/png;base64,${captcha.captcha}`" @click='getCaptcha')
 
       van-cell-group(inset)
-        van-button(:loading='buttonLoading' block type='info' native-type='submit' data-testid="submit")
+        van-button(:disabled='buttonLoading' block type='info' native-type='submit' data-testid="submit")
           | {{ $t('g.register') }}
 
   .page__footer.h-auto

@@ -36,7 +36,8 @@ module.exports = {
         changeOrigin: true,
       },
       [process.env.VUE_APP_BASE_API]: {
-        target: 'http://localhost:4000',
+        // target: 'http://localhost:4000',
+        target: 'http://localhost:5000',
         // target: 'http://118.24.152.123/api',
         changeOrigin: true,
         pathRewrite: {

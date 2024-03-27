@@ -16,7 +16,7 @@
   .page__body
     van-empty(v-if='list.length == 0' :description="$t('g.noData')")
     template(v-else)
-      van-cell-group(inset)
+      van-cell-group.mb-4(inset)
         van-collapse(v-model='activeName' accordion)
           van-collapse-item(v-for="d in list" :key="d.id" :name='d.id')
             template(#title)
